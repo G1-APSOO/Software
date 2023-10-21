@@ -29,6 +29,20 @@ public class Usuario {
 		this.tipoDeUsuario = tipoDeUsuario;
 	}
 	
+	public String getLogin() {
+		return login;
+	}
 	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public String getTipoDeUsuario() {
+		return tipoDeUsuario;
+	}
 
 }
