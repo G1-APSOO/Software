@@ -1,26 +1,38 @@
-package Classes;
+package classes;
+
+import java.util.ArrayList;
 
 public class SalgadoSelecionado {
 	private int quantidade;
-	private Doce doce;
+	private Salgado salgado;
 	
-	public SalgadoSelecionado(int quantidade, Doce doce) {
+	public SalgadoSelecionado(int quantidade, Salgado salgado) {
 		setQuantidade(quantidade);
-		this.doce = doce;
+		setSalgado(salgado);
 	}
 	
-	public void setQuantidade(int quantidade) {
+	public static ArrayList<Salgado> getAllSalgados() {
+		return SalgadoSelecionadoDAO.getAll();
+	}
+	
+	private void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
+	private void setSalgado(Salgado salgado) {
+		this.salgado = salgado;
+	}
+	
 	public int getQuantidade() {
 		return quantidade;
 	}
+	
+	public Salgado getSalgado() {
+		return salgado;
+	}
 
 	public Double getValor() {
-		Double valorSalgado;
-		
-		valorSalgado = doce.getValorUnitario() * quantidade;
-		return valorSalgado;
+		return salgado.getValorUnitario() * quantidade;
 	}
+
 }
