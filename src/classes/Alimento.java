@@ -1,11 +1,11 @@
-package Classes;
+package classes;
 
 public abstract class Alimento {
 	private int id;
 	private String descricao;
 	private double valorUnitario;
 	
-	public Alimento(int id, String descricao, double valorUnitario) {
+	protected Alimento(int id, String descricao, double valorUnitario) {
 		setId(id);
 		setDescricao(descricao);
 		setValorUnitario(valorUnitario);
