@@ -1,4 +1,6 @@
-package Classes;
+package classes;
+
+import java.util.ArrayList;
 
 public class DoceSelecionado {
 	private int quantidade;
@@ -6,17 +8,28 @@ public class DoceSelecionado {
 	
 	public DoceSelecionado(int quantidade, Doce doce) {
 		setQuantidade(quantidade);
-		this.doce = doce;
+		setDoce(doce);
 	}
 	
-	public void setQuantidade(int quantidade) {
+	public static ArrayList<Doce> getAllDoces() {
+		return DoceSelecionadoDAO.getAllDoces();
+	}
+	
+	private void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+	
+	private void setDoce(Doce doce) {
+		this.doce = doce;
 	}
 
 	public int getQuantidade() {
 		return quantidade;
 	}
 
+	public Doce getDoce() {
+		return doce;
+	}
 	public Double getValor() {
 		Double valorDoce;
 		
