@@ -1,4 +1,4 @@
-package Classes;
+package classes;
 
 public class Doce extends Alimento{
 	public Doce(int id, String descricao, double valorUnitario) {

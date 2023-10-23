@@ -1,4 +1,4 @@
-package Classes;
+package classes;
 
 public class Cliente {
 	
@@ -95,9 +95,5 @@ public class Cliente {
 	public String getEmail() {
 		return email;
 	}
-
-
-
-
 
 }
