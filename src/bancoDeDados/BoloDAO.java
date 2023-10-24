@@ -1,5 +1,7 @@
 package bancoDeDados;
 
-public class BoloDAO {
+public class BoloDAO implements DAO{
 
+	
+	
 }
