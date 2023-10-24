@@ -3,35 +3,35 @@ package classes;
 import java.util.ArrayList;
 
 public class OrcamentoBuffetCompleto extends OrcamentoEvento {
-	private double teraCerveja;
+	private boolean teraCerveja;
 	
 	private ArrayList<SalgadoSelecionado> arraySalgadoSelecionados = new ArrayList<>();
 	private ArrayList<DoceSelecionado>    arrayDoceSelecionados    = new ArrayList<>();
 	private Bolo bolo;
 	
-	public OrcamentoBuffetCompleto(Data data, int numeroDeConvidados, String horaDeInicio, int id, double teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(data, id, numeroDeConvidados, horaDeInicio);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(id, numeroDeConvidados, horaDeInicio, data, pagamento);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 	}
 	
-	public OrcamentoBuffetCompleto(Data data, int numeroDeConvidados, String horaDeInicio, double teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(data, -1, numeroDeConvidados, horaDeInicio);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 	}
 	
-	public OrcamentoBuffetCompleto(Data data, int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, int id, double teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(data, id, numeroDeConvidados, numeroDeColaboradores, horaDeInicio);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(id, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 	}
 	
-	public OrcamentoBuffetCompleto(Data data, int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, double teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(data, -1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
@@ -84,7 +84,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		return Bolo.getAllBolos();
 	}
 	
-	private void setTeraCerveja(double teraCerveja) {
+	private void setTeraCerveja(boolean teraCerveja) {
 		this.teraCerveja = teraCerveja;
 	}
 	
@@ -92,7 +92,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		this.bolo = bolo;
 	}
 	
-	public double getTeraCerveja() {
+	public boolean getTeraCerveja() {
 		return teraCerveja;
 	}	
 	

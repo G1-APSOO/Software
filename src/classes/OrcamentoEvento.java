@@ -1,29 +1,28 @@
 package classes;
 
 public class OrcamentoEvento {
-	private Data data;
 	private int id;
 	private int numeroDeConvidados;
 	private int numeroDeColaboradores;
 	private String horaDeInicio;
+	private Data data;
+	private Pagamento pagamento;
 	
-	public OrcamentoEvento(Data data, int id, int numeroDeConvidados, String horaDeInicio) {
-		setData(data);
+	public OrcamentoEvento(int id, int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento) {
 		setId(id);
 		setNumeroDeConvidados(numeroDeConvidados);
 		setHoraDeInicio(horaDeInicio);
+		setData(data);
+		setPagamento(pagamento);
 	}
 	
-	public OrcamentoEvento(Data data, int id, int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio) {
-		setData(data);
+	public OrcamentoEvento(int id, int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento) {
 		setId(id);
 		setNumeroDeConvidados(numeroDeConvidados);
 		setNumeroDeColaboradores(numeroDeColaboradores);
 		setHoraDeInicio(horaDeInicio);
-	}
-	
-	private void setData(Data data) {
-		this.data = data;
+		setData(data);
+		setPagamento(pagamento);
 	}
 	
 	private void setId(int id) {
@@ -42,8 +41,12 @@ public class OrcamentoEvento {
 		this.numeroDeColaboradores = numeroDeColaboradores;
 	}
 	
-	public Data getData() {
-		return data;
+	private void setData(Data data) {
+		this.data = data;
+	}
+	
+	private void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 	
 	public int getId() {
@@ -60,5 +63,13 @@ public class OrcamentoEvento {
 	
 	public String getHoraDeInicio() {
 		return horaDeInicio;
+	}
+	
+	public Data getData() {
+		return data;
+	}
+	
+	public Pagamento getPagamento() {
+		return pagamento;
 	}
 }
