@@ -8,22 +8,16 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema dbname
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+USE `dbname` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Table `dbname`.`Bolo`
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+DROP TABLE IF EXISTS `dbname`.`Bolo` ;
 
--- -----------------------------------------------------
--- Table `mydb`.`Bolo`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Bolo` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Bolo` (
+CREATE TABLE IF NOT EXISTS `dbname`.`Bolo` (
   `id` INT NOT NULL,
   `descricao` VARCHAR(200) NOT NULL,
   `valorUnitario` DOUBLE NOT NULL,
@@ -33,11 +27,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Cliente`
+-- Table `dbname`.`Cliente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Cliente` ;
+DROP TABLE IF EXISTS `dbname`.`Cliente` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Cliente` (
+CREATE TABLE IF NOT EXISTS `dbname`.`Cliente` (
   `cpf` VARCHAR(11) NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   `RG` VARCHAR(20) NOT NULL,
@@ -52,11 +46,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Doce`
+-- Table `dbname`.`Doce`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Doce` ;
+DROP TABLE IF EXISTS `dbname`.`Doce` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Doce` (
+CREATE TABLE IF NOT EXISTS `dbname`.`Doce` (
   `id` INT NOT NULL,
   `descricao` VARCHAR(200) NOT NULL,
   `valorUnitario` DOUBLE NOT NULL,
@@ -65,11 +59,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`DoceSelecionado`
+-- Table `dbname`.`DoceSelecionado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`DoceSelecionado` ;
+DROP TABLE IF EXISTS `dbname`.`DoceSelecionado` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`DoceSelecionado` (
+CREATE TABLE IF NOT EXISTS `dbname`.`DoceSelecionado` (
   `quantidade` INT NOT NULL,
   `fk_idDoce` INT NOT NULL,
   `fk_idOrcamentoBuffetCompleto` INT NOT NULL,
@@ -78,23 +72,23 @@ CREATE TABLE IF NOT EXISTS `mydb`.`DoceSelecionado` (
   INDEX `fk_idDoce_idx` (`fk_idDoce` ASC) VISIBLE,
   CONSTRAINT `fk_idOrcamentoBuffetCompleto`
     FOREIGN KEY (`fk_idOrcamentoBuffetCompleto`)
-    REFERENCES `mydb`.`OrcamentoBuffetCompleto` (`id`)
+    REFERENCES `dbname`.`OrcamentoBuffetCompleto` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_idDoce`
     FOREIGN KEY (`fk_idDoce`)
-    REFERENCES `mydb`.`Doce` (`id`)
+    REFERENCES `dbname`.`Doce` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`OrcamentoBuffetCompleto`
+-- Table `dbname`.`OrcamentoBuffetCompleto`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`OrcamentoBuffetCompleto` ;
+DROP TABLE IF EXISTS `dbname`.`OrcamentoBuffetCompleto` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`OrcamentoBuffetCompleto` (
+CREATE TABLE IF NOT EXISTS `dbname`.`OrcamentoBuffetCompleto` (
   `id` INT NOT NULL,
   `numeroDeConvidados` INT NOT NULL,
   `numeroDeColaboradores` INT NOT NULL,
@@ -108,50 +102,50 @@ CREATE TABLE IF NOT EXISTS `mydb`.`OrcamentoBuffetCompleto` (
   INDEX `fk_cpfCliente_idx` (`fk_cpfCliente` ASC) VISIBLE,
   CONSTRAINT `fk_cpfCliente`
     FOREIGN KEY (`fk_cpfCliente`)
-    REFERENCES `mydb`.`Cliente` (`cpf`)
+    REFERENCES `dbname`.`Cliente` (`cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_idBolo`
     FOREIGN KEY (`id`)
-    REFERENCES `mydb`.`Bolo` (`id`)
+    REFERENCES `dbname`.`Bolo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_idPagamento`
     FOREIGN KEY (`id`)
-    REFERENCES `mydb`.`Pagamento` (`id`)
+    REFERENCES `dbname`.`Pagamento` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`OrcamentoLocacaoDeEspaco`
+-- Table `dbname`.`OrcamentoLocacaoDeEspaco`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`OrcamentoLocacaoDeEspaco` ;
+DROP TABLE IF EXISTS `dbname`.`OrcamentoLocacaoDeEspaco` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`OrcamentoLocacaoDeEspaco` (
+CREATE TABLE IF NOT EXISTS `dbname`.`OrcamentoLocacaoDeEspaco` (
   `id` INT NOT NULL,
   `numeroDeConvidados` INT NOT NULL,
   `numeroDeColaboradores` INT NOT NULL,
   `horaDeInicio` VARCHAR(8) NOT NULL,
   `data` VARCHAR(10) NOT NULL,
-  `fk_cpfCliente` VARCHAR(11) NOT NULL,
+  `fk_cpf` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_cpfCliente_idx` (`fk_cpfCliente` ASC) VISIBLE,
-  CONSTRAINT `fk_cpfCliente`
-    FOREIGN KEY (`fk_cpfCliente`)
-    REFERENCES `mydb`.`Cliente` (`cpf`)
+  INDEX `fk_cpfCliente_idx` (`fk_cpf` ASC) VISIBLE,
+  CONSTRAINT `fk_cpf`
+    FOREIGN KEY (`fk_cpf`)
+    REFERENCES `dbname`.`Cliente` (`cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Pagamento`
+-- Table `dbname`.`Pagamento`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Pagamento` ;
+DROP TABLE IF EXISTS `dbname`.`Pagamento` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Pagamento` (
+CREATE TABLE IF NOT EXISTS `dbname`.`Pagamento` (
   `id` INT NOT NULL,
   `valorTotal` DOUBLE NOT NULL,
   `formaDePagamento` VARCHAR(60) NOT NULL,
@@ -160,11 +154,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Salgado`
+-- Table `dbname`.`Salgado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Salgado` ;
+DROP TABLE IF EXISTS `dbname`.`Salgado` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Salgado` (
+CREATE TABLE IF NOT EXISTS `dbname`.`Salgado` (
   `id` INT NOT NULL,
   `descricao` VARCHAR(200) NOT NULL,
   `valorUnitario` DOUBLE NOT NULL,
@@ -173,36 +167,36 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`SalgadoSelecionado`
+-- Table `dbname`.`SalgadoSelecionado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`SalgadoSelecionado` ;
+DROP TABLE IF EXISTS `dbname`.`SalgadoSelecionado` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`SalgadoSelecionado` (
+CREATE TABLE IF NOT EXISTS `dbname`.`SalgadoSelecionado` (
   `quantidade` INT NOT NULL,
-  `fk_idSalgado` INT NOT NULL,
-  `fk_idOrcamentoBuffetCompleto` INT NOT NULL,
-  INDEX `fk_idSalgado_idx` (`fk_idSalgado` ASC) VISIBLE,
-  INDEX `fk_idOrcamentoBuffetCompleto_idx` (`fk_idOrcamentoBuffetCompleto` ASC) VISIBLE,
-  PRIMARY KEY (`fk_idOrcamentoBuffetCompleto`, `fk_idSalgado`),
-  CONSTRAINT `fk_idSalgado`
-    FOREIGN KEY (`fk_idSalgado`)
-    REFERENCES `mydb`.`Salgado` (`id`)
+  `fk_idSalg` INT NOT NULL,
+  `fk_idOrcamentoBuffetComp` INT NOT NULL,
+  INDEX `fk_idSalgado_idx` (`fk_idSalg` ASC) VISIBLE,
+  INDEX `fk_idOrcamentoBuffetCompleto_idx` (`fk_idOrcamentoBuffetComp` ASC) VISIBLE,
+  PRIMARY KEY (`fk_idOrcamentoBuffetComp`, `fk_idSalg`),
+  CONSTRAINT `fk_idSalg`
+    FOREIGN KEY (`fk_idSalg`)
+    REFERENCES `dbname`.`Salgado` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_idOrcamentoBuffetCompleto`
-    FOREIGN KEY (`fk_idOrcamentoBuffetCompleto`)
-    REFERENCES `mydb`.`OrcamentoBuffetCompleto` (`id`)
+  CONSTRAINT `fk_idOrcamentoBuffetComp`
+    FOREIGN KEY (`fk_idOrcamentoBuffetComp`)
+    REFERENCES `dbname`.`OrcamentoBuffetCompleto` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ServicoAdicional`
+-- Table `dbname`.`ServicoAdicional`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`ServicoAdicional` ;
+DROP TABLE IF EXISTS `dbname`.`ServicoAdicional` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`ServicoAdicional` (
+CREATE TABLE IF NOT EXISTS `dbname`.`ServicoAdicional` (
   `id` INT NOT NULL,
   `descricao` VARCHAR(200) NOT NULL,
   `valor` DOUBLE NOT NULL,
@@ -211,11 +205,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ServicoContratado`
+-- Table `dbname`.`ServicoContratado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`ServicoContratado` ;
+DROP TABLE IF EXISTS `dbname`.`ServicoContratado` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`ServicoContratado` (
+CREATE TABLE IF NOT EXISTS `dbname`.`ServicoContratado` (
   `fk_idServicoAdicional` INT NOT NULL,
   `fk_idOrcamentoLocacaoDeEspaco` INT NOT NULL,
   `quantidade` INT NOT NULL,
@@ -223,23 +217,23 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ServicoContratado` (
   INDEX `fk_idOrcamentoLocacaoDeEspaco_idx` (`fk_idOrcamentoLocacaoDeEspaco` ASC) VISIBLE,
   CONSTRAINT `fk_idOrcamentoLocacaoDeEspaco`
     FOREIGN KEY (`fk_idOrcamentoLocacaoDeEspaco`)
-    REFERENCES `mydb`.`OrcamentoLocacaoDeEspaco` (`id`)
+    REFERENCES `dbname`.`OrcamentoLocacaoDeEspaco` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_idServicoAdicional`
     FOREIGN KEY (`fk_idServicoAdicional`)
-    REFERENCES `mydb`.`ServicoAdicional` (`id`)
+    REFERENCES `dbname`.`ServicoAdicional` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Usuario`
+-- Table `dbname`.`Usuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Usuario` ;
+DROP TABLE IF EXISTS `dbname`.`Usuario` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Usuario` (
+CREATE TABLE IF NOT EXISTS `dbname`.`Usuario` (
   `login` VARCHAR(100) NOT NULL,
   `senha` VARCHAR(500) NOT NULL,
   `nome` VARCHAR(150) NOT NULL,
@@ -249,20 +243,20 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`parcela`
+-- Table `dbname`.`parcela`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`parcela` ;
+DROP TABLE IF EXISTS `dbname`.`parcela` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`parcela` (
+CREATE TABLE IF NOT EXISTS `dbname`.`parcela` (
   `id` INT NOT NULL,
   `valorPago` DOUBLE NOT NULL,
   `dataVencimento` VARCHAR(10) NOT NULL,
   `dataPagamento` VARCHAR(10) NOT NULL,
-  `fk_idPagamento` INT NULL,
+  `fk_idPagam` INT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_idPagamento`
+  CONSTRAINT `fk_idPagam`
     FOREIGN KEY (`id`)
-    REFERENCES `mydb`.`Pagamento` (`id`)
+    REFERENCES `exgrupo`.`Pagamento` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
