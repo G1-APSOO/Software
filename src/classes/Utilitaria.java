@@ -1,35 +1,32 @@
 package classes;
 
+import java.util.ArrayList;
 
 public class Utilitaria {
+	
 	public static boolean verificarValidezDaData(Data dataDoEvento){
 		OrcamentoBuffetCompletoDAO instance = new OrcamentoBuffetCompletoDAO();
 		return instance.verificarData(dataDoEvento);
 	}
 	
 	public static boolean verificarNumeroConvidados(int numeroDeConvidados) {
-		
 		return 50 <= numeroDeConvidados && numeroDeConvidados <= 180;
-		
 	}
 	
 	public static boolean verificarValidezDoHorario(String horaDeInicio) {
-		String [] horario = horaDeInicio.split(".");
-		String hora = horario[0];
-		String min = horario[1];
-		int horaok = Integer.valueOf(hora);
+		String[] horario = horaDeInicio.split(":");
 		
-		return 11 <= horaok && horaok <= 20;
+		int horaOk = Integer.parseInt(horario[0]);
+		
+		return (11 <= horaOk && horaOk <= 20);
 	}
 	
-	public static boolean verificarOpcoesSalgados (<ArrayList>Salgado opcoesDeSalgado){
-		salgadoqtdarray = opcoesDeSalgado.size();
-		
-		return salgadoqtdarray 
+	public static boolean verificarOpcoesSalgados (int qtdDeSalgados) {
+		return qtdDeSalgados >= 7;
 	}
 	
-	public static boolean verificarOpcoesDoces (<ArrayList>Doce opcoesDeDoce){
-		return 
+	public static boolean verificarOpcoesDoces (int qtdDeDoces){
+		return qtdDeDoces == 3;
 	}
 
 }
