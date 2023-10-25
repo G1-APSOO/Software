@@ -14,6 +14,7 @@ public class Bolo extends Alimento {
 	}
 	
 	public static ArrayList<Bolo> getAllBolos() {
+		BoloDAO BoloDAO = new BoloDAO();
 		return BoloDAO.getAll();
 	}
 	

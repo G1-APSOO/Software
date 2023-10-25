@@ -12,6 +12,7 @@ public class SalgadoSelecionado {
 	}
 	
 	public static ArrayList<Salgado> getAllSalgados() {
+		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
 		return SalgadoSelecionadoDAO.getAll();
 	}
 	

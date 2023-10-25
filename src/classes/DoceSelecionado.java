@@ -12,6 +12,7 @@ public class DoceSelecionado {
 	}
 	
 	public static ArrayList<Doce> getAllDoces() {
+		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
 		return DoceSelecionadoDAO.getAllDoces();
 	}
 	

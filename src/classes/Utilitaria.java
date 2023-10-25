@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 public class Utilitaria {
 	
+	private static final OrcamentoBuffetCompletoDAO OrcBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
+	
+	private Utilitaria() {
+		throw new IllegalAccessError();
+	}
+	
 	public static boolean verificarValidezDaData(Data dataDoEvento){
-		OrcamentoBuffetCompletoDAO instance = new OrcamentoBuffetCompletoDAO();
-		return instance.verificarData(dataDoEvento);
+		return OrcBuffetCompletoDAO.verificarData(dataDoEvento);
 	}
 	
 	public static boolean verificarNumeroConvidados(int numeroDeConvidados) {
