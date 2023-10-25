@@ -2,14 +2,19 @@ package classes;
 
 import java.util.ArrayList;
 
+import excecoes.ExcecaoValorNaoSetado;
+
 public class Bolo extends Alimento {
 	private Double peso;
 	
 	public Bolo(int id, String descricao, double valorUnitario) {
 		super(id, descricao, valorUnitario);
+		setPeso(0.0);
 	}
 
-	public Double getValor() {
+	public Double getValor() throws ExcecaoValorNaoSetado {
+		if (peso == 0.0) throw new ExcecaoValorNaoSetado("Bolo", "peso");
+		
 		return getValorUnitario() * peso;
 	}
 	

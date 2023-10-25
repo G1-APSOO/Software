@@ -1,18 +1,46 @@
 package classes;
 
+import excecoes.ExcecaoDDDInvalido;
+import excecoes.ExcecaoNaoPreenchido;
+import excecoes.ExcecaoParametroPreenchidoErrado;
+import excecoes.ExcecaoSomenteLetras;
+import excecoes.ExcecaoSomenteNumeros;
+
 public class Cliente {
 	
-	private String nome;
-	private String cpf;
-	private String rg;
-	private String endereco;
-	private String cep;
-	private String celular;
-	private String telefoneResidencial;
-	private String telefoneComercial;
-	private String email;
+	private String nome; 				// OBRIGATORIO
+	private String cpf;					// OBRIGATORIO
+	private String rg;					// OPCIONAL
+	private String endereco;			// OBRIGATORIO
+	private String cep;					// OBRIGATORIO
+	private String celular;				// OBRIGATORIO
+	private String telefoneResidencial; // OPCIONAL
+	private String telefoneComercial; 	// OPCIONAL
+	private String email;				// OBRIGATORIO
 	
-	public Cliente(String nome, String cpf, String rg, String endereco, String cep, String celular, String telefoneResidencial, String telefoneComercial, String email) {
+	/* Construtor minimo */
+	public Cliente(String nome, String cpf, String endereco, String cep, String celular, String email)
+		throws  ExcecaoSomenteLetras,
+		ExcecaoSomenteNumeros,
+		ExcecaoParametroPreenchidoErrado,
+		ExcecaoDDDInvalido
+	{	
+		setNome(nome);
+		setCpf(cpf);
+		setEndereco(endereco);
+		setCep(cep);
+		setCelular(celular);
+		setEmail(email);
+
+	}
+	
+	// Construtor Completo
+	public Cliente(String nome, String cpf, String endereco, String cep, String celular, String email, String rg, String telefoneResidencial, String telefoneComercial) 
+		throws  ExcecaoSomenteLetras,
+				ExcecaoSomenteNumeros,
+				ExcecaoParametroPreenchidoErrado,
+				ExcecaoDDDInvalido
+	{
 		setNome(nome);
 		setCpf(cpf);
 		setRg(rg);
@@ -24,39 +52,83 @@ public class Cliente {
 		setEmail(email);
 	}
 	
-	private void setNome(String nome) {
+	public void adicionarInformacoes(String rg, String telefoneResidencial, String telefoneComercial) {
+		if (rg != null) setRg(rg);
+		if (telefoneComercial != null) setTelefoneComercial(telefoneComercial);
+		if (telefoneResidencial != null) setTelefoneResidencial(telefoneResidencial);
+	}
+	
+	private void setNome(String nome) throws ExcecaoSomenteLetras {
+		if (nome.matches("[a-zA-Z]([ a-zA-Zçãõ])*+") == false) throw new ExcecaoSomenteLetras("Nome");
 		this.nome = nome;
 	}
 	
-	private void setCpf(String cpf) {
+	private void setCpf (String cpf) throws ExcecaoParametroPreenchidoErrado {
+		cpf = cpf.replace(".", "");
+		cpf = cpf.replace("-", "");
+		
+		if (Utilitaria.verificarCPF(cpf) == false) throw new ExcecaoParametroPreenchidoErrado("CPF");
 		this.cpf = cpf;
 	}
 	
-	private void setRg(String rg) {
-		this.rg = rg;
+	private void setRg (String rg) throws ExcecaoParametroPreenchidoErrado {
+		boolean isRGOk = Utilitaria.verificarRG(rg);
+		
+		if (isRGOk)
+			this.rg = rg;
+
+		else 
+			throw new ExcecaoParametroPreenchidoErrado("RG");
+		
 	}
 	
 	private void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 	
-	private void setCep(String cep) {
+	private void setCep(String cep) throws ExcecaoParametroPreenchidoErrado {
+		if (cep.matches("\\d{5}-\\d{3}") == false) throw new ExcecaoParametroPreenchidoErrado("CEP");
+		
 		this.cep = cep;
 	}
 	
-	private void setCelular(String celular) {
-		this.celular = celular;
+	private void setCelular(String celular) throws ExcecaoDDDInvalido, ExcecaoParametroPreenchidoErrado {
+		
+		boolean isCelularOk = Utilitaria.verificarCelular(celular);
+		
+		if (isCelularOk)
+			this.celular = celular;
+		
+		else 
+			throw new ExcecaoParametroPreenchidoErrado("Celular");
+		
 	}
 
-	private void setTelefoneResidencial(String telefoneResidencial) {
-		this.telefoneResidencial = telefoneResidencial;
+	private void setTelefoneResidencial(String telefoneResidencial) throws ExcecaoDDDInvalido, ExcecaoParametroPreenchidoErrado {
+		
+		boolean isTelefoneResidencialOk = Utilitaria.verificarTelefoneFixo(telefoneResidencial);
+		
+		if (isTelefoneResidencialOk)
+			this.telefoneResidencial = telefoneResidencial;
+		
+		else 
+			throw new ExcecaoParametroPreenchidoErrado("Telefone Residencial");
 	}
 	
-	private void setTelefoneComercial(String telefoneComercial) {
-		this.telefoneComercial = telefoneComercial;
+	private void setTelefoneComercial(String telefoneComercial) throws ExcecaoDDDInvalido, ExcecaoParametroPreenchidoErrado {
+		
+		boolean telefoneComercialECelular = Utilitaria.verificarCelular(telefoneComercial);
+		boolean telefoneComercialETelefoneFixo = Utilitaria.verificarTelefoneFixo(telefoneComercial);
+		
+		if (telefoneComercialECelular || telefoneComercialETelefoneFixo) 
+			this.telefoneComercial = telefoneComercial;
+		else
+			throw new ExcecaoParametroPreenchidoErrado("Telefone comercial");
 	}
 	
 	private void setEmail(String email) {
+		if (email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]+") == false) throw new ExcecaoParametroPreenchidoErrado("Email");
+		
 		this.email = email;
 	}
 	
