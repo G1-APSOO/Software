@@ -32,7 +32,7 @@ public class SalgadoSelecionado {
 		return salgado;
 	}
 
-	public Double getValor() {
+	public double getValor() {
 		return salgado.getValorUnitario() * quantidade;
 	}
 

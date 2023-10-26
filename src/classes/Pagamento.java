@@ -1,19 +1,21 @@
 package classes;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 public class Pagamento {
-	private Double valorTotal;
+	private double valorTotal;
 	private String formaDePagamento;
 	private ArrayList<Parcela> parcelas = new ArrayList<>();
 	
-	public Pagamento(Double valorTotal, String formaDePagamento, int quantidadeDeParcelas) {
+	public Pagamento(double valorTotal, String formaDePagamento, int quantidadeDeParcelas) {
 		setValorTotal(valorTotal);
 		setFormaDePagamento(formaDePagamento);
 		criaParcelas(quantidadeDeParcelas);
 	}
 	
-	private void setValorTotal(Double valorTotal) {
+	private void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 	
@@ -28,7 +30,7 @@ public class Pagamento {
 		// 	Estamos em dezembro o "proximo" seria mes 13, mas não existe mes 13, ent voltar para janeiro
 	}
 
-	public Double getValorTotal() {
+	public double getValorTotal() {
 		return valorTotal;
 	}
 

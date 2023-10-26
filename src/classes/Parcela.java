@@ -1,17 +1,17 @@
 package classes;
 
 public class Parcela {
-	private Double valorPago;
+	private double valorPago;
 	private Data dataVencimento;
 	private Data dataPagamento;
 	
-	public Parcela(Double valorPago, Data dataVencimento, Data dataPagamento) {
+	public Parcela(double valorPago, Data dataVencimento, Data dataPagamento) {
 		setValorPago(valorPago);
 		setDataVencimento(dataVencimento);
 		setDataPagamento(dataPagamento);
 	}
 	
-	private void setValorPago(Double valorPago) {
+	private void setValorPago(double valorPago) {
 		this.valorPago = valorPago;
 	}
 	
@@ -23,7 +23,7 @@ public class Parcela {
 		this.dataPagamento= dataPagamento;
 	}
 	
-	public Double getValorPago() {
+	public double getValorPago() {
 		return valorPago;
 	}
 	

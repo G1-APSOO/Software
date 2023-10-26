@@ -31,8 +31,8 @@ public class DoceSelecionado {
 	public Doce getDoce() {
 		return doce;
 	}
-	public Double getValor() {
-		Double valorDoce;
+	public double getValor() {
+		double valorDoce;
 		
 		valorDoce = doce.getValorUnitario() * quantidade;
 		return valorDoce;
