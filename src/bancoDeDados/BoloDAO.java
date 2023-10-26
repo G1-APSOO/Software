@@ -3,16 +3,17 @@ package bancoDeDados;
 import java.sql.ResultSet;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import execoes.ExcecaoValorNaoSetado;
+import excecoes.ExcecaoValorNaoSetado;
 import classes.Bolo;
 
-public class BoloDAO implements DAO{
+public class BoloDAO implements DAO<Bolo, Integer> {
 
-	public static Bolo get(int id) {
+	@Override
+	public Bolo get(Integer objetoInteger) {
+		int id = objetoInteger.intValue();
 
 		String sql = "SELECT * FROM Bolo WHERE id = ?";
 
@@ -23,7 +24,8 @@ public class BoloDAO implements DAO{
 
 			try (ResultSet rs = statement.executeQuery()) {
 				while (rs.next()) {
-					Bolo boloEncontrado = new Bolo(rs.getInt("id"), rs.getString("descricao"), rs.getDouble("valorUnitario"));
+					Bolo boloEncontrado = new Bolo(rs.getInt("id"), rs.getString("descricao"),
+							rs.getDouble("valorUnitario"));
 					boloEncontrado.setPeso(rs.getDouble("peso"));
 					return boloEncontrado;
 				}
@@ -33,60 +35,108 @@ public class BoloDAO implements DAO{
 		} catch (SQLException e) {
 			System.out.println(e);
 			return null;
-		} catch(ExcecaoValorNaoSetado e) {
+		} catch (ExcecaoValorNaoSetado e) {
 			System.out.println(e);
 			return null;
 		}
 	}
-	
-	public static ArrayList<Bolo> getAll(){
+
+	@Override
+	public ArrayList<Bolo> getAll() {
 		String sql = "SELECT * FROM Bolo";
 
 		try {
-
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			
+
 			try (ResultSet rs = statement.executeQuery()) {
-				ArrayList<Bolo> bolosEncontrados = new ArrayList<Bolo>;
+				ArrayList<Bolo> bolosEncontrados = new ArrayList<Bolo>();
 				while (rs.next()) {
-					Bolo boloEncontrado = new Bolo(rs.getInt("id"), rs.getString("descricao"), rs.getDouble("valorUnitario"));
+					Bolo boloEncontrado = new Bolo(rs.getInt("id"), rs.getString("descricao"),
+							rs.getDouble("valorUnitario"));
 					boloEncontrado.setPeso(rs.getDouble("peso"));
 					bolosEncontrados.add(boloEncontrado);
 				}
 				return bolosEncontrados;
 			}
-			return null;
-
 		} catch (SQLException e) {
 			System.out.println(e);
 			return null;
 		}
 	}
-	public static boolean criar(Bolo bolo) {
-			String sql = "INSERT INTO Cliente VALUES (?, ?, ?, ?)";
+
+	@Override
+	public boolean criar(Bolo bolo) {
+		String sql = "INSERT INTO Bolo VALUES (?, ?, ?, ?)";
+
+		try {
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, bolo.getId());
+			statement.setString(2, bolo.getDescricao());
+			statement.setDouble(3, bolo.getValorUnitario());
+			statement.setDouble(4, bolo.getPeso());
+
+			int rowsInserted = statement.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("Cliente inserido com sucesso!");
+			}
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	@Override
+	public boolean atualizar(Bolo bolo) {
+		String sql = "UPDATE Bolo SET descricao = ?, valorUnitario = ?, peso = ? WHERE id = ?";
 
 			try {
+			try {
+
+		try {
 
 				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 				statement.setInt(1, bolo.getId());
-				statement.setString(1, bolo.getDescricao());
-				statement.setDouble(1, bolo.valorUnitario());
-				statement.setDouble(1, bolo.getPeso());
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				statement.setInt(1, bolo.getId());
+			statement.setString(1, bolo.getDescricao());
+			statement.setDouble(2, bolo.getValorUnitario());
+			statement.setDouble(3, bolo.getPeso());
+			statement.setInt(4, bolo.getId());
 
-				int rowsInserted = statement.executeUpdate();
-				if (rowsInserted > 0) {
-					System.out.println("Cliente inserido com sucesso!");
-				}
-				return true;
-			} catch (SQLException e) {
-				System.out.println(e);
-				return false;
-			} catch(ExcecaoValorNaoSetado e) {
-				System.out.println(e);
-				return false;
+			int rowsInserted = statement.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("Cliente inserido com sucesso!");
 			}
-		return true;
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return false;
+		}
 	}
-	public static boolean atualizar(Bolo bolo) {return true;}
-	public static boolean deletar(int id) {return true;}
+
+	@Override
+	public boolean deletar(Integer objetoInteger) {
+		String sql = "DELETE FROM Bolo WHERE id = ?";
+		int id = objetoInteger.intValue();
+		try {
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(4, id);
+			int rowsInserted = statement.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("Cliente deletado com sucesso!");
+			}
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		}
+	}
 }
