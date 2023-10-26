@@ -77,7 +77,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Cliente inserido com sucesso!");
+				System.out.println("Bolo inserido com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -95,10 +95,22 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 			try {
 			try {
+			try {
+
+		try {
+
+		try {
+			try {
 
 		try {
 
 				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				statement.setInt(1, bolo.getId());
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				statement.setInt(1, bolo.getId());
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 				statement.setInt(1, bolo.getId());
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -110,7 +122,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Cliente inserido com sucesso!");
+				System.out.println("Bolo inserido com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -131,7 +143,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 			statement.setInt(4, id);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Cliente deletado com sucesso!");
+				System.out.println("Bolo deletado com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
