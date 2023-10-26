@@ -1,11 +1,5 @@
 package telas;
 
-import java.awt.Color;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Properties;
-
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -20,54 +14,45 @@ import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
 import componentesDeTelas.RoundJTextField;
 
-public class PainelInicialOrcamentoDeBuffetCompleto implements Painel {
+public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 
 	private JPanel painel;
 	
-	private Color corDeFundo;
-	private Color corJanelaInterna;
-	private Color corTitulo;
-	private Color corTexto;
-	private Color corInputs;
+	
 	
 	public PainelInicialOrcamentoDeBuffetCompleto() {
+		super();
 		painel = new JPanel();
 		
-		setCores();
-		
 		JLabel labelTitulo = new JLabel("Informações do evento");
-		labelTitulo.setForeground(corTitulo);
+		labelTitulo.setForeground(getCorTitulo());
 		labelTitulo.setFont(new Font("Calibri Light", Font.PLAIN, 44));
 		
 		JPanel painelDivisor = new JPanel();
-		painelDivisor.setBackground(corDeFundo);
+		painelDivisor.setBackground(getCorDeFundo());
 		
 		JPanel painelAvancar = new JPanel();
-		painelAvancar.setBackground(corDeFundo);
+		painelAvancar.setBackground(getCorDeFundo());
 		
 		JPanel painelVoltarTudo = new JPanel();
-		painelVoltarTudo.setBackground(corDeFundo);
+		painelVoltarTudo.setBackground(getCorDeFundo());
 		GroupLayout gl_painel = new GroupLayout(painel);
 		gl_painel.setHorizontalGroup(
 			gl_painel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_painel.createSequentialGroup()
-					.addGroup(gl_painel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_painel.createSequentialGroup()
+					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_painel.createSequentialGroup()
 							.addGap(40)
 							.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_painel.createSequentialGroup()
 									.addComponent(labelTitulo, GroupLayout.PREFERRED_SIZE, 571, GroupLayout.PREFERRED_SIZE)
 									.addGap(566)
-									.addComponent(painelVoltarTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-									.addGap(0, 0, Short.MAX_VALUE))
-								.addGroup(gl_painel.createSequentialGroup()
-									.addComponent(painelDivisor, GroupLayout.PREFERRED_SIZE, 1180, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE))))
+									.addComponent(painelVoltarTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
+								.addComponent(painelDivisor, GroupLayout.PREFERRED_SIZE, 1180, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_painel.createSequentialGroup()
 							.addGap(1177)
-							.addComponent(painelAvancar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-							.addGap(0, 0, Short.MAX_VALUE)))
-					.addGap(18))
+							.addComponent(painelAvancar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
+					.addGap(20))
 		);
 		gl_painel.setVerticalGroup(
 			gl_painel.createParallelGroup(Alignment.LEADING)
@@ -81,33 +66,33 @@ public class PainelInicialOrcamentoDeBuffetCompleto implements Painel {
 							.addComponent(painelVoltarTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(painelDivisor, GroupLayout.PREFERRED_SIZE, 344, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
 					.addComponent(painelAvancar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
 					.addGap(20))
 		);
 		painelVoltarTudo.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel labelVoltarTudo = new JLabel("");
-		labelVoltarTudo.setIcon(new ImageIcon("imgs/retorno.png"));
+		labelVoltarTudo.setIcon(getIconeRetornaTudo());
 		painelVoltarTudo.add(labelVoltarTudo);
 		painelAvancar.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel labelAvancar = new JLabel("");
-		labelAvancar.setIcon(new ImageIcon("imgs/Proxima_pagina.png"));
+		labelAvancar.setIcon(getIconeProximaPagina());
 		painelAvancar.add(labelAvancar);
 		painelDivisor.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JPanel painelNumeroDeConvidados = new JPanel();
-		painelNumeroDeConvidados.setBackground(corDeFundo);
+		painelNumeroDeConvidados.setBackground(getCorDeFundo());
 		painelDivisor.add(painelNumeroDeConvidados);
 		
 		RoundJPanel painelInternoNumeroDeConvidados = new RoundJPanel(25, 25, 25, 25);
-		painelInternoNumeroDeConvidados.setBackground(corJanelaInterna);
+		painelInternoNumeroDeConvidados.setBackground(getCorDeJanelaInterna());
 		painelInternoNumeroDeConvidados.setBorder(new EmptyBorder(30, 20, 30, 20));
 		painelInternoNumeroDeConvidados.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel labelNumeroDeConvidados = new JLabel(" Nº de convidados");
-		labelNumeroDeConvidados.setForeground(corTexto);
+		labelNumeroDeConvidados.setForeground(getCorTexto());
 		labelNumeroDeConvidados.setFont(new Font("Arial", Font.PLAIN, 24));
 		painelInternoNumeroDeConvidados.add(labelNumeroDeConvidados);
 		
@@ -131,16 +116,16 @@ public class PainelInicialOrcamentoDeBuffetCompleto implements Painel {
 		painelNumeroDeConvidados.setLayout(gl_painelNumeroDeConvidados);
 		
 		JPanel painelNumeroDeColaboradores = new JPanel();
-		painelNumeroDeColaboradores.setBackground(corDeFundo);
+		painelNumeroDeColaboradores.setBackground(getCorDeFundo());
 		painelDivisor.add(painelNumeroDeColaboradores);
 		
 		RoundJPanel painelInternoNumeroDeColaboradores = new RoundJPanel(25, 25, 25, 25);
-		painelInternoNumeroDeColaboradores.setBackground(corJanelaInterna);
+		painelInternoNumeroDeColaboradores.setBackground(getCorDeJanelaInterna());
 		painelInternoNumeroDeColaboradores.setBorder(new EmptyBorder(30, 20, 30, 20));
 		painelInternoNumeroDeColaboradores.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel labelNumeroDeColaboradores = new JLabel(" Nº de colaboradores");
-		labelNumeroDeColaboradores.setForeground(corTexto);
+		labelNumeroDeColaboradores.setForeground(getCorTexto());
 		labelNumeroDeColaboradores.setFont(new Font("Arial", Font.PLAIN, 24));
 		painelInternoNumeroDeColaboradores.add(labelNumeroDeColaboradores);
 		
@@ -164,16 +149,16 @@ public class PainelInicialOrcamentoDeBuffetCompleto implements Painel {
 		painelNumeroDeColaboradores.setLayout(gl_painelNumeroDeColaboradores);
 		
 		JPanel painelData = new JPanel();
-		painelData.setBackground(corDeFundo);
+		painelData.setBackground(getCorDeFundo());
 		painelDivisor.add(painelData);
 		
 		RoundJPanel painelInternoData = new RoundJPanel(25, 25, 25, 25);
-		painelInternoData.setBackground(corJanelaInterna);
+		painelInternoData.setBackground(getCorDeJanelaInterna());
 		painelInternoData.setBorder(new EmptyBorder(30, 20, 30, 20));
 		painelInternoData.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel labelData = new JLabel(" Data");
-		labelData.setForeground(corTexto);
+		labelData.setForeground(getCorTexto());
 		labelData.setFont(new Font("Arial", Font.PLAIN, 24));
 		painelInternoData.add(labelData);
 		
@@ -198,16 +183,16 @@ public class PainelInicialOrcamentoDeBuffetCompleto implements Painel {
 		painelData.setLayout(gl_painelData);
 		
 		JPanel painelHoraDeInicio = new JPanel();
-		painelHoraDeInicio.setBackground(corDeFundo);
+		painelHoraDeInicio.setBackground(getCorDeFundo());
 		painelDivisor.add(painelHoraDeInicio);
 		
 		RoundJPanel painelInternoHoraDeInicio = new RoundJPanel(25, 25, 25, 25);
-		painelInternoHoraDeInicio.setBackground(corJanelaInterna);
+		painelInternoHoraDeInicio.setBackground(getCorDeJanelaInterna());
 		painelInternoHoraDeInicio.setBorder(new EmptyBorder(30, 20, 30, 20));
 		painelInternoHoraDeInicio.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel labelHoraDeInicio = new JLabel(" Hora de início do evento");
-		labelHoraDeInicio.setForeground(corTexto);
+		labelHoraDeInicio.setForeground(getCorTexto());
 		labelHoraDeInicio.setFont(new Font("Arial", Font.PLAIN, 24));
 		painelInternoHoraDeInicio.add(labelHoraDeInicio);
 		
@@ -246,55 +231,5 @@ public class PainelInicialOrcamentoDeBuffetCompleto implements Painel {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void setCores() {
-		Path pathfile = Path.of("config.txt");
-		Properties properties = new Properties();
-		
-		try {
-			String aux;
-			String[] auxArray;
-			int[] auxInt = new int[3];
-			
-			properties.load(Files.newBufferedReader(pathfile));
-			
-			aux = properties.getProperty("COR_DE_FUNDO");
-			auxArray = aux.split(",");
-			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
-			corDeFundo = new Color(auxInt[0], auxInt[1], auxInt[2]);
-			
-			aux = properties.getProperty("COR_DE_FUNDO_JANELA_INTERNA");
-			auxArray = aux.split(",");
-			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
-			corJanelaInterna = new Color(auxInt[0], auxInt[1], auxInt[2]);
-			
-			aux = properties.getProperty("COR_LETRA_TITULO");
-			auxArray = aux.split(",");
-			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
-			corTitulo = new Color(auxInt[0], auxInt[1], auxInt[2]);
-			
-			aux = properties.getProperty("COR_LETRA_JANELA_INTERNA");
-			auxArray = aux.split(",");
-			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
-			corTexto = new Color(auxInt[0], auxInt[1], auxInt[2]);
-			
-			aux = properties.getProperty("COR_LETRA_INPUTS");
-			auxArray = aux.split(",");
-			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
-			corInputs = new Color(auxInt[0], auxInt[1], auxInt[2]);
-			
-		} catch (Exception e) {
-			System.out.println("Erro: Ao tentar abrir o arquivo configs.txt");
-		} 
-		//Abaixo começa debug, retirar trecho de codigo na versao final
-		corDeFundo = new Color(100, 183, 206);
-		corTexto = new Color(240,240,240);
-		corTitulo = new Color(34,45,48);
-		corJanelaInterna = new Color(25,25,25);
-		corInputs = new Color(0,0,0);
-		// Fim debug
-		
-		painel.setBackground(corDeFundo);
-	}
+	
 }

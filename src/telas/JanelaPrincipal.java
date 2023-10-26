@@ -9,7 +9,7 @@ public class JanelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7430438618817551574L;
 	
-	private PainelInicialOrcamentoDeBuffetCompleto painelEscolhaDeOrcamento;
+	private PainelEscolhaDeOrcamento painelEscolhaDeOrcamento;
 	
 	public JanelaPrincipal() {
 		setSize(new Dimension(1280, 720));
@@ -20,9 +20,12 @@ public class JanelaPrincipal extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-		painelEscolhaDeOrcamento = new PainelEscolhaDeOrcamento();
+		//painelEscolhaDeOrcamento = new PainelEscolhaDeOrcamento();
+		//setContentPane(painelEscolhaDeOrcamento.getPainel());
 		
-		setContentPane(painelEscolhaDeOrcamento.getPainel());
+		PainelOpcoesOrcamentoDeBuffetCompleto orc = new PainelOpcoesOrcamentoDeBuffetCompleto();
+		setContentPane(orc.getPainel());
+		
 		setVisible(true);
 	}
 

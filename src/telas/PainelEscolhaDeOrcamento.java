@@ -1,7 +1,5 @@
 package telas;
 
-import java.awt.Color;
-
 import javax.swing.JPanel;
 
 import componentesDeTelas.RoundJPanel;
@@ -9,108 +7,94 @@ import componentesDeTelas.RoundJPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-public class PainelEscolhaDeOrcamento implements Painel {
+public class PainelEscolhaDeOrcamento extends Painel {
 	
 	private JPanel painel;
-	private Color corDeFundo;
-	private Color corJanelaInterna;
-	private Color corTitulo;
-	private Color corTexto;
-	private Color corInputs;
 	
 	public PainelEscolhaDeOrcamento() {
+		super();
 		painel = new JPanel();
 		
-		setCores();
-		corDeFundo = new Color(100, 183, 206);
-		corTexto = new Color(240,240,240);
-		corTitulo = new Color(34,45,48);
-		corJanelaInterna = new Color(25,25,25);
-		corInputs = new Color(0,0,0);
-		
-		painel.setBackground(corDeFundo);
-		
+		painel.setBackground(getCorDeFundo());
 		
 		JPanel painelDivisorBotoes = new JPanel();
+		painelDivisorBotoes.setBackground(getCorDeFundo());
 		
 		JPanel painelRetornaTudo = new JPanel();
+		painelRetornaTudo.setBackground(getCorDeFundo());
 		
-		JPanel painelVolta = new JPanel();
+		JPanel painelVoltar = new JPanel();
+		painelVoltar.setBackground(getCorDeFundo());
+		
+		JLabel lblNewLabel = new JLabel("Qual o tipo de orçamento?");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 24));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GroupLayout gl_painel = new GroupLayout(painel);
 		gl_painel.setHorizontalGroup(
-			gl_painel.createParallelGroup(Alignment.LEADING)
+			gl_painel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_painel.createSequentialGroup()
+					.addGap(20)
+					.addComponent(painelVoltar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 645, Short.MAX_VALUE)
+					.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+					.addGap(20))
 				.addGroup(gl_painel.createSequentialGroup()
 					.addGap(400)
-					.addComponent(painelDivisorBotoes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_painel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+						.addComponent(painelDivisorBotoes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(400))
-				.addGroup(gl_painel.createSequentialGroup()
-					.addGap(1163)
-					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
-						.addComponent(painelVolta, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-						.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(23, Short.MAX_VALUE))
 		);
 		gl_painel.setVerticalGroup(
 			gl_painel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_painel.createSequentialGroup()
-					.addGap(29)
-					.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-					.addGap(111)
-					.addComponent(painelDivisorBotoes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(20)
+					.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+					.addGap(82)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(painelDivisorBotoes, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
 					.addGap(109)
-					.addComponent(painelVolta, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-					.addGap(31))
+					.addComponent(painelVoltar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+					.addGap(20))
 		);
-		painelDivisorBotoes.setLayout(new GridLayout(2, 0, 0, 0));
+		painelRetornaTudo.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JPanel painelExternoOrcamentoBuffetCompleto = new JPanel();
-		painelExternoOrcamentoBuffetCompleto.setBackground(corDeFundo);
+		JLabel labelRetornaTudo = new JLabel("");
+		labelRetornaTudo.setIcon(getIconeRetornaTudo());
+		painelRetornaTudo.add(labelRetornaTudo);
+		painelVoltar.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel labelVoltar = new JLabel("");
+		labelVoltar.setIcon(getIconeVoltarPagina());
+		painelVoltar.add(labelVoltar);
+		painelDivisorBotoes.setLayout(new GridLayout(2, 0, 0, 20));
+		
+		RoundJPanel painelExternoOrcamentoBuffetCompleto = new RoundJPanel(35, 35, 35, 35);
+		painelExternoOrcamentoBuffetCompleto.setBorder(new EmptyBorder(20, 20, 20, 20));
+		painelExternoOrcamentoBuffetCompleto.setBackground(getCorDeJanelaInterna());
 		painelDivisorBotoes.add(painelExternoOrcamentoBuffetCompleto);
+		painelExternoOrcamentoBuffetCompleto.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		RoundJPanel painelBotaoOrcamentoBuffetCompleto = new RoundJPanel(35, 35, 35, 35);
-		painelBotaoOrcamentoBuffetCompleto.setBackground(corJanelaInterna);
-		GroupLayout gl_painelExternoOrcamentoBuffetCompleto = new GroupLayout(painelExternoOrcamentoBuffetCompleto);
-		gl_painelExternoOrcamentoBuffetCompleto.setHorizontalGroup(
-			gl_painelExternoOrcamentoBuffetCompleto.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelExternoOrcamentoBuffetCompleto.createSequentialGroup()
-					.addGap(15)
-					.addComponent(painelBotaoOrcamentoBuffetCompleto, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
-					.addGap(15))
-		);
-		gl_painelExternoOrcamentoBuffetCompleto.setVerticalGroup(
-			gl_painelExternoOrcamentoBuffetCompleto.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelExternoOrcamentoBuffetCompleto.createSequentialGroup()
-					.addGap(20)
-					.addComponent(painelBotaoOrcamentoBuffetCompleto, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-					.addGap(20))
-		);
-		painelExternoOrcamentoBuffetCompleto.setLayout(gl_painelExternoOrcamentoBuffetCompleto);
+		JButton botaoOrcamentoBuffetCompleto = new JButton("Orçamento de buffet completo");
+		painelExternoOrcamentoBuffetCompleto.add(botaoOrcamentoBuffetCompleto);
+		botaoOrcamentoBuffetCompleto.setFont(new Font("Dialog", Font.BOLD, 12));
 		
-		JPanel painelExternoOrcamentoLocacao = new JPanel();
-		painelExternoOrcamentoLocacao.setBackground(corDeFundo);
+		RoundJPanel painelExternoOrcamentoLocacao = new RoundJPanel(25, 25, 25, 25);
+		painelExternoOrcamentoLocacao.setBorder(new EmptyBorder(20, 20, 20, 20));
+		painelExternoOrcamentoLocacao.setBackground(getCorDeJanelaInterna());
 		painelDivisorBotoes.add(painelExternoOrcamentoLocacao);
+		painelExternoOrcamentoLocacao.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		RoundJPanel painelBotaoOrcamentoLocacao = new RoundJPanel(35, 35, 35, 35);
-		painelBotaoOrcamentoLocacao.setBackground(corJanelaInterna);
-		GroupLayout gl_painelExternoOrcamentoLocacao = new GroupLayout(painelExternoOrcamentoLocacao);
-		gl_painelExternoOrcamentoLocacao.setHorizontalGroup(
-			gl_painelExternoOrcamentoLocacao.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 470, Short.MAX_VALUE)
-				.addGroup(gl_painelExternoOrcamentoLocacao.createSequentialGroup()
-					.addGap(15)
-					.addComponent(painelBotaoOrcamentoLocacao, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
-					.addGap(15))
-		);
-		gl_painelExternoOrcamentoLocacao.setVerticalGroup(
-			gl_painelExternoOrcamentoLocacao.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 160, Short.MAX_VALUE)
-				.addGroup(gl_painelExternoOrcamentoLocacao.createSequentialGroup()
-					.addGap(20)
-					.addComponent(painelBotaoOrcamentoLocacao, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-					.addGap(20))
-		);
-		painelExternoOrcamentoLocacao.setLayout(gl_painelExternoOrcamentoLocacao);
+		JButton botaoOrcamentoLocacao = new JButton("Orçamento de locação de espaço\n");
+		painelExternoOrcamentoLocacao.add(botaoOrcamentoLocacao);
 		painel.setLayout(gl_painel);
 		
 	}
@@ -122,12 +106,6 @@ public class PainelEscolhaDeOrcamento implements Painel {
 
 	@Override
 	public void limparCampos() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setCores() {
 		// TODO Auto-generated method stub
 		
 	}
