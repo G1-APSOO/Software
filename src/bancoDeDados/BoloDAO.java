@@ -92,53 +92,9 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 	@Override
 	public boolean atualizar(Bolo bolo) {
 		String sql = "UPDATE Bolo SET descricao = ?, valorUnitario = ?, peso = ? WHERE id = ?";
-
-			try {
-			try {
-			try {
-			try {
-
+			
 		try {
-
-		try {
-			try {
-
-		try {
-
-				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-		try {
-			try {
-			try {
-
-		try {
-
-		try {
-			try {
-
-		try {
-
-				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				statement.setInt(1, bolo.getId());
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				statement.setInt(1, bolo.getId());
-			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				statement.setInt(1, bolo.getId());
-			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				statement.setInt(1, bolo.getId());
-			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				statement.setInt(1, bolo.getId());
-			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				statement.setInt(1, bolo.getId());
-			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				statement.setInt(1, bolo.getId());
-			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-				statement.setInt(1, bolo.getId());
 			statement.setString(1, bolo.getDescricao());
 			statement.setDouble(2, bolo.getValorUnitario());
 			statement.setDouble(3, bolo.getPeso());
@@ -146,7 +102,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Bolo atualizado com sucesso!");
+				System.out.println("Cliente atualizado com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
