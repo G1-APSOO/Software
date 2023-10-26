@@ -96,6 +96,20 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 			try {
 			try {
 			try {
+			try {
+
+		try {
+
+		try {
+			try {
+
+		try {
+
+				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+		try {
+			try {
+			try {
 
 		try {
 
@@ -107,6 +121,16 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				statement.setInt(1, bolo.getId());
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				statement.setInt(1, bolo.getId());
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				statement.setInt(1, bolo.getId());
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+				statement.setInt(1, bolo.getId());
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 				statement.setInt(1, bolo.getId());
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 				statement.setInt(1, bolo.getId());
@@ -122,7 +146,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Bolo inserido com sucesso!");
+				System.out.println("Bolo atualizado com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -140,7 +164,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 		int id = objetoInteger.intValue();
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setInt(4, id);
+			statement.setInt(1, id);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
 				System.out.println("Bolo deletado com sucesso!");
