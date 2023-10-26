@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import classes.Doce;
+import classes.Data;
 import classes.OrcamentoBuffetCompleto;
 import excecoes.ExcecaoValorNaoSetado;
 
@@ -67,5 +68,9 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 		return false;
 	}
 
-	
+	public Boolean verificarData(Data data){
+    	//TO DO
+        System.out.print("Nenhuma verificacao implementada!");
+    	return true;
+    }
 }
