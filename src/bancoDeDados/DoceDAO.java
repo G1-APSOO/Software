@@ -97,7 +97,7 @@ public class DoceDAO implements DAO<Doce, Integer>{
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Doce inserido com sucesso!");
+				System.out.println("Doce atualizado com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -115,7 +115,7 @@ public class DoceDAO implements DAO<Doce, Integer>{
 		int id = objetoInteger.intValue();
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setInt(4, id);
+			statement.setInt(1, id);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
 				System.out.println("Doce deletado com sucesso!");
