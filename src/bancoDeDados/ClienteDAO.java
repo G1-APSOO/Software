@@ -3,7 +3,7 @@ package bancoDeDados;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.ArrayList;w
 
 import classes.Cliente;
 import excecoes.ExcecaoValorNaoSetado;
