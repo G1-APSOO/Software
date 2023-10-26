@@ -9,7 +9,7 @@ public class JanelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7430438618817551574L;
 	
-	private PainelEscolhaDeOrcamento painelEscolhaDeOrcamento;
+	private PainelInicialOrcamentoDeBuffetCompleto painelEscolhaDeOrcamento;
 	
 	public JanelaPrincipal() {
 		setSize(new Dimension(1280, 720));
