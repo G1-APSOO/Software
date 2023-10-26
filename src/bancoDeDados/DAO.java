@@ -2,12 +2,12 @@ package bancoDeDados;
 
 import java.util.ArrayList;
 
-public interface DAO {
+public interface DAO<T, PK> {
 	
-	public <T> T get(T chavePrimaria);
-	public <T> ArrayList<T> getAll();
-	public <T> void criar(T objeto);
-	public <T> void atualizar(T objeto);
-	public <T> void deletar(T chavePrimaria);
+	public T get(PK chavePrimaria);
+	public ArrayList<T> getAll();
+	public boolean criar(T objeto);
+	public boolean atualizar(T objeto);
+	public boolean deletar(PK chavePrimaria);
 	
 }
