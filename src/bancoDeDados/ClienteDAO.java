@@ -3,7 +3,7 @@ package bancoDeDados;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;w
+import java.util.ArrayList;
 
 import classes.Cliente;
 import excecoes.ExcecaoValorNaoSetado;
@@ -88,7 +88,7 @@ public class ClienteDAO implements DAO<Cliente, String>{
 
     @Override
     public boolean atualizar(Cliente cliente) {
-        String sql = "UPDATE Cliente SET nome = ?, RG = ?, endereco = ?, CEP = ?, celular = ?, telefoneResidencial = ?, telefoneComercial = ?, email = ?, WHERE cpf = ?";
+        String sql = "UPDATE Cliente SET nome = ?, RG = ?, endereco = ?, CEP = ?, celular = ?, telefoneResidencial = ?, telefoneComercial = ?, email = ? WHERE CPF = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
