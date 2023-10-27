@@ -9,40 +9,40 @@ import classes.Salgado;
 import classes.SalgadoSelecionado;
 import excecoes.ExcecaoValorNaoSetado;
 
-public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String>{
+public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 
 	@Override
 	public SalgadoSelecionado get(String salgadoBuffet) {
 		// A string doceBuffet tem o seguinte formato: 'idSalgado idBuffetCompleto'
-				int idSalgado = Integer.parseInt(salgadoBuffet.split(" ")[0]);
-				int idBuffet = Integer.parseInt(salgadoBuffet.split(" ")[1]);
+		int idSalgado = Integer.parseInt(salgadoBuffet.split(" ")[0]);
+		int idBuffet = Integer.parseInt(salgadoBuffet.split(" ")[1]);
 
-				String sql = "SELECT * FROM SalgadoSelecionado WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetCompleto = ?";
+		String sql = "SELECT * FROM SalgadoSelecionado WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetCompleto = ?";
 
-				try {
+		try {
 
-					PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-					statement.setInt(1, idSalgado);
-					statement.setInt(2, idBuffet);
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, idSalgado);
+			statement.setInt(2, idBuffet);
 
-					try (ResultSet rs = statement.executeQuery()) {
-						while (rs.next()) {
-							SalgadoDAO salgadoDAO = new SalgadoDAO();
-							Salgado salgadoEncontrado = salgadoDAO.get(rs.getInt("fk_idSalg"));
-							SalgadoSelecionado salgadoSelecionadoEncontrado = new SalgadoSelecionado(rs.getInt("quantidade"),
-									salgadoEncontrado);
-							return salgadoSelecionadoEncontrado;
-						}
-					}
-					return null;
-
-				} catch (SQLException e) {
-					System.out.println(e);
-					return null;
-				} catch (ExcecaoValorNaoSetado e) {
-					System.out.println(e);
-					return null;
+			try (ResultSet rs = statement.executeQuery()) {
+				while (rs.next()) {
+					SalgadoDAO salgadoDAO = new SalgadoDAO();
+					Salgado salgadoEncontrado = salgadoDAO.get(rs.getInt("fk_idSalg"));
+					SalgadoSelecionado salgadoSelecionadoEncontrado = new SalgadoSelecionado(rs.getInt("quantidade"),
+							salgadoEncontrado);
+					return salgadoSelecionadoEncontrado;
 				}
+			}
+			return null;
+
+		} catch (SQLException e) {
+			System.out.println(e);
+			return null;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 
 	@Override
@@ -56,7 +56,31 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String>{
 				ArrayList<SalgadoSelecionado> salgadosSelecionadosEncontrados = new ArrayList<SalgadoSelecionado>();
 				SalgadoDAO salgadoDao = new SalgadoDAO();
 				while (rs.next()) {
-					Salgado salgadoEncontrado = salgadoDao.get(rs.getInt("fk_idDoce"));
+					Salgado salgadoEncontrado = salgadoDao.get(rs.getInt("fk_idSalg"));
+					SalgadoSelecionado salgadoSelecionadoEncontrado = new SalgadoSelecionado(rs.getInt("quantidade"),
+							salgadoEncontrado);
+					salgadosSelecionadosEncontrados.add(salgadoSelecionadoEncontrado);
+				}
+				return salgadosSelecionadosEncontrados;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+
+	public ArrayList<SalgadoSelecionado> getAllBuffet(int idBuffet) {
+		String sql = "SELECT * FROM SalgadoSelecionado WHERE fk_idOrcamentoBuffetCompleto = ?";
+
+		try {
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, idBuffet);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				ArrayList<SalgadoSelecionado> salgadosSelecionadosEncontrados = new ArrayList<SalgadoSelecionado>();
+				SalgadoDAO salgadoDAO = new SalgadoDAO();
+				while (rs.next()) {
+					Salgado salgadoEncontrado = salgadoDAO.get(rs.getInt("fk_idSalg"));
 					SalgadoSelecionado salgadoSelecionadoEncontrado = new SalgadoSelecionado(rs.getInt("quantidade"),
 							salgadoEncontrado);
 					salgadosSelecionadosEncontrados.add(salgadoSelecionadoEncontrado);
@@ -73,7 +97,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String>{
 	public boolean criar(SalgadoSelecionado objeto) {
 		throw new IllegalAccessError();
 	}
-	
+
 	public boolean criarBuffet(SalgadoSelecionado salgadoSelecionado, int idBuffet) {
 		String sql = "INSERT INTO SalgadoSelecionado VALUES (?, ?, ?)";
 
@@ -101,7 +125,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String>{
 	public boolean atualizar(SalgadoSelecionado objeto) {
 		throw new IllegalAccessError();
 	}
-	
+
 	public boolean atualizarBuffet(SalgadoSelecionado salgadoSelecionado, int idBuffet) {
 		String sql = "UPDATE SalgadoSelecionado SET quantidade = ? WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetCompleto = ?";
 
@@ -142,5 +166,5 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String>{
 			return false;
 		}
 	}
-	
+
 }
