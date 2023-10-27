@@ -5,10 +5,9 @@ public class Parcela {
 	private Data dataVencimento;
 	private Data dataPagamento;
 	
-	public Parcela(double valorPago, Data dataVencimento, Data dataPagamento) {
+	public Parcela(double valorPago, Data dataVencimento) {
 		setValorPago(valorPago);
 		setDataVencimento(dataVencimento);
-		setDataPagamento(dataPagamento);
 	}
 	
 	private void setValorPago(double valorPago) {
@@ -19,7 +18,7 @@ public class Parcela {
 		this.dataVencimento = dataVencimento;
 	}
 	
-	private void setDataPagamento(Data dataPagamento) {
+	public void pagarParcela(Data dataPagamento) {
 		this.dataPagamento= dataPagamento;
 	}
 	
