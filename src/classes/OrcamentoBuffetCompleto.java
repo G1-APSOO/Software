@@ -8,12 +8,14 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	private ArrayList<SalgadoSelecionado> arraySalgadoSelecionados = new ArrayList<>();
 	private ArrayList<DoceSelecionado>    arrayDoceSelecionados    = new ArrayList<>();
 	private Bolo bolo;
+	private OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO;
 	
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
 		super(id, numeroDeConvidados, horaDeInicio, data, pagamento);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
@@ -21,6 +23,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
@@ -28,6 +31,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
@@ -35,6 +39,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
 	private void calcularQuantidades(ArrayList<Salgado> salgados, ArrayList<Doce> doces) {
@@ -73,15 +78,18 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	}
 	
 	public static ArrayList<Salgado> getAllSalgados() {
-		return SalgadoSelecionado.getAllSalgados();
+		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
+		return SalgadoSelecionadoDAO.getAllSalgados();
 	}
 	
 	public static ArrayList<Doce> getAllDoces() {
-		return DoceSelecionado.getAllDoces();
+		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
+		return DoceSelecionadoDAO.getAllDoces();
 	}
 	
 	public static ArrayList<Bolo> getAllBolos() {
-		return Bolo.getAllBolos();
+		BoloDAO BoloDAO = new BoloDAO();
+		return BoloDAO.getAllBolos();
 	}
 	
 	private void setTeraCerveja(boolean teraCerveja) {

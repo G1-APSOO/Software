@@ -18,11 +18,6 @@ public class Bolo extends Alimento {
 		return getValorUnitario() * peso;
 	}
 	
-	public static ArrayList<Bolo> getAllBolos() {
-		BoloDAO BoloDAO = new BoloDAO();
-		return BoloDAO.getAll();
-	}
-	
 	public void setPeso(double peso) {
 		this.peso = peso;
 	}

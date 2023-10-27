@@ -11,11 +11,6 @@ public class SalgadoSelecionado {
 		setSalgado(salgado);
 	}
 	
-	public static ArrayList<Salgado> getAllSalgados() {
-		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
-		return SalgadoSelecionadoDAO.getAll();
-	}
-	
 	private void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}

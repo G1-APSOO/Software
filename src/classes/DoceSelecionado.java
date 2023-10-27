@@ -11,11 +11,6 @@ public class DoceSelecionado {
 		setDoce(doce);
 	}
 	
-	public static ArrayList<Doce> getAllDoces() {
-		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
-		return DoceSelecionadoDAO.getAllDoces();
-	}
-	
 	private void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
