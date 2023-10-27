@@ -2,7 +2,7 @@ import bancoDeDados.ClienteDAO;
 import bancoDeDados.ConexaoBanco;
 import classes.Cliente;
 
-public class Principal {
+public class TesteClienteDAO {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -26,7 +26,9 @@ public class Principal {
 
 		System.out.println("Resultado busca: " + cDao.get(c3.getCpf()).getNome());
 		
-		cDao.deletar(c3.getCpf());	
+		cDao.deletar(c3.getCpf());
+		
+		System.out.println(cDao.getAll());
 	}
 
 }
