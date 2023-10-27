@@ -24,6 +24,7 @@ public class JanelaPrincipal extends JFrame {
 		//setContentPane(painelEscolhaDeOrcamento.getPainel());
 		
 		PainelOpcoesOrcamentoDeBuffetCompleto orc = new PainelOpcoesOrcamentoDeBuffetCompleto();
+		//PainelInicialOrcamentoDeBuffetCompleto orc = new PainelInicialOrcamentoDeBuffetCompleto();
 		setContentPane(orc.getPainel());
 		
 		setVisible(true);

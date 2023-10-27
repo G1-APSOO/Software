@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
-import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -34,7 +33,7 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		painelVoltar.setBackground(getCorDeFundo());
 		
 		JLabel lblNewLabel = new JLabel("Qual o tipo de orçamento?");
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 24));
+		lblNewLabel.setFont(getFonteTitulo());
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GroupLayout gl_painel = new GroupLayout(painel);
 		gl_painel.setHorizontalGroup(
@@ -85,7 +84,7 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		
 		JButton botaoOrcamentoBuffetCompleto = new JButton("Orçamento de buffet completo");
 		painelExternoOrcamentoBuffetCompleto.add(botaoOrcamentoBuffetCompleto);
-		botaoOrcamentoBuffetCompleto.setFont(new Font("Dialog", Font.BOLD, 12));
+		botaoOrcamentoBuffetCompleto.setFont(getFonteLabelInterno());
 		
 		RoundJPanel painelExternoOrcamentoLocacao = new RoundJPanel(25, 25, 25, 25);
 		painelExternoOrcamentoLocacao.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -93,7 +92,8 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		painelDivisorBotoes.add(painelExternoOrcamentoLocacao);
 		painelExternoOrcamentoLocacao.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton botaoOrcamentoLocacao = new JButton("Orçamento de locação de espaço\n");
+		JButton botaoOrcamentoLocacao = new JButton("Orçamento de locação de espaço");
+		botaoOrcamentoBuffetCompleto.setFont(getFonteLabelInterno());
 		painelExternoOrcamentoLocacao.add(botaoOrcamentoLocacao);
 		painel.setLayout(gl_painel);
 		

@@ -3,30 +3,34 @@ package telas;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.border.EmptyBorder;
 
 import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
-import componentesDeTelas.RoundJTextField;
+import javax.swing.JFormattedTextField;
 
 public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 
 	private JPanel painel;
-	
-	
+	private RoundJFormattedTextField inputNumeroDeConvidados;
+	private RoundJFormattedTextField inputNumeroDeColaboradores;
+	private RoundJFormattedTextField inputData;
+	private RoundJFormattedTextField inputHoraDeInicio;
+	private JLabel labelVoltarTudo;
+	private JLabel labelAvancar;
 	
 	public PainelInicialOrcamentoDeBuffetCompleto() {
 		super();
+		
 		painel = new JPanel();
+		painel.setBackground(getCorDeFundo());
 		
 		JLabel labelTitulo = new JLabel("Informações do evento");
 		labelTitulo.setForeground(getCorTitulo());
-		labelTitulo.setFont(new Font("Calibri Light", Font.PLAIN, 44));
+		labelTitulo.setFont(getFonteTitulo());
 		
 		JPanel painelDivisor = new JPanel();
 		painelDivisor.setBackground(getCorDeFundo());
@@ -72,13 +76,11 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 		);
 		painelVoltarTudo.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel labelVoltarTudo = new JLabel("");
-		labelVoltarTudo.setIcon(getIconeRetornaTudo());
+		setLabelVoltarTudo();
 		painelVoltarTudo.add(labelVoltarTudo);
 		painelAvancar.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel labelAvancar = new JLabel("");
-		labelAvancar.setIcon(getIconeProximaPagina());
+		setLabelAvancar();
 		painelAvancar.add(labelAvancar);
 		painelDivisor.setLayout(new GridLayout(2, 2, 0, 0));
 		
@@ -93,10 +95,10 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 		
 		JLabel labelNumeroDeConvidados = new JLabel(" Nº de convidados");
 		labelNumeroDeConvidados.setForeground(getCorTexto());
-		labelNumeroDeConvidados.setFont(new Font("Arial", Font.PLAIN, 24));
+		labelNumeroDeConvidados.setFont(getFonteLabelInterno());
 		painelInternoNumeroDeConvidados.add(labelNumeroDeConvidados);
 		
-		RoundJTextField inputNumeroDeConvidados = new RoundJTextField(0);
+		setInputNumeroDeConvidados();
 		painelInternoNumeroDeConvidados.add(inputNumeroDeConvidados);
 		GroupLayout gl_painelNumeroDeConvidados = new GroupLayout(painelNumeroDeConvidados);
 		gl_painelNumeroDeConvidados.setHorizontalGroup(
@@ -126,10 +128,10 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 		
 		JLabel labelNumeroDeColaboradores = new JLabel(" Nº de colaboradores");
 		labelNumeroDeColaboradores.setForeground(getCorTexto());
-		labelNumeroDeColaboradores.setFont(new Font("Arial", Font.PLAIN, 24));
+		labelNumeroDeColaboradores.setFont(getFonteLabelInterno());
 		painelInternoNumeroDeColaboradores.add(labelNumeroDeColaboradores);
 		
-		RoundJTextField inputNumeroDeColaboradores = new RoundJTextField(0);
+		setInputNumeroDeColaboradores();
 		painelInternoNumeroDeColaboradores.add(inputNumeroDeColaboradores);
 		GroupLayout gl_painelNumeroDeColaboradores = new GroupLayout(painelNumeroDeColaboradores);
 		gl_painelNumeroDeColaboradores.setHorizontalGroup(
@@ -159,11 +161,10 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 		
 		JLabel labelData = new JLabel(" Data");
 		labelData.setForeground(getCorTexto());
-		labelData.setFont(new Font("Arial", Font.PLAIN, 24));
+		labelData.setFont(getFonteLabelInterno());
 		painelInternoData.add(labelData);
 		
-		RoundJFormattedTextField inputData = new RoundJFormattedTextField(0);
-		inputData.setText("");
+		setInputData();
 		painelInternoData.add(inputData);
 		GroupLayout gl_painelData = new GroupLayout(painelData);
 		gl_painelData.setHorizontalGroup(
@@ -193,11 +194,10 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 		
 		JLabel labelHoraDeInicio = new JLabel(" Hora de início do evento");
 		labelHoraDeInicio.setForeground(getCorTexto());
-		labelHoraDeInicio.setFont(new Font("Arial", Font.PLAIN, 24));
+		labelHoraDeInicio.setFont(getFonteLabelInterno());
 		painelInternoHoraDeInicio.add(labelHoraDeInicio);
 		
-		RoundJFormattedTextField inputHoraDeInicio = new RoundJFormattedTextField(0);
-		inputHoraDeInicio.setText("");
+		setInputHoraDeInicio();
 		painelInternoHoraDeInicio.add(inputHoraDeInicio);
 		GroupLayout gl_painelHoraDeInicio = new GroupLayout(painelHoraDeInicio);
 		gl_painelHoraDeInicio.setHorizontalGroup(
@@ -219,6 +219,50 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 		painelHoraDeInicio.setLayout(gl_painelHoraDeInicio);
 		painel.setLayout(gl_painel);
 		
+	}
+	
+	private void setInputNumeroDeConvidados() {
+		inputNumeroDeConvidados = new RoundJFormattedTextField(0);
+		inputNumeroDeConvidados.setFocusLostBehavior(JFormattedTextField.COMMIT);
+		inputNumeroDeConvidados.setFont(getFonteInputs());
+		inputNumeroDeConvidados.setText("");
+		// TODO Adiciona mascara aqui até 3 digitos
+	}
+	
+	private void setInputNumeroDeColaboradores() {
+		inputNumeroDeColaboradores = new RoundJFormattedTextField(0);
+		inputNumeroDeColaboradores.setFocusLostBehavior(JFormattedTextField.COMMIT);
+		inputNumeroDeColaboradores.setFont(getFonteInputs());
+		inputNumeroDeColaboradores.setText("");
+		// TODO Adiciona mascara aqui até 3 digitos
+	}
+	
+	private void setInputData() {
+		inputData = new RoundJFormattedTextField(0);
+		inputData.setFocusLostBehavior(JFormattedTextField.COMMIT);
+		inputData.setFont(getFonteInputs());
+		inputData.setText("");
+		// TODO Adiciona mascara aqui
+	}
+	
+	private void setInputHoraDeInicio() {
+		inputHoraDeInicio = new RoundJFormattedTextField(0);
+		inputHoraDeInicio.setFocusLostBehavior(JFormattedTextField.COMMIT);
+		inputHoraDeInicio.setFont(getFonteInputs());
+		inputHoraDeInicio.setText("");
+		// TODO Adiciona mascara aqui
+	}
+	
+	private void setLabelVoltarTudo() {
+		labelVoltarTudo = new JLabel("");
+		labelVoltarTudo.setIcon(getIconeRetornaTudo());
+		// TODO Adionar MouseListener
+	}
+	
+	private void setLabelAvancar() {
+		labelAvancar = new JLabel("");
+		labelAvancar.setIcon(getIconeProximaPagina());
+		// TODO Adionar MouseListener
 	}
 	
 	@Override
