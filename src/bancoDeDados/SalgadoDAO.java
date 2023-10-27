@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import classes.Doce;
 import classes.Salgado;
 import excecoes.ExcecaoValorNaoSetado;
 
@@ -47,10 +46,9 @@ public class SalgadoDAO implements DAO<Salgado, Integer>{
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setInt(1, id);
 
 			try (ResultSet rs = statement.executeQuery()) {
-				ArrayList<Salgado> salgadosEncontrados = new ArrayList<Salgados>();
+				ArrayList<Salgado> salgadosEncontrados = new ArrayList<Salgado>();
 				while (rs.next()) {
 					Salgado salgadoEncontrado = new Salgado(rs.getInt("id"), rs.getString("descricao"),
 							rs.getDouble("valorUnitario"));
@@ -58,7 +56,6 @@ public class SalgadoDAO implements DAO<Salgado, Integer>{
 				}
 				return salgadosEncontrados;
 			}
-			return null;
 
 		} catch (SQLException e) {
 			System.out.println(e);
