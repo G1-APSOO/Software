@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import classes.Doce;
-import classes.DoceSelecionado;
 import classes.Salgado;
 import classes.SalgadoSelecionado;
 import excecoes.ExcecaoValorNaoSetado;
