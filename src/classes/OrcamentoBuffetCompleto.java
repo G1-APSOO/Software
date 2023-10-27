@@ -58,23 +58,28 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	}
 	
 	private int calcularQuantidadeDeSalgados() {
-		// TODO Pedir para cliente
-		return -1;
+		int quantidadeSalgados = 12*getNumeroDeConvidados();
+		return quantidadeSalgados;
 	}
 	
 	private int calcularQuantidadeDeDoces() {
-		// TODO Pedir para cliente
-		return -1;
+		int quantidadeDoces = 3*getNumeroDeConvidados();
+		return quantidadeDoces;
 	}
 	
 	private double calcularPesoDoBolo() {
-		// TODO Pedir para cliente
-		return -1;
+		double pesoDoBolo = getNumeroDeConvidados()*0.1;
+		return pesoDoBolo;
 	}
 	
 	private int calcularNumeroMinimoDeColaboradores() {
-		// TODO Pedir para cliente
-		return -1;
+		int numeroDeColaboradores = 8;
+		
+		if (teraCerveja == true) {
+			numeroDeColaboradores = numeroDeColaboradores + 1;
+		}
+		
+		return numeroDeColaboradores;
 	}
 	
 	public static ArrayList<Salgado> getAllSalgados() {
