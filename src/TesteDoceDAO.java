@@ -1,44 +1,52 @@
+
 import java.util.ArrayList;
 
-import bancoDeDados.BoloDAO;
 import bancoDeDados.ConexaoBanco;
-import classes.Bolo;
+import bancoDeDados.DoceDAO;
+import classes.Doce;
 
 public class TesteDoceDAO {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method 
-				System.out.print(ConexaoBanco.getConexao());
-				System.out.print(ConexaoBanco.status);
-				
-				BoloDAO dao = new BoloDAO();
-				
-				Bolo b = new Bolo(2, "Bolo muito gostoso", 150.75);
-				
-				b.setPeso(2.0);
-				
-				dao.criar(b);
-				
-				System.out.println(dao.get(2).getDescricao());
-				
-				Bolo b2 = new Bolo(b.getId(),"Bolo mais ou menos",b.getValor());
-
-				b2.setPeso(b.getPeso());
-				
-				dao.atualizar(b2);
-				
-				System.out.println(dao.get(2).getDescricao());
-				
-				
-				ArrayList<Bolo> list = dao.getAll();
-				
-				for (int i=0; i<list.size();i++) {
-					Bolo a = list.get(i);
-					
-					System.out.println(a.getPeso());
-				}
-				
-				dao.deletar(2);
+		System.out.println(ConexaoBanco.getConexao());
+		System.out.println(ConexaoBanco.status);
+		
+		//criar DAO
+		
+		DoceDAO dao = new DoceDAO();
+		
+		//criar
+		Doce d = new Doce(1,"Brigadeiro",1.5);
+		
+		dao.criar(d);
+		
+		//atualizar
+		
+		Doce d1 = new Doce(d.getId(),"Brigadeiro Gurmet",d.getValorUnitario());
+		
+		dao.atualizar(d1);
+		
+		//buscar
+		
+		System.out.println("Resultado busca: "+dao.get(d1.getId()).getDescricao());
+		
+		//buscar todos
+		
+		Doce d2 = new Doce(2,"Beijingo",2);
+		dao.criar(d2);
+	
+		ArrayList<Doce> list = dao.getAll();
+		
+		System.out.println("\nlista:");
+		for (int i=0; i<list.size();i++) {
+			Doce a = list.get(i);
+			
+			System.out.println(a.getDescricao());
+		}
+		
+		//deletar
+		dao.deletar(d2.getId());
 	}
 
 }
