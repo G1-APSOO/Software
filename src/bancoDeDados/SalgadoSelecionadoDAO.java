@@ -9,7 +9,7 @@ import classes.Salgado;
 import classes.SalgadoSelecionado;
 import excecoes.ExcecaoValorNaoSetado;
 
-public class SalagadoSelecionadoDAO implements DAO<SalgadoSelecionado, String>{
+public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String>{
 
 	@Override
 	public SalgadoSelecionado get(String salgadoBuffet) {
