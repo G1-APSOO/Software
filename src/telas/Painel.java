@@ -1,6 +1,7 @@
 package telas;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
@@ -12,19 +13,20 @@ public abstract class Painel {
 	
 	private Color corDeFundo;
 	private Color corJanelaInterna;
+	private Color corJanelaErro;
 	private Color corTitulo;
 	private Color corTexto;
 	private Color corInputs;
+	private Color corTextoErro;
+	private Color corValor;
 	
-	private ImageIcon iconeRetornaTudo;
-	private ImageIcon iconeProximaPagina;
-	private ImageIcon iconeVoltarPagina;
+	private Font fonteTitulo;
+	private Font fonteLabelInterno;
+	private Font fonteInputs;
 	
 	protected Painel() {
 		setCores();
-		iconeRetornaTudo = new ImageIcon("imgs/retornaTudo.png");
-		iconeProximaPagina = new ImageIcon("imgs/proximaPagina.png");
-		iconeVoltarPagina = new ImageIcon("imgs/voltarPagina.png");
+		setFontes();
 	}
 	
 	public abstract JPanel getPainel();
@@ -51,6 +53,11 @@ public abstract class Painel {
 			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
 			corJanelaInterna = new Color(auxInt[0], auxInt[1], auxInt[2]);
 			
+			aux = properties.getProperty("COR_DE_FUNDO_JANELA_ERRO");
+			auxArray = aux.split(",");
+			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
+			corJanelaErro = new Color(auxInt[0], auxInt[1], auxInt[2]);
+			
 			aux = properties.getProperty("COR_LETRA_TITULO");
 			auxArray = aux.split(",");
 			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
@@ -66,6 +73,16 @@ public abstract class Painel {
 			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
 			corInputs = new Color(auxInt[0], auxInt[1], auxInt[2]);
 			
+			aux = properties.getProperty("COR_LETRA_ERRO");
+			auxArray = aux.split(",");
+			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
+			corTextoErro = new Color(auxInt[0], auxInt[1], auxInt[2]);
+			
+			aux = properties.getProperty("COR_LETRA_VALOR");
+			auxArray = aux.split(",");
+			for (int i = 0; i < auxArray.length; i++) auxInt[i] = Integer.valueOf(auxArray[i]);
+			corValor = new Color(auxInt[0], auxInt[1], auxInt[2]);
+			
 		} catch (Exception e) {
 			System.out.println("Erro: Ao tentar abrir o arquivo configs.txt");
 		} 
@@ -75,19 +92,59 @@ public abstract class Painel {
 		corTitulo = new Color(34,45,48);
 		corJanelaInterna = new Color(25,25,25);
 		corInputs = new Color(0,0,0);
+		corTextoErro = new Color(219, 19, 19);
+		corValor = new Color(6, 198, 54);
+		corJanelaErro = new Color(217, 217, 217);
 		// Fim debug
 	}
 	
+	private void setFontes() {
+		Path pathfile = Path.of("config.txt");
+		Properties properties = new Properties();
+		
+		try {
+			String aux;
+			String[] auxArray;
+			
+			properties.load(Files.newBufferedReader(pathfile));
+			
+			aux = properties.getProperty("FONTE_TITULO");
+			auxArray = aux.split(",");
+			fonteTitulo = new Font(auxArray[0], Font.PLAIN, Integer.valueOf(auxArray[1]));
+			
+			aux = properties.getProperty("FONTE_LABEL_INTERNO");
+			auxArray = aux.split(",");
+			fonteLabelInterno = new Font(auxArray[0], Font.PLAIN, Integer.valueOf(auxArray[1]));
+			
+			aux = properties.getProperty("FONTE_INPUTS");
+			auxArray = aux.split(",");
+			fonteInputs = new Font(auxArray[0], Font.PLAIN, Integer.valueOf(auxArray[1]));
+			
+		} catch (Exception e) {
+			System.out.println("Erro: Ao tentar abrir o arquivo configs.txt");
+		} 
+		
+		// TODO Retirar Debug apos finalizar as telas
+		fonteTitulo = new Font("Calibri Light", Font.PLAIN, 44);
+		fonteLabelInterno = new Font("Arial", Font.PLAIN, 24);
+		fonteInputs = new Font("Arial", Font.PLAIN, 24);
+		// Fim do Debug
+	}
+	
 	protected ImageIcon getIconeRetornaTudo() {
-		return iconeRetornaTudo;
+		return new ImageIcon("imgs/retornaTudo.png");
 	}
 	
 	protected ImageIcon getIconeProximaPagina() {
-		return iconeProximaPagina;
+		return new ImageIcon("imgs/proximaPagina.png");
 	}
 	
 	protected ImageIcon getIconeVoltarPagina() {
-		return iconeVoltarPagina;
+		return new ImageIcon("imgs/voltarPagina.png");
+	}
+	
+	protected ImageIcon getIconeErro() {
+		return new ImageIcon("imgs/simboloAlerta.png");
 	}
 	
 	protected Color getCorDeFundo() {
@@ -96,6 +153,10 @@ public abstract class Painel {
 	
 	protected Color getCorDeJanelaInterna() {
 		return corJanelaInterna;
+	}
+	
+	protected Color getCorJanelaErro() {
+		return corJanelaErro;
 	}
 	
 	protected Color getCorTitulo() {
@@ -109,4 +170,25 @@ public abstract class Painel {
 	protected Color getCorInputs() {
 		return corInputs;
 	}
+	
+	protected Color getCorTextoErro() {
+		return corTextoErro;
+	}
+	
+	protected Color getCorValor() {
+		return corValor;
+	}
+	
+	protected Font getFonteTitulo() {
+		return fonteTitulo;
+	}
+	
+	protected Font getFonteLabelInterno() {
+		return fonteLabelInterno;
+	}
+	
+	protected Font getFonteInputs() {
+		return fonteInputs;
+	}
+	
 }
