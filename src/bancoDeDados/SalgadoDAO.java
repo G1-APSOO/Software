@@ -123,7 +123,7 @@ public class SalgadoDAO implements DAO<Salgado, Integer>{
 			statement.setInt(1, id);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Doce deletado com sucesso!");
+				System.out.println("Salgado deletado com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {

@@ -37,7 +37,7 @@ public class TesteBoloDAO {
 			System.out.println(a.getPeso());
 		}
 		
-		dao.deletar(2);
+//		dao.deletar(2);
 	}
 
 }
