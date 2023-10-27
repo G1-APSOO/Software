@@ -21,10 +21,10 @@ public class RoundJPanel extends JPanel{
 
     public RoundJPanel(int arcoInferiorEsquerdo, int arcoInferiorDireito, int arcoSuperiorEsquerdo, int arcoSuperiorDireito) {
         setOpaque(false);
-        this.arcoInferiorEsquerdo = arcoInferiorEsquerdo;
-        this.arcoInferiorDireito = arcoInferiorDireito;
         this.arcoSuperiorEsquerdo = arcoSuperiorEsquerdo;
         this.arcoSuperiorDireito = arcoSuperiorDireito;
+        this.arcoInferiorEsquerdo = arcoInferiorEsquerdo;
+        this.arcoInferiorDireito = arcoInferiorDireito;
     }
 
     @Override
