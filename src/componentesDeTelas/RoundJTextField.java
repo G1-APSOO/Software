@@ -6,29 +6,30 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JTextField;
 
-@SuppressWarnings("serial")
 public class RoundJTextField extends JTextField {
+
+	private static final long serialVersionUID = 7456855456976460093L;
 	
-	private Shape formato;
+	private transient Shape formato;
 	private int arco;
     
-	public RoundJTextField(int size) {
-        super(size);
+	public RoundJTextField(int tamanho) {
+        super(tamanho);
         setOpaque(false);
         arco = 35;
     }
     
     @Override
-    protected void paintComponent(Graphics g) {
-         g.setColor(getBackground());
-         g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, arco, arco);
-         super.paintComponent(g);
+    protected void paintComponent(Graphics graficos) {
+         graficos.setColor(getBackground());
+         graficos.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, arco, arco);
+         super.paintComponent(graficos);
     }
     
     @Override
-    protected void paintBorder(Graphics g) {
-         g.setColor(getForeground());
-         g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, arco, arco);
+    protected void paintBorder(Graphics graficos) {
+         graficos.setColor(getForeground());
+         graficos.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, arco, arco);
     }
     
     @Override

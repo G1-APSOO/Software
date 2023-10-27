@@ -12,116 +12,84 @@ import javax.swing.JPanel;
 
 public class RoundJPanel extends JPanel{
 
-    private int roundTopLeft = 0;
-    private int roundTopRight = 0;
-    private int roundBottomLeft = 0;
-    private int roundBottomRight = 0;
+	private static final long serialVersionUID = 5658930683579565919L;
+	
+	private int arcoSuperiorEsquerdo = 0;
+    private int arcoSuperiorDireito = 0;
+    private int arcoInferiorEsquerdo = 0;
+    private int arcoInferiorDireito = 0;
 
-    public RoundJPanel(int roundBottomLeft, int roundBottomRight, int roundTopLeft, int roundTopRight) {
+    public RoundJPanel(int arcoInferiorEsquerdo, int arcoInferiorDireito, int arcoSuperiorEsquerdo, int arcoSuperiorDireito) {
         setOpaque(false);
-        setRoundBottomLeft(roundBottomLeft);
-        setRoundBottomRight(roundBottomRight);
-        setRoundTopLeft(roundTopLeft);
-        setRoundTopRight(roundTopRight);
+        this.arcoInferiorEsquerdo = arcoInferiorEsquerdo;
+        this.arcoInferiorDireito = arcoInferiorDireito;
+        this.arcoSuperiorEsquerdo = arcoSuperiorEsquerdo;
+        this.arcoSuperiorDireito = arcoSuperiorDireito;
     }
 
     @Override
-    protected void paintComponent(Graphics grphcs) {
-        Graphics2D g2 = (Graphics2D) grphcs.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(getBackground());
-        Area area = new Area(createRoundTopLeft());
-        if (roundTopRight > 0) {
-            area.intersect(new Area(createRoundTopRight()));
+    protected void paintComponent(Graphics graficos) {
+        Graphics2D graficoEm2D = (Graphics2D) graficos.create();
+        graficoEm2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graficoEm2D.setColor(getBackground());
+        Area area = new Area(criarArcoSuperiorEsquerdo());
+        if (arcoSuperiorDireito > 0) {
+            area.intersect(new Area(criarArcoSuperiorDireito()));
         }
-        if (roundBottomLeft > 0) {
-            area.intersect(new Area(createRoundBottomLeft()));
+        if (arcoInferiorEsquerdo > 0) {
+            area.intersect(new Area(criarArcoInferiorEsquerdo()));
         }
-        if (roundBottomRight > 0) {
-            area.intersect(new Area(createRoundBottomRight()));
+        if (arcoInferiorDireito > 0) {
+            area.intersect(new Area(criarArcoInferiorDireito()));
         }
-        g2.fill(area);
-        g2.dispose();
-        super.paintComponent(grphcs);
+        graficoEm2D.fill(area);
+        graficoEm2D.dispose();
+        super.paintComponent(graficos);
     }
 
-    private Shape createRoundTopLeft() {
-        int width = getWidth();
-        int height = getHeight();
-        int roundX = Math.min(width, roundTopLeft);
-        int roundY = Math.min(height, roundTopLeft);
-        Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
-        area.add(new Area(new Rectangle2D.Double(roundX / 2, 0, width - roundX / 2, height)));
-        area.add(new Area(new Rectangle2D.Double(0, roundY / 2, width, height - roundY / 2)));
+    private Shape criarArcoSuperiorEsquerdo() {
+        int comprimento = getWidth();
+        int altura = getHeight();
+        int arcoNoEixoX = Math.min(comprimento, arcoSuperiorEsquerdo);
+        int arcoNoEixoY = Math.min(altura, arcoSuperiorEsquerdo);
+        Area area = new Area(new RoundRectangle2D.Double(0, 0, comprimento, altura, arcoNoEixoX, arcoNoEixoY));
+        area.add(new Area(new Rectangle2D.Double(arcoNoEixoX / 2, 0, comprimento - arcoNoEixoX / 2, altura)));
+        area.add(new Area(new Rectangle2D.Double(0, arcoNoEixoY / 2, comprimento, altura - arcoNoEixoY / 2)));
         return area;
     }
 
-    private Shape createRoundTopRight() {
-        int width = getWidth();
-        int height = getHeight();
-        int roundX = Math.min(width, roundTopRight);
-        int roundY = Math.min(height, roundTopRight);
-        Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
-        area.add(new Area(new Rectangle2D.Double(0, 0, width - roundX / 2, height)));
-        area.add(new Area(new Rectangle2D.Double(0, roundY / 2, width, height - roundY / 2)));
+    private Shape criarArcoSuperiorDireito() {
+        int comprimento = getWidth();
+        int altura = getHeight();
+        int arcoNoEixoX = Math.min(comprimento, arcoSuperiorDireito);
+        int arcoNoEixoY = Math.min(altura, arcoSuperiorDireito);
+        Area area = new Area(new RoundRectangle2D.Double(0, 0, comprimento, altura, arcoNoEixoX, arcoNoEixoY));
+        area.add(new Area(new Rectangle2D.Double(0, 0, comprimento - arcoNoEixoX / 2, altura)));
+        area.add(new Area(new Rectangle2D.Double(0, arcoNoEixoY / 2, comprimento, altura - arcoNoEixoY / 2)));
         return area;
     }
 
-    private Shape createRoundBottomLeft() {
-        int width = getWidth();
-        int height = getHeight();
-        int roundX = Math.min(width, roundBottomLeft);
-        int roundY = Math.min(height, roundBottomLeft);
-        Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
-        area.add(new Area(new Rectangle2D.Double(roundX / 2, 0, width - roundX / 2, height)));
-        area.add(new Area(new Rectangle2D.Double(0, 0, width, height - roundY / 2)));
+    private Shape criarArcoInferiorEsquerdo() {
+        int comprimento = getWidth();
+        int altura = getHeight();
+        int arcoNoEixoX = Math.min(comprimento, arcoInferiorEsquerdo);
+        int arcoNoEixoY = Math.min(altura, arcoInferiorEsquerdo);
+        Area area = new Area(new RoundRectangle2D.Double(0, 0, comprimento, altura, arcoNoEixoX, arcoNoEixoY));
+        area.add(new Area(new Rectangle2D.Double(arcoNoEixoX / 2, 0, comprimento - arcoNoEixoX / 2, altura)));
+        area.add(new Area(new Rectangle2D.Double(0, 0, comprimento, altura - arcoNoEixoY / 2)));
         return area;
     }
 
-    private Shape createRoundBottomRight() {
-        int width = getWidth();
-        int height = getHeight();
-        int roundX = Math.min(width, roundBottomRight);
-        int roundY = Math.min(height, roundBottomRight);
-        Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
-        area.add(new Area(new Rectangle2D.Double(0, 0, width - roundX / 2, height)));
-        area.add(new Area(new Rectangle2D.Double(0, 0, width, height - roundY / 2)));
+    private Shape criarArcoInferiorDireito() {
+        int comprimento = getWidth();
+        int altura = getHeight();
+        int arcoNoEixoX = Math.min(comprimento, arcoInferiorDireito);
+        int arcoNoEixoY = Math.min(altura, arcoInferiorDireito);
+        Area area = new Area(new RoundRectangle2D.Double(0, 0, comprimento, altura, arcoNoEixoX, arcoNoEixoY));
+        area.add(new Area(new Rectangle2D.Double(0, 0, comprimento - arcoNoEixoX / 2, altura)));
+        area.add(new Area(new Rectangle2D.Double(0, 0, comprimento, altura - arcoNoEixoY / 2)));
         return area;
     }
-    
-    public int getRoundTopLeft() {
-        return roundTopLeft;
-    }
 
-    public void setRoundTopLeft(int roundTopLeft) {
-        this.roundTopLeft = roundTopLeft;
-        repaint();
-    }
 
-    public int getRoundTopRight() {
-        return roundTopRight;
-    }
-
-    public void setRoundTopRight(int roundTopRight) {
-        this.roundTopRight = roundTopRight;
-        repaint();
-    }
-
-    public int getRoundBottomLeft() {
-        return roundBottomLeft;
-    }
-
-    public void setRoundBottomLeft(int roundBottomLeft) {
-        this.roundBottomLeft = roundBottomLeft;
-        repaint();
-    }
-
-    public int getRoundBottomRight() {
-        return roundBottomRight;
-    }
-
-    public void setRoundBottomRight(int roundBottomRight) {
-        this.roundBottomRight = roundBottomRight;
-        repaint();
-    }
 }
