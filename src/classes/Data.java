@@ -28,7 +28,7 @@ public class Data {
     		throw new ExcecaoNaoPreenchido("dia");
     	}
 
-        verificaDia(dia, this.mes, this.ano);
+        verificarDia(dia, this.mes, this.ano);
 
         this.dia = dia;
     }
@@ -56,7 +56,7 @@ public class Data {
         this.ano = ano;
     }
 
-    private void verificaDia(int dia, int mes, int ano) throws ExcecaoDiaInvalido {
+    private void verificarDia(int dia, int mes, int ano) throws ExcecaoDiaInvalido {
 
         GregorianCalendar calendario = new GregorianCalendar();
         calendario.set(Calendar.YEAR, ano);
