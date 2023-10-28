@@ -7,22 +7,25 @@ public class OrcamentoEvento {
 	private String horaDeInicio;
 	private Data data;
 	private Pagamento pagamento;
+	private Cliente cliente;
 	
-	public OrcamentoEvento(int id, int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento) {
+	public OrcamentoEvento(int id, int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente) {
 		setId(id);
 		setNumeroDeConvidados(numeroDeConvidados);
 		setHoraDeInicio(horaDeInicio);
 		setData(data);
 		setPagamento(pagamento);
+		setCliente(cliente);
 	}
 	
-	public OrcamentoEvento(int id, int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento) {
+	public OrcamentoEvento(int id, int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente) {
 		setId(id);
 		setNumeroDeConvidados(numeroDeConvidados);
 		setNumeroDeColaboradores(numeroDeColaboradores);
 		setHoraDeInicio(horaDeInicio);
 		setData(data);
 		setPagamento(pagamento);
+		setCliente(cliente);
 	}
 	
 	private void setId(int id) {
@@ -49,6 +52,10 @@ public class OrcamentoEvento {
 		this.pagamento = pagamento;
 	}
 	
+	private void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -72,4 +79,9 @@ public class OrcamentoEvento {
 	public Pagamento getPagamento() {
 		return pagamento;
 	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
 }

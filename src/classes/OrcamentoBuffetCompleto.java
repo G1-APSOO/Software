@@ -8,33 +8,38 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	private ArrayList<SalgadoSelecionado> arraySalgadoSelecionados = new ArrayList<>();
 	private ArrayList<DoceSelecionado>    arrayDoceSelecionados    = new ArrayList<>();
 	private Bolo bolo;
+	private OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO;
 	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(id, numeroDeConvidados, horaDeInicio, data, pagamento);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(id, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(id, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(id, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
 	private void calcularQuantidades(ArrayList<Salgado> salgados, ArrayList<Doce> doces) {
@@ -53,35 +58,43 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	}
 	
 	private int calcularQuantidadeDeSalgados() {
-		// TODO Pedir para cliente
-		return -1;
+		int quantidadeSalgados = 12*getNumeroDeConvidados();
+		return quantidadeSalgados;
 	}
 	
 	private int calcularQuantidadeDeDoces() {
-		// TODO Pedir para cliente
-		return -1;
+		int quantidadeDoces = 3*getNumeroDeConvidados();
+		return quantidadeDoces;
 	}
 	
 	private double calcularPesoDoBolo() {
-		// TODO Pedir para cliente
-		return -1;
+		double pesoDoBolo = getNumeroDeConvidados()*0.1;
+		return pesoDoBolo;
 	}
 	
 	private int calcularNumeroMinimoDeColaboradores() {
-		// TODO Pedir para cliente
-		return -1;
+		int numeroDeColaboradores = 8;
+		
+		if (teraCerveja == true) {
+			numeroDeColaboradores = numeroDeColaboradores + 1;
+		}
+		
+		return numeroDeColaboradores;
 	}
 	
 	public static ArrayList<Salgado> getAllSalgados() {
-		return SalgadoSelecionado.getAllSalgados();
+		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
+		return SalgadoSelecionadoDAO.getAllSalgados();
 	}
 	
 	public static ArrayList<Doce> getAllDoces() {
-		return DoceSelecionado.getAllDoces();
+		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
+		return DoceSelecionadoDAO.getAllDoces();
 	}
 	
 	public static ArrayList<Bolo> getAllBolos() {
-		return Bolo.getAllBolos();
+		BoloDAO BoloDAO = new BoloDAO();
+		return BoloDAO.getAllBolos();
 	}
 	
 	private void setTeraCerveja(boolean teraCerveja) {
