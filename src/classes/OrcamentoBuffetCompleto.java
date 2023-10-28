@@ -96,22 +96,13 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 
 	public static ArrayList<Salgado> getAllSalgados() {
 		SalgadoSelecionadoDAO salgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
-		ArrayList<SalgadoSelecionado> salgadosSelecionados = salgadoSelecionadoDAO.getAll();
-		ArrayList<Salgado> salgados = new ArrayList<Salgado>();
-		for(int i = 0; i < salgadosSelecionados.size(); i++) {
-			salgados.add(salgadosSelecionados.get(i).getSalgado());
-		}
-		return salgados;
+		return salgadoSelecionadoDAO.getAllSalgados();
 	}
 
 	public static ArrayList<Doce> getAllDoces() {
 		DoceSelecionadoDAO doceSelecionadoDAO = new DoceSelecionadoDAO();
-		ArrayList<DoceSelecionado> docesSelecionados = doceSelecionadoDAO.getAll();
-		ArrayList<Doce> doces = new ArrayList<Doce>();
-		for(int i = 0; i < docesSelecionados.size(); i++) {
-			doces.add(docesSelecionados.get(i).getDoce());
-		}
-		return doces;
+		
+		return doceSelecionadoDAO.getAllDoces();
 	}
 
 	public static ArrayList<Bolo> getAllBolos() {

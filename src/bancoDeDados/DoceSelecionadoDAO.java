@@ -78,7 +78,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 
 	public ArrayList<Doce> getAllBuffet(int idBuffet) {
 		String sql = "SELECT doce.id,doce.descricao,doce.valorUnitario FROM DoceSelecionado, Doce, orcamentobuffetcompleto WHERE fk_idOrcamentoBuffetCompleto = ? AND fk_idOrcamentoBuffetCompleto = orcamentobuffetcompleto.id AND doceselecionado.fk_idDoce = doce.id;";
-
+		
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, idBuffet);
