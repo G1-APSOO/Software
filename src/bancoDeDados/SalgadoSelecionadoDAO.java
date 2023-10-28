@@ -17,7 +17,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 		int idSalgado = Integer.parseInt(salgadoBuffet.split(" ")[0]);
 		int idBuffet = Integer.parseInt(salgadoBuffet.split(" ")[1]);
 
-		String sql = "SELECT * FROM SalgadoSelecionado WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetCompleto = ?";
+		String sql = "SELECT * FROM SalgadoSelecionado WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetComp = ?";
 
 		try {
 
@@ -69,21 +69,19 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 		}
 	}
 
-	public ArrayList<SalgadoSelecionado> getAllBuffet(int idBuffet) {
-		String sql = "SELECT * FROM SalgadoSelecionado WHERE fk_idOrcamentoBuffetCompleto = ?";
+	public ArrayList<Salgado> getAllBuffet(int idBuffet) {
+		String sql = "SELECT salgado.id, salgado.descricao, salgado.valorUnitario FROM salgadoSelecionado, salgado, orcamentobuffetcompleto WHERE fk_idOrcamentoBuffetComp = ? AND fk_idOrcamentoBuffetComp = orcamentobuffetcompleto.id AND salgadoselecionado.fk_idSalg = salgado.id;";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, idBuffet);
 
 			try (ResultSet rs = statement.executeQuery()) {
-				ArrayList<SalgadoSelecionado> salgadosSelecionadosEncontrados = new ArrayList<SalgadoSelecionado>();
-				SalgadoDAO salgadoDAO = new SalgadoDAO();
+				ArrayList<Salgado> salgadosSelecionadosEncontrados = new ArrayList<Salgado>();
 				while (rs.next()) {
-					Salgado salgadoEncontrado = salgadoDAO.get(rs.getInt("fk_idSalg"));
-					SalgadoSelecionado salgadoSelecionadoEncontrado = new SalgadoSelecionado(rs.getInt("quantidade"),
-							salgadoEncontrado);
-					salgadosSelecionadosEncontrados.add(salgadoSelecionadoEncontrado);
+					
+					Salgado salgadoEcontrado = new Salgado(rs.getInt("id"),rs.getString("descricao"),rs.getDouble("valorUnitario"));
+					salgadosSelecionadosEncontrados.add(salgadoEcontrado);
 				}
 				return salgadosSelecionadosEncontrados;
 			}
@@ -127,7 +125,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 	}
 
 	public boolean atualizarBuffet(SalgadoSelecionado salgadoSelecionado, int idBuffet) {
-		String sql = "UPDATE SalgadoSelecionado SET quantidade = ? WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetCompleto = ?";
+		String sql = "UPDATE SalgadoSelecionado SET quantidade = ? WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetComp = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -152,7 +150,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 	@Override
 	public boolean deletar(String idBuffetParam) {
 		int idBuffet = Integer.parseInt(idBuffetParam);
-		String sql = "DELETE FROM SalgadoSelecionado WHERE fk_idOrcamentoBuffetCompleto = ?";
+		String sql = "DELETE FROM SalgadoSelecionado WHERE fk_idOrcamentoBuffetComp= ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, idBuffet);

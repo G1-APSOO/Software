@@ -69,21 +69,19 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 		}
 	}
 
-	public ArrayList<DoceSelecionado> getAllBuffet(int idBuffet) {
-		String sql = "SELECT * FROM DoceSelecionado WHERE fk_idOrcamentoBuffetCompleto = ?";
+	public ArrayList<Doce> getAllBuffet(int idBuffet) {
+		String sql = "SELECT doce.id,doce.descricao,doce.valorUnitario FROM DoceSelecionado, Doce, orcamentobuffetcompleto WHERE fk_idOrcamentoBuffetCompleto = ? AND fk_idOrcamentoBuffetCompleto = orcamentobuffetcompleto.id AND doceselecionado.fk_idDoce = doce.id;";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, idBuffet);
 
 			try (ResultSet rs = statement.executeQuery()) {
-				ArrayList<DoceSelecionado> docesSelecionadosEncontrados = new ArrayList<DoceSelecionado>();
-				DoceDAO doceDao = new DoceDAO();
+				ArrayList<Doce> docesSelecionadosEncontrados = new ArrayList<Doce>();
+				
 				while (rs.next()) {
-					Doce doceEncontrado = doceDao.get(rs.getInt("fk_idDoce"));
-					DoceSelecionado doceSelecionadoEncontrado = new DoceSelecionado(rs.getInt("quantidade"),
-							doceEncontrado);
-					docesSelecionadosEncontrados.add(doceSelecionadoEncontrado);
+					Doce doceEncontrado = new Doce(rs.getInt("id"),rs.getString("descricao"),rs.getDouble("valorUnitario"));
+					docesSelecionadosEncontrados.add(doceEncontrado);
 				}
 				return docesSelecionadosEncontrados;
 			}

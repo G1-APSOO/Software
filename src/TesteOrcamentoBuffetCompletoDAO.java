@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 
+import bancoDeDados.ClienteDAO;
 import bancoDeDados.ConexaoBanco;
 import bancoDeDados.OrcamentoBuffetCompletoDAO;
 import classes.Bolo;
+import classes.Cliente;
 import classes.Data;
 import classes.Doce;
 import classes.OrcamentoBuffetCompleto;
@@ -15,7 +17,10 @@ public class TesteOrcamentoBuffetCompletoDAO {
 		System.out.println(ConexaoBanco.getConexao());
 		System.out.println(ConexaoBanco.status);
 		
-		OrcamentoBuffetCompletoDAO orcDAO = new OrcamentoBuffetCompletoDAO();		
+		OrcamentoBuffetCompletoDAO orcDAO = new OrcamentoBuffetCompletoDAO();
+		ClienteDAO cliDAO = new ClienteDAO();
+		
+		//criar
 		Data data = new Data(13,11,2023);
 		Pagamento pagamento = new Pagamento(100.23,"debito",1);
 		
@@ -36,9 +41,27 @@ public class TesteOrcamentoBuffetCompletoDAO {
 		Bolo bolo = new Bolo(1,"Prestigio",100);
 		bolo.setPeso(2.0);
 		
-		OrcamentoBuffetCompleto orc = new OrcamentoBuffetCompleto(10,"10:30",data,pagamento,false,salgadoList,doceList,bolo);
+		Cliente cliente = cliDAO.getAll().get(0);
 		
+		System.out.println(cliente.getRg());
+		
+		OrcamentoBuffetCompleto orc = new OrcamentoBuffetCompleto(10,"10:30",data,pagamento,cliente,1,false,salgadoList,doceList,bolo);
 		orcDAO.criar(orc);
+		
+		//buscar
+		
+		OrcamentoBuffetCompleto orc2 = orcDAO.get(1);
+		System.out.println("resultado busca: \n"+ orc2.getHoraDeInicio());
+		
+		//atualizar 
+		
+		OrcamentoBuffetCompleto orc3 = new OrcamentoBuffetCompleto(10, "11:30", orc2.getData(), orc2.getPagamento(), orc2.getCliente(),orc2.getId() ,orc2.getTeraCerveja(), orc2.getArraySalgadoSelecionados(), orc2.getArrayDoceSelecionados(), orc2.getBolo());
+		
+		orcDAO.atualizar(orc3);
+		
+		//deletar
+		
+		orcDAO.deletar(orc3.getId());
 		
 	}
 

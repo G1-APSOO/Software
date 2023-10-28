@@ -2,6 +2,11 @@ package classes;
 
 import java.util.ArrayList;
 
+import bancoDeDados.BoloDAO;
+import bancoDeDados.DoceSelecionadoDAO;
+import bancoDeDados.OrcamentoBuffetCompletoDAO;
+import bancoDeDados.SalgadoSelecionadoDAO;
+
 public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	private boolean teraCerveja;
 	
@@ -82,19 +87,19 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		return numeroDeColaboradores;
 	}
 	
-	public static ArrayList<Salgado> getAllSalgados() {
+	public static ArrayList<SalgadoSelecionado> getAllSalgados() {
 		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
-		return SalgadoSelecionadoDAO.getAllSalgados();
+		return SalgadoSelecionadoDAO.getAll();
 	}
 	
-	public static ArrayList<Doce> getAllDoces() {
+	public static ArrayList<DoceSelecionado> getAllDoces() {
 		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
-		return DoceSelecionadoDAO.getAllDoces();
+		return DoceSelecionadoDAO.getAll();
 	}
 	
 	public static ArrayList<Bolo> getAllBolos() {
 		BoloDAO BoloDAO = new BoloDAO();
-		return BoloDAO.getAllBolos();
+		return BoloDAO.getAll();
 	}
 	
 	private void setTeraCerveja(boolean teraCerveja) {
@@ -109,12 +114,14 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		return teraCerveja;
 	}	
 	
-	public ArrayList<SalgadoSelecionado> getArraySalgadoSelecionados() {
-		return arraySalgadoSelecionados;
+	public ArrayList<Salgado> getArraySalgadoSelecionados() {
+		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
+		return SalgadoSelecionadoDAO.getAllBuffet(this.getId());
 	}
 
-	public ArrayList<DoceSelecionado> getArrayDoceSelecionados() {
-		return arrayDoceSelecionados;
+	public ArrayList<Doce> getArrayDoceSelecionados() {
+		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
+		return DoceSelecionadoDAO.getAllBuffet(this.getId());
 	}
 
 	public Bolo getBolo() {

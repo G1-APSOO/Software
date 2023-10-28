@@ -13,7 +13,7 @@ public class SalgadoSelecionado {
 		setSalgado(salgado);
 	}
 
-	public static ArrayList<Salgado> getAllSalgados() {
+	public static ArrayList<SalgadoSelecionado> getAllSalgados() {
 		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
 		return SalgadoSelecionadoDAO.getAll();
 	}
