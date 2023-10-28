@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import excecoes.ExcecaoValorNaoSetado;
 import classes.Bolo;
@@ -70,7 +71,12 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setInt(1, bolo.getId());
+			Random random = new Random();
+			int id = random.nextInt(2147483646);
+			while (existeEssaChavePrimaria(id)) {
+				id = random.nextInt(2147483646);
+			}
+			statement.setInt(1, id);
 			statement.setString(2, bolo.getDescricao());
 			statement.setDouble(3, bolo.getValorUnitario());
 			statement.setDouble(4, bolo.getPeso());
@@ -92,7 +98,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 	@Override
 	public boolean atualizar(Bolo bolo) {
 		String sql = "UPDATE Bolo SET descricao = ?, valorUnitario = ?, peso = ? WHERE id = ?";
-			
+
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, bolo.getDescricao());
@@ -129,6 +135,31 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 		} catch (SQLException e) {
 			System.out.println(e);
 			return false;
+		}
+	}
+
+	@Override
+	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
+		int chavePrimariaInt = chavePrimaria.intValue();
+		String sql = "SELECT FROM Bolo WHERE id = ?";
+		try {
+
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, chavePrimariaInt);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				if (rs.next()) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			return true;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return true;
 		}
 	}
 }
