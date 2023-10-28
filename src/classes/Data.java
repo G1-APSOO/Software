@@ -73,7 +73,7 @@ public class Data {
     	GregorianCalendar dataAtual = new GregorianCalendar();
 		dataAtual.set(Calendar.MONTH, dataAtual.get(Calendar.MONTH)+1);
 		int diaAtual = dataAtual.get(Calendar.DAY_OF_MONTH);
-		int mesAtual = dataAtual.get(Calendar.MONTH)+1;
+		int mesAtual = dataAtual.get(Calendar.MONTH);
 		int anoAtual = dataAtual.get(Calendar.YEAR);
 		
 		if (ano > anoAtual) {
@@ -93,7 +93,6 @@ public class Data {
 		} 
 		
 		return false;
-		
 		
     }
 
