@@ -173,10 +173,8 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 			statement.setString(4, orcamentoBuffet.getHoraDeInicio());
 			statement.setString(5, orcamentoBuffet.getData().getData());
 			statement.setInt(6, teraCervejaInt);
-//			statement.setString(7, orcamentoBuffet.getCliente().getCpf());
-			statement.setString(7, "");
+			statement.setString(7, );
 			statement.setInt(8, orcamentoBuffet.getBolo().getId());
-//			statement.setInt(9, orcamentoBuffet.getPagamento().getId());
 			statement.setInt(9, -1);
 
 			int rowsInserted = statement.executeUpdate();

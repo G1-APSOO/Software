@@ -12,13 +12,13 @@ public class TesteBoloDAO {
 		
 		BoloDAO dao = new BoloDAO();
 		
-		Bolo b = new Bolo(2, "Bolo muito gostoso", 150.75);
+		Bolo b = new Bolo(1, "Bolo muito gostoso", 150.75);
 		
 		b.setPeso(2.0);
 		
 		dao.criar(b);
 		
-		System.out.println(dao.get(2).getDescricao());
+		System.out.println(dao.get(1).getDescricao());
 		
 		Bolo b2 = new Bolo(b.getId(),"Bolo mais ou menos",b.getValor());
 
@@ -26,7 +26,7 @@ public class TesteBoloDAO {
 		
 		dao.atualizar(b2);
 		
-		System.out.println(dao.get(2).getDescricao());
+		System.out.println(dao.get(1).getDescricao());
 		
 		
 		ArrayList<Bolo> list = dao.getAll();

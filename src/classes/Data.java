@@ -56,14 +56,6 @@ public class Data {
     	if (ano <= 0) {
     		throw new ExcecaoNaoPreenchido("ano");
     	}
-
-        int anoAtual = LocalDate.now().getYear();
-
-        // Condição: 
-        // 1: Ter + de 18 anos
-        // 2: Ter - de 100 anos (Evitando umas loucuras tipo nasci em 1800)
-        if (ano > (anoAtual-18)) throw new ExcecaoAnoInvalido("menor de 18 anos");
-        else if ((anoAtual-100) > ano) throw new ExcecaoAnoInvalido("maior de 100 anos");
         
         this.ano = ano;
     }
