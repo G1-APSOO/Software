@@ -4,11 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import classes.Salgado;
 import excecoes.ExcecaoValorNaoSetado;
 
-public class SalgadoDAO implements DAO<Salgado, Integer>{
+public class SalgadoDAO implements DAO<Salgado, Integer> {
 
 	@Override
 	public Salgado get(Integer objetoInteger) {
@@ -72,7 +73,12 @@ public class SalgadoDAO implements DAO<Salgado, Integer>{
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setInt(1, salgado.getId());
+			Random random = new Random();
+			int id = random.nextInt(2147483646);
+			while (existeEssaChavePrimaria(id)) {
+				id = random.nextInt(2147483646);
+			}
+			statement.setInt(1, id);
 			statement.setString(2, salgado.getDescricao());
 			statement.setDouble(3, salgado.getValorUnitario());
 
@@ -131,5 +137,29 @@ public class SalgadoDAO implements DAO<Salgado, Integer>{
 			return false;
 		}
 	}
-	
+
+	@Override
+	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
+		int chavePrimariaInt = chavePrimaria.intValue();
+		String sql = "SELECT FROM Salgado WHERE id = ?";
+		try {
+
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, chavePrimariaInt);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				if (rs.next()) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			return true;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return true;
+		}
+	}
 }
