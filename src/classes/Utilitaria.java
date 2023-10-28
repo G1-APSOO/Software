@@ -13,7 +13,7 @@ public class Utilitaria {
 		throw new IllegalAccessError();
 	}
 	
-	public static boolean verificarValidezDaData(Data dataDoEvento) {
+	public static boolean verificarData(Data dataDoEvento) {
 		return OrcBuffetCompletoDAO.verificarData(dataDoEvento);
 	}
 	
@@ -21,7 +21,7 @@ public class Utilitaria {
 		return 50 <= numeroDeConvidados && numeroDeConvidados <= 180;
 	}
 	
-	public static boolean verificarValidezDoHorario(String horaDeInicio) {
+	public static boolean verificarValidezHorario(String horaDeInicio) {
 		String[] horario = horaDeInicio.split(":");
 		
 		int horaOk = Integer.parseInt(horario[0]);
