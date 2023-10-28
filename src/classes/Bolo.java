@@ -1,6 +1,7 @@
 package classes;
 
 import excecoes.ExcecaoValorNaoSetado;
+import bancoDeDados.BoloDAO;
 
 public class Bolo extends Alimento {
 	private double peso;
