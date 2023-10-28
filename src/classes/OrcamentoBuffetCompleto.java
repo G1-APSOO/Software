@@ -120,5 +120,18 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	public Bolo getBolo() {
 		return bolo;
 	}
+	
+	@Override
+	public double calcularValorTotal() {
+		double valorTotal;
+		
+		valorTotal = calcularQuantidadeDeSalgados()*0.75 + calcularQuantidadeDeDoces()*1.2 + calcularPesoDoBolo()*53.0;
+		
+		if (getNumeroDeConvidados() > 50 && getNumeroDeConvidados() <= 180) {
+			valorTotal = valorTotal + (getNumeroDeConvidados() - 50) * 40.00;
+		}
+		
+		return valorTotal;
+	}
 
 }
