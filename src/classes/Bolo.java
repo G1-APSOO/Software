@@ -1,7 +1,5 @@
 package classes;
 
-import java.util.ArrayList;
-
 import excecoes.ExcecaoValorNaoSetado;
 
 public class Bolo extends Alimento {
