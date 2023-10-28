@@ -13,7 +13,7 @@ public class Utilitaria {
 		throw new IllegalAccessError();
 	}
 	
-	public static boolean verificarData(Data dataDoEvento) {
+	public static boolean verificarSeDataEstaDisponivel(Data dataDoEvento) {
 		return OrcBuffetCompletoDAO.verificarData(dataDoEvento);
 	}
 	
