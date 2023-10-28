@@ -34,7 +34,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	private JRadioButton botaoBoloDoisAmores;
 	private JRadioButton botaoBoloViuvaNegra;
 	private JRadioButton botaoComCerveja;
-	private JRadioButton rdbtnSemCerveja;
+	private JRadioButton botaoSemCerveja;
 	private JRadioButton botaoSalgadoCoxinhaDeFrango;
 	private JRadioButton botaoSalgadoCoxinhaDeFrangoComCatupiry;
 	private JRadioButton botaoSalgadoRisolesDeCarne;
@@ -63,21 +63,21 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		labelTitulo.setFont(getFonteTitulo());
 		
 		RoundJPanel painelDelimitadorSalgado = new RoundJPanel(25, 25, 25, 25);
-		painelDelimitadorSalgado.setBounds(40, 99, 1191, 154);
+		painelDelimitadorSalgado.setBounds(40, 109, 1191, 144);
 		painelDelimitadorSalgado.setBorder(new EmptyBorder(10, 10, 10, 10));
 		painelDelimitadorSalgado.setBackground(getCorDeJanelaInterna());
 		
 		JPanel painelDelimitadorDoceBoloCerveja = new JPanel();
-		painelDelimitadorDoceBoloCerveja.setBounds(40, 268, 1191, 325);
+		painelDelimitadorDoceBoloCerveja.setBounds(40, 268, 1191, 314);
 		painelDelimitadorDoceBoloCerveja.setBackground(getCorDeFundo());
 		
 		JPanel painelVoltaPagina = new JPanel();
 		painelVoltaPagina.setBackground(getCorDeFundo());
-		painelVoltaPagina.setBounds(10, 604, 70, 70);
+		painelVoltaPagina.setBounds(10, 600, 70, 70);
 		
 		JPanel painelAvancaPagina = new JPanel();
 		painelAvancaPagina.setBackground(getCorDeFundo());
-		painelAvancaPagina.setBounds(1186, 604, 70, 70);
+		painelAvancaPagina.setBounds(1186, 600, 70, 70);
 		painelAvancaPagina.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JPanel painelRetornaTudo = new JPanel();
@@ -121,37 +121,43 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoDoceBrigadeiro.setFont(fonteRadioButton);
 		botaoDoceBrigadeiro.setForeground(getCorTexto());
 		botaoDoceBrigadeiro.setBackground(getCorDeJanelaInterna());
+		botaoDoceBrigadeiro.setFocusable(false);
 		
 		botaoDoceBrigadeiroBranco = new JRadioButton("Brigadeiro branco");
 		botaoDoceBrigadeiroBranco.setFont(fonteRadioButton);
 		botaoDoceBrigadeiroBranco.setForeground(getCorTexto());
 		botaoDoceBrigadeiroBranco.setBackground(getCorDeJanelaInterna());
+		botaoDoceBrigadeiroBranco.setFocusable(false);
 		
 		botaoDoceBrigadeiroColorido = new JRadioButton("Brigadeiro colorido");
 		botaoDoceBrigadeiroColorido.setFont(fonteRadioButton);
 		botaoDoceBrigadeiroColorido.setForeground(getCorTexto());
 		botaoDoceBrigadeiroColorido.setBackground(getCorDeJanelaInterna());
+		botaoDoceBrigadeiroColorido.setFocusable(false);
 		
 		botaoDoceBeijinhoDeCoco = new JRadioButton("Beijinho de coco");
 		botaoDoceBeijinhoDeCoco.setFont(fonteRadioButton);
 		botaoDoceBeijinhoDeCoco.setForeground(getCorTexto());
 		botaoDoceBeijinhoDeCoco.setBackground(getCorDeJanelaInterna());
+		botaoDoceBeijinhoDeCoco.setFocusable(false);
 		
 		botaoDoceCasadinho = new JRadioButton("Casadinho");
 		botaoDoceCasadinho.setFont(fonteRadioButton);
 		botaoDoceCasadinho.setForeground(getCorTexto());
 		botaoDoceCasadinho.setBackground(getCorDeJanelaInterna());
+		botaoDoceCasadinho.setFocusable(false);
 		
 		botaoDoceCajuzinho = new JRadioButton("Cajuzinho");
 		botaoDoceCajuzinho.setFont(fonteRadioButton);
 		botaoDoceCajuzinho.setForeground(getCorTexto());
 		botaoDoceCajuzinho.setBackground(getCorDeJanelaInterna());
+		botaoDoceCajuzinho.setFocusable(false);
 		
 		GroupLayout gl_painelBotoesDoce = new GroupLayout(painelBotoesDoce);
 		gl_painelBotoesDoce.setHorizontalGroup(
 			gl_painelBotoesDoce.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_painelBotoesDoce.createSequentialGroup()
-					.addGap(5)
+					.addGap(1)
 					.addComponent(botaoDoceBrigadeiro, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
 					.addGap(10)
 					.addComponent(botaoDoceBrigadeiroBranco, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
@@ -160,7 +166,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 					.addGap(10)
 					.addComponent(botaoDoceBeijinhoDeCoco, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
 					.addGap(10)
-					.addComponent(botaoDoceCasadinho, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+					.addComponent(botaoDoceCasadinho, GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
 					.addGap(10)
 					.addComponent(botaoDoceCajuzinho, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
 					.addGap(347))
@@ -170,12 +176,12 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 				.addGroup(gl_painelBotoesDoce.createSequentialGroup()
 					.addGap(10)
 					.addGroup(gl_painelBotoesDoce.createParallelGroup(Alignment.LEADING)
-						.addComponent(botaoDoceBeijinhoDeCoco, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(botaoDoceCajuzinho, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(botaoDoceCasadinho, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(botaoDoceBrigadeiroColorido, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(botaoDoceBrigadeiroBranco, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(botaoDoceBrigadeiro, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+						.addComponent(botaoDoceBeijinhoDeCoco, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoDoceCajuzinho, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoDoceCasadinho, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoDoceBrigadeiroColorido, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoDoceBrigadeiroBranco, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoDoceBrigadeiro, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(10))
 		);
 		painelBotoesDoce.setLayout(gl_painelBotoesDoce);
@@ -216,37 +222,43 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoBoloBrigadeiro.setFont(fonteRadioButton);
 		botaoBoloBrigadeiro.setForeground(getCorTexto());
 		botaoBoloBrigadeiro.setBackground(getCorDeJanelaInterna());
+		botaoBoloBrigadeiro.setFocusable(false);
 		
 		botaoBoloPrestigio = new JRadioButton("Prestigio");
 		botaoBoloPrestigio.setFont(fonteRadioButton);
 		botaoBoloPrestigio.setForeground(getCorTexto());
 		botaoBoloPrestigio.setBackground(getCorDeJanelaInterna());
+		botaoBoloPrestigio.setFocusable(false);
 		
 		botaoBoloAbacaxi = new JRadioButton("Abacaxi");
 		botaoBoloAbacaxi.setFont(fonteRadioButton);
 		botaoBoloAbacaxi.setForeground(getCorTexto());
 		botaoBoloAbacaxi.setBackground(getCorDeJanelaInterna());
+		botaoBoloAbacaxi.setFocusable(false);
 		
 		botaoBoloPessego = new JRadioButton("Pêssego");
 		botaoBoloPessego.setFont(fonteRadioButton);
 		botaoBoloPessego.setForeground(getCorTexto());
 		botaoBoloPessego.setBackground(getCorDeJanelaInterna());
+		botaoBoloPessego.setFocusable(false);
 		
 		botaoBoloDoisAmores = new JRadioButton("Dois amores");
 		botaoBoloDoisAmores.setFont(fonteRadioButton);
 		botaoBoloDoisAmores.setForeground(getCorTexto());
 		botaoBoloDoisAmores.setBackground(getCorDeJanelaInterna());
+		botaoBoloDoisAmores.setFocusable(false);
 		
 		botaoBoloViuvaNegra = new JRadioButton("Viúva negra");
 		botaoBoloViuvaNegra.setFont(fonteRadioButton);
 		botaoBoloViuvaNegra.setForeground(getCorTexto());
 		botaoBoloViuvaNegra.setBackground(getCorDeJanelaInterna());
+		botaoBoloViuvaNegra.setFocusable(false);
 		
 		GroupLayout gl_painelBotoesBolo = new GroupLayout(painelBotoesBolo);
 		gl_painelBotoesBolo.setHorizontalGroup(
 			gl_painelBotoesBolo.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_painelBotoesBolo.createSequentialGroup()
-					.addGap(5)
+					.addGap(1)
 					.addComponent(botaoBoloBrigadeiro, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(10)
 					.addComponent(botaoBoloPrestigio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -265,12 +277,12 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 				.addGroup(gl_painelBotoesBolo.createSequentialGroup()
 					.addGap(10)
 					.addGroup(gl_painelBotoesBolo.createParallelGroup(Alignment.LEADING)
-						.addComponent(botaoBoloViuvaNegra, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-						.addComponent(botaoBoloDoisAmores, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-						.addComponent(botaoBoloPessego, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-						.addComponent(botaoBoloAbacaxi, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-						.addComponent(botaoBoloPrestigio, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-						.addComponent(botaoBoloBrigadeiro, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+						.addComponent(botaoBoloViuvaNegra, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoBoloDoisAmores, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoBoloPessego, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoBoloAbacaxi, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoBoloPrestigio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(botaoBoloBrigadeiro, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(10))
 		);
 		painelBotoesBolo.setLayout(gl_painelBotoesBolo);
@@ -308,20 +320,23 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoComCerveja.setFont(fonteRadioButton);
 		botaoComCerveja.setBackground(getCorDeJanelaInterna());
 		botaoComCerveja.setForeground(getCorTexto());
+		botaoComCerveja.setFocusable(false);
 		
-		rdbtnSemCerveja = new JRadioButton("Sem cerveja");
-		rdbtnSemCerveja.setFont(fonteRadioButton);
-		rdbtnSemCerveja.setBackground(getCorDeJanelaInterna());
-		rdbtnSemCerveja.setForeground(getCorTexto());
-		rdbtnSemCerveja.setSelected(true);
+		botaoSemCerveja = new JRadioButton("Sem cerveja");
+		botaoSemCerveja.setFont(fonteRadioButton);
+		botaoSemCerveja.setBackground(getCorDeJanelaInterna());
+		botaoSemCerveja.setForeground(getCorTexto());
+		botaoSemCerveja.setFocusable(false);
+		botaoSemCerveja.setSelected(true);
+		
 		GroupLayout gl_painelBotoesCerveja = new GroupLayout(painelBotoesCerveja);
 		gl_painelBotoesCerveja.setHorizontalGroup(
 			gl_painelBotoesCerveja.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_painelBotoesCerveja.createSequentialGroup()
-					.addGap(5)
-					.addComponent(botaoComCerveja, GroupLayout.PREFERRED_SIZE, 114, Short.MAX_VALUE)
+					.addGap(1)
+					.addComponent(botaoComCerveja, GroupLayout.PREFERRED_SIZE, 117, Short.MAX_VALUE)
 					.addGap(10)
-					.addComponent(rdbtnSemCerveja, GroupLayout.PREFERRED_SIZE, 122, Short.MAX_VALUE)
+					.addComponent(botaoSemCerveja, GroupLayout.PREFERRED_SIZE, 124, Short.MAX_VALUE)
 					.addGap(915))
 		);
 		gl_painelBotoesCerveja.setVerticalGroup(
@@ -330,7 +345,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 					.addGap(10)
 					.addGroup(gl_painelBotoesCerveja.createParallelGroup(Alignment.TRAILING)
 						.addComponent(botaoComCerveja, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(rdbtnSemCerveja, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(botaoSemCerveja, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(10))
 		);
 		painelBotoesCerveja.setLayout(gl_painelBotoesCerveja);
@@ -363,68 +378,80 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoSalgadoBolinhaDeQueijo = new JRadioButton("Bolinha de queijo");
 		botaoSalgadoBolinhaDeQueijo.setForeground(getCorTexto());
 		botaoSalgadoBolinhaDeQueijo.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoBolinhaDeQueijo.setBackground((Color) null);
+		botaoSalgadoBolinhaDeQueijo.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoBolinhaDeQueijo.setFocusable(false);
 		
 		botaoSalgadoBolinhaDeQueijoComMilho = new JRadioButton("Bolinha de queijo com milho");
 		botaoSalgadoBolinhaDeQueijoComMilho.setForeground(getCorTexto());
 		botaoSalgadoBolinhaDeQueijoComMilho.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoBolinhaDeQueijoComMilho.setBackground((Color) null);
+		botaoSalgadoBolinhaDeQueijoComMilho.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoBolinhaDeQueijoComMilho.setFocusable(false);
 		
 		botaoSalgadoRisolesDeFrango = new JRadioButton("Risoles de frango");
 		botaoSalgadoRisolesDeFrango.setForeground(getCorTexto());
 		botaoSalgadoRisolesDeFrango.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoRisolesDeFrango.setBackground((Color) null);
+		botaoSalgadoRisolesDeFrango.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoRisolesDeFrango.setFocusable(false);
 		
 		botaoSalgadoRisolesDePresuntoQueijo = new JRadioButton("Risoles de presunto e queijo");
 		botaoSalgadoRisolesDePresuntoQueijo.setForeground(getCorTexto());
 		botaoSalgadoRisolesDePresuntoQueijo.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoRisolesDePresuntoQueijo.setBackground((Color) null);
+		botaoSalgadoRisolesDePresuntoQueijo.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoRisolesDePresuntoQueijo.setFocusable(false);
 		
 		botaoSalgadoEnroladinhoPresuntoQueijo = new JRadioButton("Enroladinho de presunto e queijo");
 		botaoSalgadoEnroladinhoPresuntoQueijo.setForeground(getCorTexto());
 		botaoSalgadoEnroladinhoPresuntoQueijo.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoEnroladinhoPresuntoQueijo.setBackground((Color) null);
+		botaoSalgadoEnroladinhoPresuntoQueijo.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoEnroladinhoPresuntoQueijo.setFocusable(false);
 		
 		botaoSalgadoEnroladinhoDeSalsicha = new JRadioButton("Enroladinho de salsicha");
 		botaoSalgadoEnroladinhoDeSalsicha.setForeground(getCorTexto());
 		botaoSalgadoEnroladinhoDeSalsicha.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoEnroladinhoDeSalsicha.setBackground((Color) null);
+		botaoSalgadoEnroladinhoDeSalsicha.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoEnroladinhoDeSalsicha.setFocusable(false);
 		
 		botaoSalgadoCoxinhaDeFrango = new JRadioButton("Coxinha de frango");
 		botaoSalgadoCoxinhaDeFrango.setForeground(getCorTexto());
 		botaoSalgadoCoxinhaDeFrango.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoCoxinhaDeFrango.setBackground((Color) null);
+		botaoSalgadoCoxinhaDeFrango.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoCoxinhaDeFrango.setFocusable(false);
 		
 		botaoSalgadoCoxinhaDeFrangoComCatupiry = new JRadioButton("Coxinha de frango com catupiry");
 		botaoSalgadoCoxinhaDeFrangoComCatupiry.setForeground(getCorTexto());
 		botaoSalgadoCoxinhaDeFrangoComCatupiry.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoCoxinhaDeFrangoComCatupiry.setBackground((Color) null);
+		botaoSalgadoCoxinhaDeFrangoComCatupiry.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoCoxinhaDeFrangoComCatupiry.setFocusable(false);
 		
 		botaoSalgadoRisolesDeCarne = new JRadioButton("Risoles de carne");
 		botaoSalgadoRisolesDeCarne.setForeground(getCorTexto());
 		botaoSalgadoRisolesDeCarne.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoRisolesDeCarne.setBackground((Color) null);
+		botaoSalgadoRisolesDeCarne.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoRisolesDeCarne.setFocusable(false);
 		
 		botaoSalgadoQuibe = new JRadioButton("Quibe");
 		botaoSalgadoQuibe.setForeground(getCorTexto());
 		botaoSalgadoQuibe.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoQuibe.setBackground((Color) null);
+		botaoSalgadoQuibe.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoQuibe.setFocusable(false);
 		
 		botaoSalgadoEsfihaDeCarne = new JRadioButton("Esfiha de carne");
 		botaoSalgadoEsfihaDeCarne.setForeground(getCorTexto());
 		botaoSalgadoEsfihaDeCarne.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoEsfihaDeCarne.setBackground((Color) null);
+		botaoSalgadoEsfihaDeCarne.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoEsfihaDeCarne.setFocusable(false);
 		
 		botaoSalgadoEmpadinhaDePalmito = new JRadioButton("Empadinha de palmito");
 		botaoSalgadoEmpadinhaDePalmito.setForeground(getCorTexto());
 		botaoSalgadoEmpadinhaDePalmito.setFont(fonteRadioButtonSalgados);
-		botaoSalgadoEmpadinhaDePalmito.setBackground((Color) null);
+		botaoSalgadoEmpadinhaDePalmito.setBackground(getCorDeJanelaInterna());
+		botaoSalgadoEmpadinhaDePalmito.setFocusable(false);
 		
 		GroupLayout gl_painelBotoesSalgado = new GroupLayout(painelBotoesSalgado);
 		gl_painelBotoesSalgado.setHorizontalGroup(
 			gl_painelBotoesSalgado.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_painelBotoesSalgado.createSequentialGroup()
-					.addGap(5)
+					.addGap(1)
 					.addGroup(gl_painelBotoesSalgado.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_painelBotoesSalgado.createSequentialGroup()
 							.addComponent(botaoSalgadoBolinhaDeQueijo)
@@ -450,7 +477,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 							.addComponent(botaoSalgadoEmpadinhaDePalmito, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
 							.addGap(5)
 							.addComponent(botaoSalgadoEnroladinhoDeSalsicha, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(10, Short.MAX_VALUE))
+					.addContainerGap(80, Short.MAX_VALUE))
 		);
 		gl_painelBotoesSalgado.setVerticalGroup(
 			gl_painelBotoesSalgado.createParallelGroup(Alignment.LEADING)
@@ -479,9 +506,22 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		painelDelimitadorSalgado.setLayout(gl_painelDelimitadorSalgado);
 		painel.setLayout(null);
 		painel.add(painelVoltaPagina);
+		
+		JLabel labelVoltaPagina = new JLabel("");
+		labelVoltaPagina.setIcon(getIconeVoltarPagina());
+		painelVoltaPagina.add(labelVoltaPagina);
 		painel.add(painelAvancaPagina);
+		
+		JLabel labelAvancaPagina = new JLabel("");
+		labelAvancaPagina.setIcon(getIconeProximaPagina());
+		painelAvancaPagina.add(labelAvancaPagina);
 		painel.add(labelTitulo);
 		painel.add(painelRetornaTudo);
+		painelRetornaTudo.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel labelRetornaTudo = new JLabel("");
+		labelRetornaTudo.setIcon(getIconeRetornaTudo());
+		painelRetornaTudo.add(labelRetornaTudo);
 		painel.add(painelDelimitadorDoceBoloCerveja);
 		painel.add(painelDelimitadorSalgado);
 		
