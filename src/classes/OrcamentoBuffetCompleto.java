@@ -9,111 +9,129 @@ import bancoDeDados.SalgadoSelecionadoDAO;
 
 public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	private boolean teraCerveja;
-	
+
 	private ArrayList<SalgadoSelecionado> arraySalgadoSelecionados = new ArrayList<>();
-	private ArrayList<DoceSelecionado>    arrayDoceSelecionados    = new ArrayList<>();
+	private ArrayList<DoceSelecionado> arrayDoceSelecionados = new ArrayList<>();
 	private Bolo bolo;
 	private OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO;
-	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento,
+			Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces,
+			Bolo bolo) {
 		super(id, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
-	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento,
+			Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
 		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
-	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data,
+			Pagamento pagamento, Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados,
+			ArrayList<Doce> doces, Bolo bolo) {
 		super(id, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
-	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data,
+			Pagamento pagamento, Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados,
+			ArrayList<Doce> doces, Bolo bolo) {
 		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
-	
+
 	private void calcularQuantidades(ArrayList<Salgado> salgados, ArrayList<Doce> doces) {
 		int quantidadeSalgados = calcularQuantidadeDeSalgados();
 		int quantidadeDoces = calcularQuantidadeDeDoces();
 		double pesoBolo = calcularPesoDoBolo();
-		
-		for (int i = 0; i < salgados.size(); i++) 
+
+		for (int i = 0; i < salgados.size(); i++)
 			arraySalgadoSelecionados.add(new SalgadoSelecionado(quantidadeSalgados, salgados.get(i)));
-		
-		for (int i = 0; i < doces.size(); i++) 
+
+		for (int i = 0; i < doces.size(); i++)
 			arrayDoceSelecionados.add(new DoceSelecionado(quantidadeDoces, doces.get(i)));
-		
+
 		bolo.setPeso(pesoBolo);
-		
+
 	}
-	
+
 	private int calcularQuantidadeDeSalgados() {
-		int quantidadeSalgados = 12*getNumeroDeConvidados();
+		int quantidadeSalgados = 12 * getNumeroDeConvidados();
 		return quantidadeSalgados;
 	}
-	
+
 	private int calcularQuantidadeDeDoces() {
-		int quantidadeDoces = 3*getNumeroDeConvidados();
+		int quantidadeDoces = 3 * getNumeroDeConvidados();
 		return quantidadeDoces;
 	}
-	
+
 	private double calcularPesoDoBolo() {
-		double pesoDoBolo = getNumeroDeConvidados()*0.1;
+		double pesoDoBolo = getNumeroDeConvidados() * 0.1;
 		return pesoDoBolo;
 	}
-	
+
 	private int calcularNumeroMinimoDeColaboradores() {
 		int numeroDeColaboradores = 8;
-		
+
 		if (teraCerveja == true) {
 			numeroDeColaboradores = numeroDeColaboradores + 1;
 		}
-		
+
 		return numeroDeColaboradores;
 	}
-	
-	public static ArrayList<SalgadoSelecionado> getAllSalgados() {
-		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
-		return SalgadoSelecionadoDAO.getAll();
+
+	public static ArrayList<Salgado> getAllSalgados() {
+		SalgadoSelecionadoDAO salgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
+		ArrayList<SalgadoSelecionado> salgadosSelecionados = salgadoSelecionadoDAO.getAll();
+		ArrayList<Salgado> salgados = new ArrayList<Salgado>();
+		for(int i = 0; i < salgadosSelecionados.size(); i++) {
+			salgados.add(salgadosSelecionados.get(i).getSalgado());
+		}
+		return salgados;
 	}
-	
-	public static ArrayList<DoceSelecionado> getAllDoces() {
-		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
-		return DoceSelecionadoDAO.getAll();
+
+	public static ArrayList<Doce> getAllDoces() {
+		DoceSelecionadoDAO doceSelecionadoDAO = new DoceSelecionadoDAO();
+		ArrayList<DoceSelecionado> docesSelecionados = doceSelecionadoDAO.getAll();
+		ArrayList<Doce> doces = new ArrayList<Doce>();
+		for(int i = 0; i < docesSelecionados.size(); i++) {
+			doces.add(docesSelecionados.get(i).getDoce());
+		}
+		return doces;
 	}
-	
+
 	public static ArrayList<Bolo> getAllBolos() {
-		BoloDAO BoloDAO = new BoloDAO();
-		return BoloDAO.getAll();
+		BoloDAO boloDAO = new BoloDAO();
+		ArrayList<Bolo> bolos = boloDAO.getAll();
+		return bolos;
 	}
-	
+
 	private void setTeraCerveja(boolean teraCerveja) {
 		this.teraCerveja = teraCerveja;
 	}
-	
+
 	private void setBolo(Bolo bolo) {
 		this.bolo = bolo;
 	}
-	
+
 	public boolean getTeraCerveja() {
 		return teraCerveja;
-	}	
-	
+	}
+
 	public ArrayList<Salgado> getArraySalgadoSelecionados() {
 		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
 		return SalgadoSelecionadoDAO.getAllBuffet(this.getId());

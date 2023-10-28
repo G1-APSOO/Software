@@ -2,7 +2,6 @@ package classes;
 
 import java.util.ArrayList;
 
-import bancoDeDados.BoloDAO;
 import excecoes.ExcecaoValorNaoSetado;
 import bancoDeDados.BoloDAO;
 

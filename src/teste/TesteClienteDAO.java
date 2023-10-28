@@ -1,3 +1,4 @@
+package teste;
 import bancoDeDados.ClienteDAO;
 import bancoDeDados.ConexaoBanco;
 import classes.Cliente;

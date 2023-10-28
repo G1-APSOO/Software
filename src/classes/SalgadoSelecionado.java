@@ -2,8 +2,6 @@ package classes;
 
 import java.util.ArrayList;
 
-import bancoDeDados.SalgadoSelecionadoDAO;
-
 public class SalgadoSelecionado {
 	private int quantidade;
 	private Salgado salgado;
@@ -11,11 +9,6 @@ public class SalgadoSelecionado {
 	public SalgadoSelecionado(int quantidade, Salgado salgado) {
 		setQuantidade(quantidade);
 		setSalgado(salgado);
-	}
-
-	public static ArrayList<SalgadoSelecionado> getAllSalgados() {
-		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
-		return SalgadoSelecionadoDAO.getAll();
 	}
 
 	private void setQuantidade(int quantidade) {
