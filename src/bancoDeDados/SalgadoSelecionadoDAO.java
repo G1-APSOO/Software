@@ -69,6 +69,11 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 			return null;
 		}
 	}
+	
+	public ArrayList<Salgado> getAllSalgados() {
+		SalgadoDAO salgDAO = new SalgadoDAO();
+		return salgDAO.getAll();
+	}
 
 	public ArrayList<Salgado> getAllBuffet(int idBuffet) {
 		String sql = "SELECT salgado.id, salgado.descricao, salgado.valorUnitario FROM salgadoSelecionado, salgado, orcamentobuffetcompleto WHERE fk_idOrcamentoBuffetComp = ? AND fk_idOrcamentoBuffetComp = orcamentobuffetcompleto.id AND salgadoselecionado.fk_idSalg = salgado.id;";

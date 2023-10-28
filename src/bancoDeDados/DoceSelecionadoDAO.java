@@ -70,6 +70,11 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 			return null;
 		}
 	}
+	
+	public ArrayList<Doce> getAllDoces() {
+		DoceDAO doceDAO = new DoceDAO();
+		return doceDAO.getAll();		
+	}
 
 	public ArrayList<Doce> getAllBuffet(int idBuffet) {
 		String sql = "SELECT doce.id,doce.descricao,doce.valorUnitario FROM DoceSelecionado, Doce, orcamentobuffetcompleto WHERE fk_idOrcamentoBuffetCompleto = ? AND fk_idOrcamentoBuffetCompleto = orcamentobuffetcompleto.id AND doceselecionado.fk_idDoce = doce.id;";
