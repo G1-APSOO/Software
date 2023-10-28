@@ -16,6 +16,8 @@ import javax.swing.border.EmptyBorder;
 public class PainelEscolhaDeOrcamento extends Painel {
 	
 	private JPanel painel;
+	private JButton botaoOrcamentoBuffetCompleto;
+	private JButton botaoOrcamentoLocacao;
 	
 	public PainelEscolhaDeOrcamento() {
 		super();
@@ -82,9 +84,10 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		painelDivisorBotoes.add(painelExternoOrcamentoBuffetCompleto);
 		painelExternoOrcamentoBuffetCompleto.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JButton botaoOrcamentoBuffetCompleto = new JButton("Orçamento de buffet completo");
-		painelExternoOrcamentoBuffetCompleto.add(botaoOrcamentoBuffetCompleto);
+		botaoOrcamentoBuffetCompleto = new JButton("Orçamento de buffet completo");
 		botaoOrcamentoBuffetCompleto.setFont(getFonteLabelInterno());
+		botaoOrcamentoBuffetCompleto.setFocusable(false);
+		painelExternoOrcamentoBuffetCompleto.add(botaoOrcamentoBuffetCompleto);
 		
 		RoundJPanel painelExternoOrcamentoLocacao = new RoundJPanel(25, 25, 25, 25);
 		painelExternoOrcamentoLocacao.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -92,8 +95,9 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		painelDivisorBotoes.add(painelExternoOrcamentoLocacao);
 		painelExternoOrcamentoLocacao.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton botaoOrcamentoLocacao = new JButton("Orçamento de locação de espaço");
-		botaoOrcamentoBuffetCompleto.setFont(getFonteLabelInterno());
+		botaoOrcamentoLocacao = new JButton("Orçamento de locação de espaço");
+		botaoOrcamentoLocacao.setFont(getFonteLabelInterno());
+		botaoOrcamentoLocacao.setFocusable(false);
 		painelExternoOrcamentoLocacao.add(botaoOrcamentoLocacao);
 		painel.setLayout(gl_painel);
 		
