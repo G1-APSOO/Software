@@ -10,9 +10,15 @@ public class Utilitaria {
 	private Utilitaria() {
 		throw new IllegalAccessError();
 	}
+<<<<<<< Updated upstream
 
 	public static boolean verificarValidezDaData(Data dataDoEvento) {
 		return OrcBuffetCompletoDAO.verificarData(dataDoEvento);
+=======
+	
+	public static boolean verificarValidezDaData(Data dataDoEvento){
+		return OrcamentoBuffetCompletoDAO.verificarData(dataDoEvento);
+>>>>>>> Stashed changes
 	}
 
 	public static boolean verificarNumeroConvidados(int numeroDeConvidados) {
