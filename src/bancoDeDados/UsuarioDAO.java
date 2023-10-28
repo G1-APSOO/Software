@@ -1,30 +1,31 @@
 package bancoDeDados;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import classes.Cliente;
+import classes.Usuario;
 import excecoes.ExcecaoValorNaoSetado;
 
-public class UsuarioDAO implements DAO<Cliente, String>{
+public class UsuarioDAO implements DAO<Usuario, String>{
 
 	@Override
-	public Cliente get(String cpf) {
-		String sql = "SELECT * FROM Cliente WHERE cpf = ?";
+	public Usuario get(String login) {
+		String sql = "SELECT * FROM Usuario WHERE login = ?";	
 
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setString(1, cpf);
+			statement.setString(1, login);
 
 			try (ResultSet rs = statement.executeQuery()) {
 				while (rs.next()) {
-					// Cliente possui os seguintes atributos no banco de dados:
-					// cpf nome RG endereco CEP celular telefoneResidencial telefoneComercial email
-					Cliente clienteEncontrado = new Cliente(rs.getString("nome"), rs.getString("cpf"), rs.getString("endereco"), rs.getString("CEP"), rs.getString("celular"), rs.getString("email"), rs.getString("RG"), rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"));
-					return clienteEncontrado;
+					// Usuario possui os seguintes atributos no banco de dados:
+					Usuario UsuarioEncontrado = new Usuario(rs.getString("login"),rs.getString("senha"),rs.getString("nome"),rs.getString("tipoDeUsuario"));
+					return UsuarioEncontrado;
 				}
 			}
 			return null;
@@ -32,64 +33,63 @@ public class UsuarioDAO implements DAO<Cliente, String>{
 		} catch (SQLException e) {
 			System.out.println(e);
 			return null;
-		} catch (ExcecaoValorNaoSetado e) {
+		}
+		catch (ExcecaoValorNaoSetado e) {
 			System.out.println(e);
 			return null;
 		}
 	}
 
 	@Override
-	public ArrayList<Cliente> getAll() {
-		String sql = "SELECT * FROM Cliente";
+	public ArrayList<Usuario> getAll() {
+		String sql = "SELECT * FROM Usuario";
 
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 
 			try (ResultSet rs = statement.executeQuery()) {
-				ArrayList<Cliente> clientesEncontrados = new ArrayList<Cliente>();
+				ArrayList<Usuario> UsuariosEncontrados = new ArrayList<Usuario>();
 				while (rs.next()) {
-					Cliente clienteEncontrado = new Cliente(rs.getString("nome"), rs.getString("cpf"), rs.getString("endereco"), rs.getString("CEP"), rs.getString("celular"), rs.getString("email"), rs.getString("RG"), rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"));
-					clientesEncontrados.add(clienteEncontrado);
+					Usuario UsuarioEncontrado = new Usuario(rs.getString("login"),rs.getString("senha"),rs.getString("nome"),rs.getString("tipoDeUsuario"));
+					UsuariosEncontrados.add(UsuarioEncontrado);
 				}
-				return clientesEncontrados;
+				return UsuariosEncontrados;
 			}
 
 		} catch (SQLException e) {
 			System.out.println(e);
 			return null;
-		} catch (ExcecaoValorNaoSetado e) {
+		} 
+		catch (ExcecaoValorNaoSetado e) {
 			System.out.println(e);
 			return null;
 		}
 	}
 
 	@Override
-	public boolean criar(Cliente cliente) {
+	public boolean criar(Usuario Usuario) {
 		// cpf nome RG endereco CEP celular telefoneResidencial telefoneComercial email
-		String sql = "INSERT INTO Cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO Usuario VALUES (?, ?, ?, ?)";
+		String hashed = sha256Hash(Usuario.getSenha());
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setString(1, cliente.getCpf());
-			statement.setString(2, cliente.getNome());
-			statement.setString(3, cliente.getRg());
-			statement.setString(4, cliente.getEndereco());
-			statement.setString(5, cliente.getCep());
-			statement.setString(6, cliente.getCelular());
-			statement.setString(7, cliente.getTelefoneResidencial());
-			statement.setString(8, cliente.getTelefoneComercial());
-			statement.setString(9, cliente.getEmail());
+			statement.setString(1, Usuario.getLogin());
+			statement.setString(2, hashed);
+			statement.setString(3, Usuario.getNome());
+			statement.setString(4, Usuario.getTipoDeUsuario());
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Cliente inserido com sucesso!");
+				System.out.println("Usuario inserido com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
 			System.out.println(e);
 			return false;
-		} catch (ExcecaoValorNaoSetado e) {
+		}
+		catch (ExcecaoValorNaoSetado e) {
 			System.out.println(e);
 			return false;
 		}
@@ -97,25 +97,46 @@ public class UsuarioDAO implements DAO<Cliente, String>{
 	}
 
 	@Override
-	public boolean atualizar(Cliente cliente) {
-		// cpf nome RG endereco CEP celular telefoneResidencial telefoneComercial email
-		String sql = "UPDATE Cliente SET nome = ?, RG = ?, endereco = ?, CEP = ?, celular = ?, telefoneResidencial = ?, telefoneComercial = ?, email = ? WHERE cpf = ?";
-
+	public boolean atualizar(Usuario Usuario) {
+		// Não altera a senha 
+		
+		String sql = "UPDATE Usuario SET nome = ?, tipoDeUsuario = ? WHERE login = ?";
+		
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setString(1, cliente.getNome());
-			statement.setString(2, cliente.getRg());
-			statement.setString(3, cliente.getEndereco());
-			statement.setString(4, cliente.getCep());
-			statement.setString(5, cliente.getCelular());
-			statement.setString(6, cliente.getTelefoneResidencial());
-			statement.setString(7, cliente.getTelefoneComercial());
-			statement.setString(8, cliente.getEmail());
-			statement.setString(9, cliente.getCpf());
+	
+			statement.setString(1, Usuario.getNome());
+			statement.setString(2, Usuario.getTipoDeUsuario());
+			statement.setString(3, Usuario.getLogin());
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Cliente atualizado com sucesso!");
+				System.out.println("Usuario atualizado com sucesso!");
+			}
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		} 
+		catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean atualizarSenha(String login, String senha) {
+		String sql = "UPDATE Usuario SET senha = ? WHERE login = ?";
+		String hashed = sha256Hash(senha);
+		
+		try {
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+	
+			statement.setString(1, hashed);
+			statement.setString(2, login);
+
+			int rowsInserted = statement.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("Usuario atualizado com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -128,14 +149,14 @@ public class UsuarioDAO implements DAO<Cliente, String>{
 	}
 
 	@Override
-	public boolean deletar(String cpf) {
-		String sql = "DELETE FROM Cliente WHERE cpf = ?";
+	public boolean deletar(String login) {
+		String sql = "DELETE FROM Usuario WHERE login = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setString(1, cpf);
+			statement.setString(1, login);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Cliente deletado com sucesso!");
+				System.out.println("Usuario deletado com sucesso!");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -143,5 +164,29 @@ public class UsuarioDAO implements DAO<Cliente, String>{
 			return false;
 		}
 	}
+	
+	//hashing the passwd function
+	public static String sha256Hash(String input) {
+	    try {
+	        // Create a MessageDigest object with the SHA-256 algorithm
+	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	        
+	        // Update the digest with the input bytes
+	        byte[] hash = digest.digest(input.getBytes());
+	        
+	        // Convert the byte array to a hexadecimal string
+	        StringBuilder hexString = new StringBuilder();
+	        for (byte b : hash) {
+	            hexString.append(String.format("%02x", b));
+	        }
+	        
+	        return hexString.toString();
+	    } catch (NoSuchAlgorithmException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
+	
 	
 }

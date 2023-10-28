@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import classes.Cliente;
 import excecoes.ExcecaoValorNaoSetado;
 
-public class ClienteDAO implements DAO<Cliente, String>{
-    @Override
-    public Cliente get(String cpf) {
+public class ClienteDAO implements DAO<Cliente, String> {
+	
+	@Override
+	public Cliente get(String cpf) {
 		String sql = "SELECT * FROM Cliente WHERE cpf = ?";
 
 		try {
@@ -20,7 +21,10 @@ public class ClienteDAO implements DAO<Cliente, String>{
 
 			try (ResultSet rs = statement.executeQuery()) {
 				while (rs.next()) {
-					Cliente clienteEncontrado = new Cliente(rs.getString("nome"), rs.getString("cpf"), rs.getString("endereco"), rs.getString("CEP"), rs.getString("celular"), rs.getString("email"), rs.getString("RG"), rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"));
+					Cliente clienteEncontrado = new Cliente(rs.getString("nome"), rs.getString("cpf"),
+							rs.getString("endereco"), rs.getString("CEP"), rs.getString("celular"),
+							rs.getString("email"), rs.getString("RG"), rs.getString("telefoneResidencial"),
+							rs.getString("telefoneComercial"));
 					return clienteEncontrado;
 				}
 			}
@@ -33,11 +37,11 @@ public class ClienteDAO implements DAO<Cliente, String>{
 			System.out.println(e);
 			return null;
 		}
-    }
+	}
 
-    @Override
-    public ArrayList<Cliente> getAll() {
-        String sql = "SELECT * FROM Cliente";
+	@Override
+	public ArrayList<Cliente> getAll() {
+		String sql = "SELECT * FROM Cliente";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -45,7 +49,10 @@ public class ClienteDAO implements DAO<Cliente, String>{
 			try (ResultSet rs = statement.executeQuery()) {
 				ArrayList<Cliente> clientesEncontrados = new ArrayList<Cliente>();
 				while (rs.next()) {
-					Cliente clienteEncontrado =  new Cliente(rs.getString("nome"), rs.getString("cpf"), rs.getString("endereco"), rs.getString("CEP"), rs.getString("celular"), rs.getString("email"), rs.getString("RG"), rs.getString("telefoneResidencial"), rs.getString("telefoneComercial"));
+					Cliente clienteEncontrado = new Cliente(rs.getString("nome"), rs.getString("cpf"),
+							rs.getString("endereco"), rs.getString("CEP"), rs.getString("celular"),
+							rs.getString("email"), rs.getString("RG"), rs.getString("telefoneResidencial"),
+							rs.getString("telefoneComercial"));
 					clientesEncontrados.add(clienteEncontrado);
 				}
 				return clientesEncontrados;
@@ -54,11 +61,11 @@ public class ClienteDAO implements DAO<Cliente, String>{
 			System.out.println(e);
 			return null;
 		}
-    }
+	}
 
-    @Override
-    public boolean criar(Cliente cliente) {
-        String sql = "INSERT INTO Cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	@Override
+	public boolean criar(Cliente cliente) {
+		String sql = "INSERT INTO Cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -84,11 +91,11 @@ public class ClienteDAO implements DAO<Cliente, String>{
 			System.out.println(e);
 			return false;
 		}
-    }
+	}
 
-    @Override
-    public boolean atualizar(Cliente cliente) {
-        String sql = "UPDATE Cliente SET nome = ?, RG = ?, endereco = ?, CEP = ?, celular = ?, telefoneResidencial = ?, telefoneComercial = ?, email = ? WHERE CPF = ?";
+	@Override
+	public boolean atualizar(Cliente cliente) {
+		String sql = "UPDATE Cliente SET nome = ?, RG = ?, endereco = ?, CEP = ?, celular = ?, telefoneResidencial = ?, telefoneComercial = ?, email = ? WHERE CPF = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -114,11 +121,11 @@ public class ClienteDAO implements DAO<Cliente, String>{
 			System.out.println(e);
 			return false;
 		}
-    }
+	}
 
-    @Override
-    public boolean deletar(String cpf) {
-        String sql = "DELETE FROM Cliente WHERE cpf = ?";
+	@Override
+	public boolean deletar(String cpf) {
+		String sql = "DELETE FROM Cliente WHERE cpf = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, cpf);
@@ -131,5 +138,5 @@ public class ClienteDAO implements DAO<Cliente, String>{
 			System.out.println(e);
 			return false;
 		}
-    }
+	}
 }
