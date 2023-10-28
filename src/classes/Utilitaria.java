@@ -13,7 +13,7 @@ public class Utilitaria {
 		throw new IllegalAccessError();
 	}
 	
-	public static boolean verificarValidezDaData(Data dataDoEvento){
+	public static boolean verificarValidezDaData(Data dataDoEvento) {
 		return OrcBuffetCompletoDAO.verificarData(dataDoEvento);
 	}
 	
@@ -33,7 +33,7 @@ public class Utilitaria {
 		return qtdDeSalgados >= 7;
 	}
 	
-	public static boolean verificarOpcoesDoces (int qtdDeDoces){
+	public static boolean verificarOpcoesDoces (int qtdDeDoces) {
 		return qtdDeDoces == 3;
 	}
 	
@@ -105,9 +105,9 @@ public class Utilitaria {
 		String ddd    = separacao[0];
 		String numero = separacao[1];
 		
-		boolean isDDDOk = verificarDDD(ddd);
+		boolean dddValido = verificarDDD(ddd);
 		
-		if(isDDDOk == false) throw new ExcecaoDDDInvalido();
+		if(dddValido == false) throw new ExcecaoDDDInvalido();
 		
 		return numero.matches("\\d{5}-\\d{4}");
 	}
@@ -120,9 +120,9 @@ public class Utilitaria {
 		String ddd    = separacao[0];
 		String numero = separacao[1];
 		
-		boolean isDDDOk = verificarDDD(ddd);
+		boolean dddValido = verificarDDD(ddd);
 		
-		if(isDDDOk == false) throw new ExcecaoDDDInvalido();
+		if (dddValido == false) throw new ExcecaoDDDInvalido();
 		
 		return numero.matches("\\d{4}-\\d{4}");
 		
@@ -147,8 +147,8 @@ public class Utilitaria {
 	    //  - = rg.charAt(10)
 	    int i = rg.charAt(11) - '0';
 	     
-	    int result = 2*a + 3*b + 4*c + 5*d + 6*e + 7*f + 8*g + 9*h + 100*i;
-	    return (result % 11) == 0;
+	    int resultado = 2*a + 3*b + 4*c + 5*d + 6*e + 7*f + 8*g + 9*h + 100*i;
+	    return (resultado % 11) == 0;
 	}
 
 }

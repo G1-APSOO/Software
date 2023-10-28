@@ -11,11 +11,6 @@ public class SalgadoSelecionado {
 		setSalgado(salgado);
 	}
 	
-	public static ArrayList<Salgado> getAllSalgados() {
-		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
-		return SalgadoSelecionadoDAO.getAll();
-	}
-	
 	private void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
@@ -32,7 +27,7 @@ public class SalgadoSelecionado {
 		return salgado;
 	}
 
-	public Double getValor() {
+	public double getValor() {
 		return salgado.getValorUnitario() * quantidade;
 	}
 

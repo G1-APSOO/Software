@@ -3,9 +3,9 @@ package classes;
 public class ServicoAdicional {
 	private int id;
 	private String descricao;
-	private Double valor;
+	private double valor;
 	
-	public ServicoAdicional(int id, String descricao, Double valor) {
+	public ServicoAdicional(int id, String descricao, double valor) {
 		setId(id);
 		setDescricao(descricao);
 		setValor(valor);
@@ -19,7 +19,7 @@ public class ServicoAdicional {
 		this.descricao = descricao;
 	}
 	
-	private void setValor(Double valor) {
+	private void setValor(double valor) {
 		this.valor = valor;
 	}
 	
@@ -31,7 +31,7 @@ public class ServicoAdicional {
 		return descricao;
 	}
 
-	public Double getValor() {
+	public double getValor() {
 		return valor;
 	}
 }
