@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import classes.Bolo;
 import classes.Data;
@@ -45,8 +46,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 					boolean teraCerveja = rs.getInt("teraCerveja") == 1;
 
 					SalgadoSelecionadoDAO salgadoSelecionadoDao = new SalgadoSelecionadoDAO();
-					ArrayList<Salgado> salgadosSelecionados = salgadoSelecionadoDao
-							.getAllBuffet(rs.getInt("id"));
+					ArrayList<Salgado> salgadosSelecionados = salgadoSelecionadoDao.getAllBuffet(rs.getInt("id"));
 					ArrayList<Salgado> salgados = new ArrayList<Salgado>();
 
 					for (int i = 0; i < salgadosSelecionados.size(); i++)
@@ -70,17 +70,10 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 //					Pagamento pagamento = pagamentoDao.get(idPagamento);
 
 					OrcamentoBuffetCompleto orcamentoBuffetCompletoEncontrado = new OrcamentoBuffetCompleto(
-							rs.getInt("numeroDeConvidados"),
-							rs.getInt("numeroDeColaboradores"),
-							rs.getString("horaDeInicio"),
-							dataOrcamento,
-							null,
-							clienteDAO.get(rs.getString("fk_cpfCliente")),
-							rs.getInt("id"),
-							teraCerveja,
-							salgados,
-							doces,
-							bolo);
+							rs.getInt("numeroDeConvidados"), rs.getInt("numeroDeColaboradores"),
+							rs.getString("horaDeInicio"), dataOrcamento, null,
+							clienteDAO.get(rs.getString("fk_cpfCliente")), rs.getInt("id"), teraCerveja, salgados,
+							doces, bolo);
 					return orcamentoBuffetCompletoEncontrado;
 				}
 			}
@@ -122,8 +115,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 
 					boolean teraCerveja = rs.getInt("teraCerveja") == 1;
 
-					ArrayList<Salgado> salgadosSelecionados = salgadoSelecionadoDao
-							.getAllBuffet(rs.getInt("id"));
+					ArrayList<Salgado> salgadosSelecionados = salgadoSelecionadoDao.getAllBuffet(rs.getInt("id"));
 					ArrayList<Salgado> salgados = new ArrayList<Salgado>();
 
 					for (int i = 0; i < salgadosSelecionados.size(); i++)
@@ -141,17 +133,9 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 					ClienteDAO clienteDAO = new ClienteDAO();
 
 					OrcamentoBuffetCompleto orcamentoBuffetCompletoEncontrado = new OrcamentoBuffetCompleto(
-							rs.getInt("numeroDeConvidados"),
-							rs.getInt("numeroDeColaboradores"),
-							rs.getString("horaDeInicio"),
-							dataOrcamento,
-							null,
-							clienteDAO.get(rs.getString("cpf")),
-							rs.getInt("id"),
-							teraCerveja,
-							salgados,
-							doces,
-							bolo);
+							rs.getInt("numeroDeConvidados"), rs.getInt("numeroDeColaboradores"),
+							rs.getString("horaDeInicio"), dataOrcamento, null, clienteDAO.get(rs.getString("cpf")),
+							rs.getInt("id"), teraCerveja, salgados, doces, bolo);
 					orcamentoBuffetCompletoEncontrados.add(orcamentoBuffetCompletoEncontrado);
 				}
 				return orcamentoBuffetCompletoEncontrados;
@@ -177,7 +161,12 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 			} else {
 				teraCervejaInt = 0;
 			}
-			statement.setInt(1, orcamentoBuffet.getId());
+			Random random = new Random();
+			int id = random.nextInt(2147483646);
+			while (existeEssaChavePrimaria(id)) {
+				id = random.nextInt(2147483646);
+			}
+			statement.setInt(1, id);
 			statement.setInt(2, orcamentoBuffet.getNumeroDeConvidados());
 			statement.setInt(3, orcamentoBuffet.getNumeroDeColaboradores());
 			statement.setString(4, orcamentoBuffet.getHoraDeInicio());
@@ -245,13 +234,13 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 	@Override
 	public boolean deletar(Integer objetoInteger) {
 		int id = objetoInteger.intValue();
-		
+
 		DoceSelecionadoDAO doceDAO = new DoceSelecionadoDAO();
 		SalgadoSelecionadoDAO salgadoDAO = new SalgadoSelecionadoDAO();
-		
+
 		doceDAO.deletar(Integer.toString(objetoInteger));
 		salgadoDAO.deletar(Integer.toString(objetoInteger));
-		
+
 		String sql = "DELETE FROM OrcamentoBuffetCompleto WHERE id = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -283,6 +272,31 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 		} catch (SQLException e) {
 			System.out.println(e);
 			return false;
+		}
+	}
+
+	@Override
+	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
+		int chavePrimariaInt = chavePrimaria.intValue();
+		String sql = "SELECT FROM OrcamentoBuffetCompleto WHERE id = ?";
+		try {
+
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, chavePrimariaInt);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				if (rs.next()) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			return true;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return true;
 		}
 	}
 }
