@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class OrcamentoLocacaoDeEspaco extends OrcamentoEvento {
 	private ArrayList<ServicoContratado> arrayServicosContratados = new ArrayList<>();
 	
-	public OrcamentoLocacaoDeEspaco(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, ArrayList<ServicoContratado> arrayServicosContratados) {
-		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento);
+	public OrcamentoLocacaoDeEspaco(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, ArrayList<ServicoContratado> arrayServicosContratados) {
+		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setArrayServicosContratados(arrayServicosContratados);
 	}
 	
-	public OrcamentoLocacaoDeEspaco(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, ArrayList<ServicoContratado> arrayServicosContratados) {
-		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento);
+	public OrcamentoLocacaoDeEspaco(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, ArrayList<ServicoContratado> arrayServicosContratados) {
+		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setArrayServicosContratados(arrayServicosContratados);
 	}
 	

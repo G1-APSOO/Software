@@ -10,32 +10,32 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	private Bolo bolo;
 	private OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO;
 	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(id, numeroDeConvidados, horaDeInicio, data, pagamento);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(id, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(id, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(id, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
 		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 	
-	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
-		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento);
+	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data, Pagamento pagamento, Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
