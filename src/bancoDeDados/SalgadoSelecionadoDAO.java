@@ -1,4 +1,4 @@
-package bancoDeDados;
+	package bancoDeDados;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,10 +12,11 @@ import excecoes.ExcecaoValorNaoSetado;
 public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 
 	@Override
-	public SalgadoSelecionado get(String salgadoBuffet) {
-		// A string doceBuffet tem o seguinte formato: 'idSalgado idBuffetCompleto'
-		int idSalgado = Integer.parseInt(salgadoBuffet.split(" ")[0]);
-		int idBuffet = Integer.parseInt(salgadoBuffet.split(" ")[1]);
+	public SalgadoSelecionado get(String salgado) {
+		throw new IllegalAccessError();
+	}
+	
+	public SalgadoSelecionado getSalgado(int idSalgado, int idBuffet) {
 
 		String sql = "SELECT * FROM SalgadoSelecionado WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetComp = ?";
 
@@ -107,7 +108,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("SalgadoSelecionado inserido com sucesso!");
+				System.out.println("SalgadoSelecionado inserido com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -135,7 +136,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("SalgadoSelecionado atualizado com sucesso!");
+				System.out.println("SalgadoSelecionado atualizado com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -149,14 +150,18 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 
 	@Override
 	public boolean deletar(String idBuffetParam) {
-		int idBuffet = Integer.parseInt(idBuffetParam);
-		String sql = "DELETE FROM SalgadoSelecionado WHERE fk_idOrcamentoBuffetComp= ?";
+		throw new IllegalAccessError();
+	}
+	
+	public boolean deletarSalgado(int idSalgado, int idBuffet) {
+		String sql = "DELETE FROM SalgadoSelecionado WHERE fk_idOrcamentoBuffetComp= ? AND fk_idSalg = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, idBuffet);
+			statement.setInt(2, idSalgado);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("SalgadoSelecionado(s) deletado(s) com sucesso!");
+				System.out.println("SalgadoSelecionado(s) deletado(s) com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {

@@ -61,7 +61,7 @@ public class TesteOrcamentoBuffetCompletoDAO {
 		
 		//deletar
 		
-		orcDAO.deletar(orc3.getId());
+//		orcDAO.deletar(orc3.getId());
 		
 	}
 
