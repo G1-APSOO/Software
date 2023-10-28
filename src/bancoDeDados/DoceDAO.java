@@ -4,15 +4,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import classes.Doce;
 import excecoes.ExcecaoValorNaoSetado;
 
-public class DoceDAO implements DAO<Doce, Integer>{
+public class DoceDAO implements DAO<Doce, Integer> {
 
-    @Override
-    public Doce get(Integer objetoInteger) {
-        int id = objetoInteger.intValue();
+	@Override
+	public Doce get(Integer objetoInteger) {
+		int id = objetoInteger.intValue();
 
 		String sql = "SELECT * FROM Doce WHERE id = ?";
 
@@ -37,11 +38,11 @@ public class DoceDAO implements DAO<Doce, Integer>{
 			System.out.println(e);
 			return null;
 		}
-    }
+	}
 
-    @Override
-    public ArrayList<Doce> getAll() {
-        String sql = "SELECT * FROM Doce";
+	@Override
+	public ArrayList<Doce> getAll() {
+		String sql = "SELECT * FROM Doce";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -59,15 +60,20 @@ public class DoceDAO implements DAO<Doce, Integer>{
 			System.out.println(e);
 			return null;
 		}
-    }
+	}
 
-    @Override
-    public boolean criar(Doce doce) {
-        String sql = "INSERT INTO Doce VALUES (?, ?, ?)";
+	@Override
+	public boolean criar(Doce doce) {
+		String sql = "INSERT INTO Doce VALUES (?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setInt(1, doce.getId());
+			Random random = new Random();
+			int id = random.nextInt(2147483646);
+			while (existeEssaChavePrimaria(id)) {
+				id = random.nextInt(2147483646);
+			}
+			statement.setInt(1, id);
 			statement.setString(2, doce.getDescricao());
 			statement.setDouble(3, doce.getValorUnitario());
 
@@ -83,11 +89,11 @@ public class DoceDAO implements DAO<Doce, Integer>{
 			System.out.println(e);
 			return false;
 		}
-    }
+	}
 
-    @Override
-    public boolean atualizar(Doce doce) {
-        String sql = "UPDATE Doce SET descricao = ?, valorUnitario = ? WHERE id = ?";
+	@Override
+	public boolean atualizar(Doce doce) {
+		String sql = "UPDATE Doce SET descricao = ?, valorUnitario = ? WHERE id = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -107,11 +113,11 @@ public class DoceDAO implements DAO<Doce, Integer>{
 			System.out.println(e);
 			return false;
 		}
-    }
+	}
 
-    @Override
-    public boolean deletar(Integer objetoInteger) {
-        String sql = "DELETE FROM Doce WHERE id = ?";
+	@Override
+	public boolean deletar(Integer objetoInteger) {
+		String sql = "DELETE FROM Doce WHERE id = ?";
 		int id = objetoInteger.intValue();
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -125,6 +131,31 @@ public class DoceDAO implements DAO<Doce, Integer>{
 			System.out.println(e);
 			return false;
 		}
-    }
-    
+	}
+
+	@Override
+	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
+		int chavePrimariaInt = chavePrimaria.intValue();
+		String sql = "SELECT FROM Doce WHERE id = ?";
+		try {
+
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, chavePrimariaInt);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				if (rs.next()) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			return true;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return true;
+		}
+	}
+
 }
