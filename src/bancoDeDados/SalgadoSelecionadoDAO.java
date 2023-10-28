@@ -1,4 +1,4 @@
-	package bancoDeDados;
+package bancoDeDados;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 	public SalgadoSelecionado get(String salgado) {
 		throw new IllegalAccessError();
 	}
-	
+
 	public SalgadoSelecionado getSalgado(int idSalgado, int idBuffet) {
 
 		String sql = "SELECT * FROM SalgadoSelecionado WHERE fk_idSalg = ? AND fk_idOrcamentoBuffetComp = ?";
@@ -69,7 +69,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 			return null;
 		}
 	}
-	
+
 	public ArrayList<Salgado> getAllSalgados() {
 		SalgadoDAO salgDAO = new SalgadoDAO();
 		return salgDAO.getAll();
@@ -85,8 +85,9 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 			try (ResultSet rs = statement.executeQuery()) {
 				ArrayList<Salgado> salgadosSelecionadosEncontrados = new ArrayList<Salgado>();
 				while (rs.next()) {
-					
-					Salgado salgadoEcontrado = new Salgado(rs.getInt("id"),rs.getString("descricao"),rs.getDouble("valorUnitario"));
+
+					Salgado salgadoEcontrado = new Salgado(rs.getInt("id"), rs.getString("descricao"),
+							rs.getDouble("valorUnitario"));
 					salgadosSelecionadosEncontrados.add(salgadoEcontrado);
 				}
 				return salgadosSelecionadosEncontrados;
@@ -157,7 +158,7 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 	public boolean deletar(String idBuffetParam) {
 		throw new IllegalAccessError();
 	}
-	
+
 	public boolean deletarSalgado(int idSalgado, int idBuffet) {
 		String sql = "DELETE FROM SalgadoSelecionado WHERE fk_idOrcamentoBuffetComp= ? AND fk_idSalg = ?";
 		try {
@@ -173,6 +174,11 @@ public class SalgadoSelecionadoDAO implements DAO<SalgadoSelecionado, String> {
 			System.out.println(e);
 			return false;
 		}
+	}
+
+	@Override
+	public boolean existeEssaChavePrimaria(String chavePrimaria) {
+		throw new IllegalAccessError();
 	}
 
 }
