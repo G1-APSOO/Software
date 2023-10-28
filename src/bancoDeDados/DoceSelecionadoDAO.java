@@ -13,9 +13,11 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 
 	@Override
 	public DoceSelecionado get(String doceBuffet) {
+		throw new IllegalAccessError();
+	}
+	
+	public DoceSelecionado getDoce(int idDoce, int idBuffet) {
 		// A string doceBuffet tem o seguinte formato: 'idDoce idBuffetCompleto'
-		int idDoce = Integer.parseInt(doceBuffet.split(" ")[0]);
-		int idBuffet = Integer.parseInt(doceBuffet.split(" ")[1]);
 
 		String sql = "SELECT * FROM DoceSelecionado WHERE fk_idDoce = ? AND fk_idOrcamentoBuffetCompleto = ?";
 
@@ -107,7 +109,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("DoceSelecionado inserido com sucesso!");
+				System.out.println("Doce selecionado inserido com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -135,7 +137,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("DoceSelecionado atualizado com sucesso!");
+				System.out.println("Doce selecionado atualizado com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -149,14 +151,18 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 
 	@Override
 	public boolean deletar(String idBuffetParam) {
-		int idBuffet = Integer.parseInt(idBuffetParam);
-		String sql = "DELETE FROM DoceSelecionado WHERE fk_idOrcamentoBuffetCompleto = ?";
+		throw new IllegalAccessError();
+	}
+	
+	public boolean deletarDoce(int idDoce, int idBuffet) {
+		String sql = "DELETE FROM DoceSelecionado WHERE fk_idOrcamentoBuffetCompleto= ? AND fk_idDoce = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, idBuffet);
+			statement.setInt(2, idDoce);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("DoceSelecionado(s) deletado(s) com sucesso!");
+				System.out.println("Doce selecionado(s) deletado(s) com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {
