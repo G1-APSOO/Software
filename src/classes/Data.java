@@ -68,6 +68,34 @@ public class Data {
         this.dia = dia;
 
     }
+    
+    public boolean verificarSeDataEstaNoFuturo() {
+    	GregorianCalendar dataAtual = new GregorianCalendar();
+		dataAtual.set(Calendar.MONTH, dataAtual.get(Calendar.MONTH)+1);
+		int diaAtual = dataAtual.get(Calendar.DAY_OF_MONTH);
+		int mesAtual = dataAtual.get(Calendar.MONTH)+1;
+		int anoAtual = dataAtual.get(Calendar.YEAR);
+		
+		if (ano > anoAtual) {
+			return true;
+		} else if (ano < anoAtual) {
+			return false;
+		}
+		
+		if (mes > mesAtual) {
+			return true;
+		} else if (mes < mesAtual) {
+			return false;
+		}
+		
+		if (dia > diaAtual) {
+			return true;
+		} 
+		
+		return false;
+		
+		
+    }
 
     public int getDia() {
         return dia;
