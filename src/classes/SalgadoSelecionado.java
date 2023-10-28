@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class SalgadoSelecionado {
 	private int quantidade;
 	private Salgado salgado;
-	
+
 	public SalgadoSelecionado(int quantidade, Salgado salgado) {
 		setQuantidade(quantidade);
 		setSalgado(salgado);
 	}
-	
+
 	private void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
@@ -18,11 +18,11 @@ public class SalgadoSelecionado {
 	private void setSalgado(Salgado salgado) {
 		this.salgado = salgado;
 	}
-	
+
 	public int getQuantidade() {
 		return quantidade;
 	}
-	
+
 	public Salgado getSalgado() {
 		return salgado;
 	}
