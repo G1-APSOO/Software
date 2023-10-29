@@ -20,12 +20,8 @@ public class JanelaPrincipal extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-		//painelEscolhaDeOrcamento = new PainelEscolhaDeOrcamento();
-		//setContentPane(painelEscolhaDeOrcamento.getPainel());
-		
-		PainelOpcoesOrcamentoDeBuffetCompleto orc = new PainelOpcoesOrcamentoDeBuffetCompleto();
-		//PainelInicialOrcamentoDeBuffetCompleto orc = new PainelInicialOrcamentoDeBuffetCompleto();
-		setContentPane(orc.getPainel());
+		painelEscolhaDeOrcamento = new PainelEscolhaDeOrcamento();
+		setContentPane(painelEscolhaDeOrcamento.getPainel());
 		
 		setVisible(true);
 	}
