@@ -25,7 +25,10 @@ public abstract class Painel {
 	private Font fonteInputs;
 	private Font fonteValor;
 	
+	private String urlDeConfig;
+	
 	protected Painel() {
+		urlDeConfig = "config.txt";
 		setCores();
 		setFontes();
 	}
@@ -34,7 +37,7 @@ public abstract class Painel {
 	public abstract void limparCampos();
 	
 	private void setCores() {
-		Path pathfile = Path.of("config.txt");
+		Path caminhoDeConfig = Path.of(urlDeConfig);
 		Properties properties = new Properties();
 		
 		try {
@@ -42,7 +45,7 @@ public abstract class Painel {
 			String[] auxArray;
 			int[] auxInt = new int[3];
 			
-			properties.load(Files.newBufferedReader(pathfile));
+			properties.load(Files.newBufferedReader(caminhoDeConfig));
 			
 			aux = properties.getProperty("COR_DE_FUNDO");
 			auxArray = aux.split(",");
@@ -100,14 +103,14 @@ public abstract class Painel {
 	}
 	
 	private void setFontes() {
-		Path pathfile = Path.of("config.txt");
+		Path caminhoDeConfig = Path.of(urlDeConfig);
 		Properties properties = new Properties();
 		
 		try {
 			String aux;
 			String[] auxArray;
 			
-			properties.load(Files.newBufferedReader(pathfile));
+			properties.load(Files.newBufferedReader(caminhoDeConfig));
 			
 			aux = properties.getProperty("FONTE_TITULO");
 			auxArray = aux.split(",");
