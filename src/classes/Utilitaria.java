@@ -5,14 +5,8 @@ import excecoes.ExcecaoDDDInvalido;
 
 public class Utilitaria {
 
-	private static final OrcamentoBuffetCompletoDAO OrcBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
-
 	private Utilitaria() {
 		throw new IllegalAccessError();
-	}
-	
-	public static boolean verificarSeDataEstaDisponivel(Data dataDoEvento) {
-		return OrcBuffetCompletoDAO.verificarData(dataDoEvento);
 	}
 
 	public static boolean verificarNumeroConvidados(int numeroDeConvidados) {
