@@ -51,7 +51,8 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 		return false;
 	}
 
-	public void cancelarOrcamento() {
+	public void cancelarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
+		OrcamentoBuffetCompleto.deletarOrcamento(orcamentoBuffet);
 	}
 
 	public ArrayList<Salgado> getAllSalgados() {
