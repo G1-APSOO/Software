@@ -5,12 +5,12 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import controladoras.ControladoraJanela;
+
 public class JanelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7430438618817551574L;
-	
-	private PainelEscolhaDeOrcamento painelEscolhaDeOrcamento;
-	
+		
 	public JanelaPrincipal() {
 		setSize(new Dimension(1280, 720));
 		setResizable(false);
@@ -19,10 +19,7 @@ public class JanelaPrincipal extends JFrame {
 		getContentPane().setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
-		painelEscolhaDeOrcamento = new PainelEscolhaDeOrcamento();
-		setContentPane(painelEscolhaDeOrcamento.getPainel());
-		
+				
 		setVisible(true);
 	}
 
