@@ -13,7 +13,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	private ArrayList<SalgadoSelecionado> arraySalgadoSelecionados = new ArrayList<>();
 	private ArrayList<DoceSelecionado> arrayDoceSelecionados = new ArrayList<>();
 	private Bolo bolo;
-	private OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO;
+	private static final OrcamentoBuffetCompletoDAO OrcBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento,
 			Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces,
@@ -22,7 +22,6 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
-		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento,
@@ -31,7 +30,6 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
-		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data,
@@ -41,7 +39,6 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
-		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data,
@@ -51,12 +48,11 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
-		this.orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	}
 
 	private void calcularQuantidades(ArrayList<Salgado> salgados, ArrayList<Doce> doces) {
-		int quantidadeSalgados = calcularQuantidadeDeSalgados();
-		int quantidadeDoces = calcularQuantidadeDeDoces();
+		int quantidadeSalgados = calcularQuantidadeDeSalgados() / arraySalgadoSelecionados.size();
+		int quantidadeDoces = calcularQuantidadeDeDoces() / arrayDoceSelecionados.size();
 		double pesoBolo = calcularPesoDoBolo();
 
 		for (int i = 0; i < salgados.size(); i++)
@@ -109,6 +105,10 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		BoloDAO boloDAO = new BoloDAO();
 		return boloDAO.getAll();
 	}
+	
+	public static boolean verificarSeDataEstaDisponivel(Data dataDoEvento) {
+		return orcBuffetCompletoDAO.verificarData(dataDoEvento);
+	}
 
 	private void setTeraCerveja(boolean teraCerveja) {
 		this.teraCerveja = teraCerveja;
@@ -134,6 +134,27 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 
 	public Bolo getBolo() {
 		return bolo;
+	}
+	
+	@Override
+	public double calcularValorTotal() {
+		double valorTotal = 2799.00;
+		
+		for (int i = 0; i < arraySalgadoSelecionados.size(); i++) {
+			valorTotal = valorTotal + arraySalgadoSelecionados.get(i).getValor();
+		}
+		
+		for (int i = 0; i < arrayDoceSelecionados.size(); i++) {
+			valorTotal = valorTotal + arrayDoceSelecionados.get(i).getValor();
+		}
+		
+		valorTotal = valorTotal + bolo.getValor();
+		
+		if (getNumeroDeConvidados() > 50 && getNumeroDeConvidados() <= 180) {
+			valorTotal = valorTotal + (getNumeroDeConvidados() - 50) * 40.00;
+		}
+		
+		return valorTotal;
 	}
 
 	public static boolean verificarData(Data data) {
