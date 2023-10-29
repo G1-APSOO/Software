@@ -97,7 +97,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 
 	public static ArrayList<Doce> getAllDoces() {
 		DoceSelecionadoDAO doceSelecionadoDAO = new DoceSelecionadoDAO();
-		
+
 		return doceSelecionadoDAO.getAllDoces();
 	}
 
@@ -105,7 +105,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		BoloDAO boloDAO = new BoloDAO();
 		return boloDAO.getAll();
 	}
-	
+
 	public static boolean verificarSeDataEstaDisponivel(Data dataDoEvento) {
 		return orcamentoBuffetCompletoDAO.verificarData(dataDoEvento);
 	}
@@ -135,31 +135,36 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	public Bolo getBolo() {
 		return bolo;
 	}
-	
+
 	@Override
 	public double calcularValorTotal() {
 		double valorTotal = 2799.00;
-		
+
 		for (int i = 0; i < arraySalgadoSelecionados.size(); i++) {
 			valorTotal = valorTotal + arraySalgadoSelecionados.get(i).getValor();
 		}
-		
+
 		for (int i = 0; i < arrayDoceSelecionados.size(); i++) {
 			valorTotal = valorTotal + arrayDoceSelecionados.get(i).getValor();
 		}
-		
+
 		valorTotal = valorTotal + bolo.getValor();
-		
+
 		if (getNumeroDeConvidados() > 50 && getNumeroDeConvidados() <= 180) {
 			valorTotal = valorTotal + (getNumeroDeConvidados() - 50) * 40.00;
 		}
-		
+
 		return valorTotal;
 	}
 
 	public static boolean verificarData(Data data) {
 		OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 		return orcamentoBuffetCompletoDAO.verificarData(data);
+	}
+
+	public static boolean deletarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
+		OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
+		return orcamentoBuffetCompletoDAO.deletar(orcamentoBuffet.getId());
 	}
 
 }
