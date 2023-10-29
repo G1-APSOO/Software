@@ -23,4 +23,12 @@ public class OrcamentoLocacaoDeEspaco extends OrcamentoEvento {
 	public ArrayList<ServicoContratado> getArrayServicosContratados() {
 		return arrayServicosContratados;
 	}
+	@Override
+	public double calcularValorTotal() {
+		double valorTotal = 0.0;
+		
+		//TODO calcular para o orcamento de locacao de espaco
+		
+		return valorTotal;
+	}
 }
