@@ -23,6 +23,7 @@ public abstract class Painel {
 	private Font fonteTitulo;
 	private Font fonteLabelInterno;
 	private Font fonteInputs;
+	private Font fonteValor;
 	
 	protected Painel() {
 		setCores();
@@ -120,6 +121,10 @@ public abstract class Painel {
 			auxArray = aux.split(",");
 			fonteInputs = new Font(auxArray[0], Font.PLAIN, Integer.valueOf(auxArray[1]));
 			
+			aux = properties.getProperty("FONTE_LABEL_VALOR");
+			auxArray = aux.split(",");
+			fonteValor = new Font(auxArray[0], Font.BOLD, Integer.valueOf(auxArray[1]));
+			
 		} catch (Exception e) {
 			System.out.println("Erro: Ao tentar abrir o arquivo configs.txt");
 		} 
@@ -128,6 +133,7 @@ public abstract class Painel {
 		fonteTitulo = new Font("Calibri Light", Font.PLAIN, 44);
 		fonteLabelInterno = new Font("Arial", Font.PLAIN, 24);
 		fonteInputs = new Font("Arial", Font.PLAIN, 24);
+		fonteValor = new Font("Arial", Font.BOLD, 40);
 		// Fim do Debug
 	}
 	
@@ -189,6 +195,10 @@ public abstract class Painel {
 	
 	protected Font getFonteInputs() {
 		return fonteInputs;
+	}
+	
+	protected Font getFonteValor() {
+		return fonteValor;
 	}
 	
 }
