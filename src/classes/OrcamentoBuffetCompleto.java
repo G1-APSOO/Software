@@ -107,8 +107,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 
 	public static ArrayList<Bolo> getAllBolos() {
 		BoloDAO boloDAO = new BoloDAO();
-		ArrayList<Bolo> bolos = boloDAO.getAll();
-		return bolos;
+		return boloDAO.getAll();
 	}
 
 	private void setTeraCerveja(boolean teraCerveja) {
@@ -135,6 +134,11 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 
 	public Bolo getBolo() {
 		return bolo;
+	}
+
+	public static boolean verificarData(Data data) {
+		OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
+		return orcamentoBuffetCompletoDAO.verificarData(data);
 	}
 
 }

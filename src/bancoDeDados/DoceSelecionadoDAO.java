@@ -15,7 +15,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 	public DoceSelecionado get(String doceBuffet) {
 		throw new IllegalAccessError();
 	}
-	
+
 	public DoceSelecionado getDoce(int idDoce, int idBuffet) {
 		// A string doceBuffet tem o seguinte formato: 'idDoce idBuffetCompleto'
 
@@ -70,24 +70,25 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 			return null;
 		}
 	}
-	
+
 	public ArrayList<Doce> getAllDoces() {
 		DoceDAO doceDAO = new DoceDAO();
-		return doceDAO.getAll();		
+		return doceDAO.getAll();
 	}
 
 	public ArrayList<Doce> getAllBuffet(int idBuffet) {
 		String sql = "SELECT doce.id,doce.descricao,doce.valorUnitario FROM DoceSelecionado, Doce, orcamentobuffetcompleto WHERE fk_idOrcamentoBuffetCompleto = ? AND fk_idOrcamentoBuffetCompleto = orcamentobuffetcompleto.id AND doceselecionado.fk_idDoce = doce.id;";
-		
+
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, idBuffet);
 
 			try (ResultSet rs = statement.executeQuery()) {
 				ArrayList<Doce> docesSelecionadosEncontrados = new ArrayList<Doce>();
-				
+
 				while (rs.next()) {
-					Doce doceEncontrado = new Doce(rs.getInt("id"),rs.getString("descricao"),rs.getDouble("valorUnitario"));
+					Doce doceEncontrado = new Doce(rs.getInt("id"), rs.getString("descricao"),
+							rs.getDouble("valorUnitario"));
 					docesSelecionadosEncontrados.add(doceEncontrado);
 				}
 				return docesSelecionadosEncontrados;
@@ -158,7 +159,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 	public boolean deletar(String idBuffetParam) {
 		throw new IllegalAccessError();
 	}
-	
+
 	public boolean deletarDoce(int idDoce, int idBuffet) {
 		String sql = "DELETE FROM DoceSelecionado WHERE fk_idOrcamentoBuffetCompleto= ? AND fk_idDoce = ?";
 		try {
@@ -174,6 +175,11 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 			System.out.println(e);
 			return false;
 		}
+	}
+
+	@Override
+	public boolean existeEssaChavePrimaria(String chavePrimaria) {
+		throw new IllegalAccessError();
 	}
 
 }

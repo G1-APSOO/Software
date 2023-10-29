@@ -9,7 +9,7 @@ import classes.Cliente;
 import excecoes.ExcecaoValorNaoSetado;
 
 public class ClienteDAO implements DAO<Cliente, String> {
-	
+
 	@Override
 	public Cliente get(String cpf) {
 		String sql = "SELECT * FROM Cliente WHERE cpf = ?";
@@ -66,7 +66,10 @@ public class ClienteDAO implements DAO<Cliente, String> {
 	@Override
 	public boolean criar(Cliente cliente) {
 		String sql = "INSERT INTO Cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+		if (existeEssaChavePrimaria(cliente.getCpf())) {
+			System.out.println("Cliente com mesmo cpf ja cadastrado");
+			return false;
+		}
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, cliente.getCpf());
@@ -137,6 +140,29 @@ public class ClienteDAO implements DAO<Cliente, String> {
 		} catch (SQLException e) {
 			System.out.println(e);
 			return false;
+		}
+	}
+
+	@Override
+	public boolean existeEssaChavePrimaria(String chavePrimaria) {
+		String sql = "SELECT FROM Cliente WHERE cpf = ?";
+		try {
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setString(1, chavePrimaria);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				if (rs.next()) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			return true;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return true;
 		}
 	}
 }
