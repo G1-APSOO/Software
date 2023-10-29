@@ -27,9 +27,7 @@ public class OrcamentoLocacaoDeEspaco extends OrcamentoEvento {
 	public double calcularValorTotal() {
 		double valorTotal = 0.0;
 		
-		if (getNumeroDeConvidados() > 50 && getNumeroDeConvidados() <= 180) {
-			valorTotal = valorTotal + (getNumeroDeConvidados() - 50) * 40.00;
-		}
+		//TODO calcular para o orcamento de locacao de espaco
 		
 		return valorTotal;
 	}
