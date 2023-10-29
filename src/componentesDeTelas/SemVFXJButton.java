@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
-public class NoVFXJButton extends JButton {
+public class SemVFXJButton extends JButton {
 
 	private static final long serialVersionUID = 8823643705950042338L;
 
@@ -20,7 +20,7 @@ public class NoVFXJButton extends JButton {
     private Color corBorda;
     private int arco;
 
-    public NoVFXJButton(String mensagemLabel) {
+    public SemVFXJButton(String mensagemLabel) {
         arco = 35;
         
         corBotao 					= Color.WHITE; 

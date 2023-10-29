@@ -2,6 +2,7 @@ package telas;
 
 import javax.swing.JPanel;
 
+import componentesDeTelas.SemVFXJButton;
 import componentesDeTelas.RoundJPanel;
 
 import javax.swing.GroupLayout;
@@ -16,8 +17,8 @@ import javax.swing.border.EmptyBorder;
 public class PainelEscolhaDeOrcamento extends Painel {
 	
 	private JPanel painel;
-	private JButton botaoOrcamentoBuffetCompleto;
-	private JButton botaoOrcamentoLocacao;
+	private SemVFXJButton botaoOrcamentoBuffetCompleto;
+	private SemVFXJButton botaoOrcamentoLocacao;
 	
 	public PainelEscolhaDeOrcamento() {
 		super();
@@ -43,25 +44,25 @@ public class PainelEscolhaDeOrcamento extends Painel {
 				.addGroup(gl_painel.createSequentialGroup()
 					.addGap(20)
 					.addComponent(painelVoltar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 645, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 1085, Short.MAX_VALUE)
 					.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-					.addGap(20))
+					.addGap(25))
 				.addGroup(gl_painel.createSequentialGroup()
 					.addGap(400)
 					.addGroup(gl_painel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
-						.addComponent(painelDivisorBotoes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+						.addComponent(painelDivisorBotoes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
 					.addGap(400))
 		);
 		gl_painel.setVerticalGroup(
 			gl_painel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_painel.createSequentialGroup()
-					.addGap(20)
+					.addGap(15)
 					.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
 					.addGap(82)
 					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(painelDivisorBotoes, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+					.addComponent(painelDivisorBotoes, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
 					.addGap(109)
 					.addComponent(painelVoltar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
 					.addGap(20))
@@ -84,7 +85,7 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		painelDivisorBotoes.add(painelExternoOrcamentoBuffetCompleto);
 		painelExternoOrcamentoBuffetCompleto.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		botaoOrcamentoBuffetCompleto = new JButton("Orçamento de buffet completo");
+		botaoOrcamentoBuffetCompleto = new SemVFXJButton("Orçamento de buffet completo");
 		botaoOrcamentoBuffetCompleto.setFont(getFonteLabelInterno());
 		botaoOrcamentoBuffetCompleto.setFocusable(false);
 		painelExternoOrcamentoBuffetCompleto.add(botaoOrcamentoBuffetCompleto);
@@ -95,7 +96,7 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		painelDivisorBotoes.add(painelExternoOrcamentoLocacao);
 		painelExternoOrcamentoLocacao.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		botaoOrcamentoLocacao = new JButton("Orçamento de locação de espaço");
+		botaoOrcamentoLocacao = new SemVFXJButton("Orçamento de locação de espaço");
 		botaoOrcamentoLocacao.setFont(getFonteLabelInterno());
 		botaoOrcamentoLocacao.setFocusable(false);
 		painelExternoOrcamentoLocacao.add(botaoOrcamentoLocacao);
