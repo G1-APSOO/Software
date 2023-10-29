@@ -20,16 +20,15 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 		return rand.nextInt(2147483646);
 	}
 	
-	public Double consultarValorDoOrcamento(int idOrcamento) {
-		return null;
+	public double consultarValorDoOrcamento(OrcamentoBuffetCompleto orcamento) {
+		return orcamento.calcularValorTotal();
 	}
 
-	public Double cadastrarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
+	public void cadastrarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
 			Cliente cliente, String horaDeInicio, boolean teraCerveja, ArrayList<Salgado> opcoesDeSalgado,
 			ArrayList<Doce> opcoesDeDoces, Bolo opcaoDeBolo) {
 		// necessario incluir Pagamento nos parametros
 			OrcamentoBuffetCompleto orcamentoBuffetCompleto = new OrcamentoBuffetCompleto(numeroDeConvidados, numeroDeColaboradores, horaDeInicio, dataDoEvento, null, cliente, criaId(), teraCerveja, opcoesDeSalgado, opcoesDeDoces, opcaoDeBolo);
-		return null;
 	}
 
 	public int verificarNumeroDeConvidados(int numeroDeConvidados) {
