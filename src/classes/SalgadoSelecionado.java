@@ -1,7 +1,5 @@
 package classes;
 
-import java.util.ArrayList;
-
 public class SalgadoSelecionado {
 	private int quantidade;
 	private Salgado salgado;

@@ -83,5 +83,11 @@ public class OrcamentoEvento {
 	public Cliente getCliente() {
 		return cliente;
 	}
+	
+	public double calcularValorTotal() {
+		double valorTotal = 0.0;
+		
+		return valorTotal;
+	}
 
 }
