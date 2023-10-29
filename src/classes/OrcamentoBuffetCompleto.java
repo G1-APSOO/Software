@@ -167,4 +167,9 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		return orcamentoBuffetCompletoDAO.deletar(orcamentoBuffet.getId());
 	}
 
+	public static boolean cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
+		OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
+		return orcamentoBuffetCompletoDAO.criar(orcamentoBuffet);
+	}
+
 }
