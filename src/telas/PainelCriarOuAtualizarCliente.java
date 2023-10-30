@@ -10,6 +10,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJPanel;
 import componentesDeTelas.RoundJTextField;
+import controladoras.ControladoraGerenciarCliente;
+import controladoras.ControladoraJanela;
+import controladoras.ControladoraOrcamentoDeBuffetCompleto;
+import excecoes.ExcecaoDDDInvalido;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
@@ -17,21 +21,23 @@ import java.awt.event.MouseListener;
 
 import javax.swing.border.EmptyBorder;
 
+import classes.OrcamentoBuffetCompleto;
+
 public class PainelCriarOuAtualizarCliente extends Painel {
 
 	private JPanel painel;
 	
 	private JLabel labelTituloTela;
 	
-	private RoundJTextField inputNomeCompleto;
-	private RoundJTextField inputCPF;
-	private RoundJTextField inputRG;
-	private RoundJTextField inputEmail;
-	private RoundJTextField inputAlternado;
-	private RoundJTextField inputCEP;
-	private RoundJTextField inputCelular;
-	private RoundJTextField inputTelefoneResidencial;
-	private RoundJTextField inputTelefoneComercial;
+	private RoundJTextField inputNomeCompleto;			// OBRIGATORIO
+	private RoundJTextField inputCPF;					// OBRIGATORIO
+	private RoundJTextField inputRG;					// OPCIONAL
+	private RoundJTextField inputEmail;					// OBRIGATORIO
+	private RoundJTextField inputAlternado;				// OBRIGATORIO
+	private RoundJTextField inputCEP;					// OBRIGATORIO
+	private RoundJTextField inputCelular;				// OBRIGATORIO
+	private RoundJTextField inputTelefoneResidencial;	// OPCIONAL
+	private RoundJTextField inputTelefoneComercial;		// OPCIONAL
 	
 	private JPanel painelDelimitadorNomeCompleto;
 	private JPanel painelDelimitadorCPF;
@@ -43,6 +49,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 	private JPanel painelDelimitadorTelefoneComercial;
 	
 	private JLabel labelAlternado;
+	private boolean usuarioJaPesquisado;
 	
 	public PainelCriarOuAtualizarCliente(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
 		
@@ -56,6 +63,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		JPanel painelProximaPagina = new JPanel();
 		JPanel painelRetornaTudo = new JPanel();
 		JPanel painelErro = new JPanel();
+		usuarioJaPesquisado = false;
 		
 		painelPaginaAnterior.setBackground(getCorDeFundo());
 		painelProximaPagina.setBackground(getCorDeFundo());
@@ -464,14 +472,57 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 			@Override
 			public void mousePressed(MouseEvent e) { 
 				
-				boolean erro = false;
-				
-				if (inputCPF.getText().matches("\\d{3}.\\d{3}.\\d{3}-\\d{2}") == false) {
-					//JOptionPane.showMessageDialog(null, "") //
+				if (usuarioJaPesquisado == false) {
+					
+					if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputCPF.getText())) {
+						//ControladoraGerenciarCliente
+					
+					} else JOptionPane.showMessageDialog(null, "CPF inválido"); // TODO Chamar PopUpErroGenerico
+					
+					return;
 				}
 				
-				organizador.proximaPagina();
-			
+				
+				boolean erro = false;
+				
+				if (ControladoraOrcamentoDeBuffetCompleto.verificarNomeCompleto(inputNomeCompleto.getText()) == false) {
+					JOptionPane.showMessageDialog(null, "Nome inválido"); // TODO Chamar PopUpErroGenerico
+					erro = true;
+				}
+				
+				if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputCPF.getText()) == false) {
+					JOptionPane.showMessageDialog(null, "CPF inválido"); // TODO Chamar PopUpErroGenerico
+					erro = true;
+				}
+
+				if (ControladoraOrcamentoDeBuffetCompleto.verificarEmail(inputEmail.getText()) == false) {
+					JOptionPane.showMessageDialog(null, "Email inválido"); // TODO Chamar PopUpErroGenerico
+					erro = true;
+				}
+				
+				// Verificação abaixo pode falhar
+				// TODO Testar!
+				if (inputAlternado.getText().isBlank() || inputAlternado.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Endereço vazio"); // TODO Chamar PopUpErroGenerico
+					erro = true;
+				}
+				
+				if (ControladoraOrcamentoDeBuffetCompleto.verificarCEP(inputCEP.getText()) == false) {
+					JOptionPane.showMessageDialog(null, "CEP inválido"); // TODO Chamar PopUpErroGenerico
+					erro = true;
+				}
+				
+				try {
+					if (ControladoraOrcamentoDeBuffetCompleto.verificarCelular(inputCelular.getText()) == false) {
+						JOptionPane.showMessageDialog(null, "Celular inválido"); // TODO Chamar PopUpErroGenerico
+						erro = true;
+					}					
+				} catch (ExcecaoDDDInvalido eDDD) {
+					JOptionPane.showMessageDialog(null, "DDD inválido"); // TODO Chamar PopUpErroGenerico
+					erro = true;
+				}
+				
+				if (erro == false) organizador.proximaPagina();
 			}
 			
 			@Override
