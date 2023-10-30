@@ -13,8 +13,8 @@ public class RoundJFormattedTextField extends JFormattedTextField {
 	private Shape formato;
 	private int arco;
 	
-    public RoundJFormattedTextField(int size) {
-        super(size);
+    public RoundJFormattedTextField() {
+        super();
         setOpaque(false); 
         arco = 35;
     }
