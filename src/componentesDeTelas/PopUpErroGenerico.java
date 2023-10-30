@@ -53,11 +53,11 @@ public class PopUpErroGenerico extends Painel {
 		labelMensagemPrincipal.setFont(new Font("Arial", Font.PLAIN, 20));
 		labelMensagemPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		SemVFXJButton botao = new SemVFXJButton("Mensagem", getCorJanelaErro(), getCorJanelaErro());
+		SemVFXJButton botao = new SemVFXJButton("Mensagem", getCorDeJanelaInterna(), getCorJanelaErro(), new Color(25, 25, 25, 220), new Color(25, 25, 25, 180), 15);
 		botao.setText(mensagemDoBotao);
 		botao.setForeground(new Color(240, 240, 240));
 		botao.setBackground(new Color(25, 25, 25));
-		botao.setFont(new Font("Arial", Font.PLAIN, 16));
+		botao.setFont(new Font("Arial", Font.PLAIN, 14));
 		botao.addActionListener(e -> ControladoraJanela.trocaPainel(painelDeRetorno.getPainel()));
 		
 		JLabel labelMensagemInstrucao = new JLabel("Mensagem de erro secundária");
@@ -104,13 +104,7 @@ public class PopUpErroGenerico extends Painel {
 
 	@Override
 	public JPanel getPainel() {
-		// TODO Auto-generated method stub
 		return painel;
 	}
 
-	@Override
-	protected void configurarBotoes() {
-		// TODO Auto-generated method stub
-		
-	}
 }
