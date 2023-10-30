@@ -4,16 +4,15 @@ import classes.Cliente;
 import classes.Salgado;
 import classes.Doce;
 import classes.OrcamentoBuffetCompleto;
-import classes.Pagamento;
 import classes.Data;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import bancoDeDados.OrcamentoBuffetCompletoDAO;
 import classes.Bolo;
 
 public class ControladoraOrcamentoDeBuffetCompleto {
+	
 	// necessario aprimorar para verificar se id ja foi utilizado
 	public int criaId() {
 		Random rand = new Random();
@@ -24,15 +23,20 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 		return orcamento.calcularValorTotal();
 	}
 
-	public void cadastrarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
+	public OrcamentoBuffetCompleto criarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
 			Cliente cliente, String horaDeInicio, boolean teraCerveja, ArrayList<Salgado> opcoesDeSalgado,
 			ArrayList<Doce> opcoesDeDoces, Bolo opcaoDeBolo) {
 		// necessario incluir Pagamento nos parametros
-			OrcamentoBuffetCompleto orcamentoBuffetCompleto = new OrcamentoBuffetCompleto(numeroDeConvidados, numeroDeColaboradores, horaDeInicio, dataDoEvento, null, cliente, criaId(), teraCerveja, opcoesDeSalgado, opcoesDeDoces, opcaoDeBolo);
+			OrcamentoBuffetCompleto orcamentoBuffetCompleto = new OrcamentoBuffetCompleto(numeroDeConvidados, numeroDeColaboradores, horaDeInicio, dataDoEvento, null, cliente, -1, teraCerveja, opcoesDeSalgado, opcoesDeDoces, opcaoDeBolo);
+			return orcamentoBuffetCompleto;
+	}
+	
+	public void cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffetCompleto) {
+		//OrcamentoBuffetCompleto.cadastrarOrcamento(orcamentoBuffetCompleto);
 	}
 
-	public int verificarNumeroDeConvidados(int numeroDeConvidados) {
-		return -1;
+	public boolean verificarNumeroDeConvidados(int numeroDeConvidados) {
+		return numeroDeConvidados >= 50 && numeroDeConvidados <= 180;
 	}
 
 	public boolean verificarData(Data data) {
@@ -52,6 +56,7 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 	}
 
 	public void cancelarOrcamento() {
+	
 	}
 
 	public ArrayList<Salgado> getAllSalgados() {
