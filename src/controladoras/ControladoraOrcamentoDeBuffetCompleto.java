@@ -18,29 +18,25 @@ import javax.swing.JOptionPane;
 import classes.Bolo;
 
 public class ControladoraOrcamentoDeBuffetCompleto {
-	
-	private ControladoraOrcamentoDeBuffetCompleto() {} // Classe statica
-	
-	// necessario aprimorar para verificar se id ja foi utilizado
-	public static int criaId() {
-		Random rand = new Random();
-		return rand.nextInt(2147483646);
-	}
-	
-	public static double consultarValorDoOrcamento(OrcamentoBuffetCompleto orcamento) {
+
+	private ControladoraOrcamentoDeBuffetCompleto() {
+		throw new IllegalAcessException("Controladora Orcamento de BuffetCompleto é estática");
+	} 
+
+	public double consultarValorDoOrcamento(OrcamentoBuffetCompleto orcamento) {
 		return orcamento.calcularValorTotal();
 	}
 
-	public static OrcamentoBuffetCompleto criarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
+	public void cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffetCompleto) {
+		 OrcamentoBuffetCompleto.cadastrarOrcamento(orcamentoBuffetCompleto);
+	}
+
+	public OrcamentoBuffetCompleto criarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
 			Cliente cliente, String horaDeInicio, boolean teraCerveja, ArrayList<Salgado> opcoesDeSalgado,
 			ArrayList<Doce> opcoesDeDoces, Bolo opcaoDeBolo) {
 		// necessario incluir Pagamento nos parametros
-			OrcamentoBuffetCompleto orcamentoBuffetCompleto = new OrcamentoBuffetCompleto(numeroDeConvidados, numeroDeColaboradores, horaDeInicio, dataDoEvento, null, cliente, -1, teraCerveja, opcoesDeSalgado, opcoesDeDoces, opcaoDeBolo);
-			return orcamentoBuffetCompleto;
-	}
-	
-	public static void cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffetCompleto) {
-		//OrcamentoBuffetCompleto.cadastrarOrcamento(orcamentoBuffetCompleto);
+		return new OrcamentoBuffetCompleto(numeroDeConvidados, numeroDeColaboradores, horaDeInicio, dataDoEvento, null,
+				cliente, -1, teraCerveja, opcoesDeSalgado, opcoesDeDoces, opcaoDeBolo);
 	}
 
 	public static boolean verificarNumeroDeConvidados(int numeroDeConvidados) {
@@ -103,8 +99,8 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 		return Utilitaria.verificarOpcoesDoces(qtdDoces);
 	}
 
-	public static void cancelarOrcamento() {
-	
+	public void cancelarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
+		OrcamentoBuffetCompleto.deletarOrcamento(orcamentoBuffet);
 	}
 
 	public static ArrayList<Salgado> getAllSalgados() {

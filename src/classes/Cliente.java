@@ -1,5 +1,8 @@
 package classes;
 
+import java.util.ArrayList;
+
+import bancoDeDados.ClienteDAO;
 import excecoes.ExcecaoDDDInvalido;
 import excecoes.ExcecaoNaoPreenchido;
 import excecoes.ExcecaoParametroPreenchidoErrado;
@@ -7,24 +10,20 @@ import excecoes.ExcecaoSomenteLetras;
 import excecoes.ExcecaoSomenteNumeros;
 
 public class Cliente {
-	
-	private String nome; 				// OBRIGATORIO
-	private String cpf;					// OBRIGATORIO
-	private String rg;					// OPCIONAL
-	private String endereco;			// OBRIGATORIO
-	private String cep;					// OBRIGATORIO
-	private String celular;				// OBRIGATORIO
+
+	private String nome; // OBRIGATORIO
+	private String cpf; // OBRIGATORIO
+	private String rg; // OPCIONAL
+	private String endereco; // OBRIGATORIO
+	private String cep; // OBRIGATORIO
+	private String celular; // OBRIGATORIO
 	private String telefoneResidencial; // OPCIONAL
-	private String telefoneComercial; 	// OPCIONAL
-	private String email;				// OBRIGATORIO
-	
+	private String telefoneComercial; // OPCIONAL
+	private String email; // OBRIGATORIO
+
 	/* Construtor minimo */
 	public Cliente(String nome, String cpf, String endereco, String cep, String celular, String email)
-		throws  ExcecaoSomenteLetras,
-		ExcecaoSomenteNumeros,
-		ExcecaoParametroPreenchidoErrado,
-		ExcecaoDDDInvalido
-	{	
+			throws ExcecaoSomenteLetras, ExcecaoSomenteNumeros, ExcecaoParametroPreenchidoErrado, ExcecaoDDDInvalido {
 		setNome(nome);
 		setCpf(cpf);
 		setEndereco(endereco);
@@ -33,14 +32,11 @@ public class Cliente {
 		setEmail(email);
 
 	}
-	
+
 	// Construtor Completo
-	public Cliente(String nome, String cpf, String endereco, String cep, String celular, String email, String rg, String telefoneResidencial, String telefoneComercial) 
-		throws  ExcecaoSomenteLetras,
-				ExcecaoSomenteNumeros,
-				ExcecaoParametroPreenchidoErrado,
-				ExcecaoDDDInvalido
-	{
+	public Cliente(String nome, String cpf, String endereco, String cep, String celular, String email, String rg,
+			String telefoneResidencial, String telefoneComercial)
+			throws ExcecaoSomenteLetras, ExcecaoSomenteNumeros, ExcecaoParametroPreenchidoErrado, ExcecaoDDDInvalido {
 		setNome(nome);
 		setCpf(cpf);
 		setRg(rg);
@@ -51,7 +47,7 @@ public class Cliente {
 		setTelefoneComercial(telefoneComercial);
 		setEmail(email);
 	}
-	
+
 	private void setNome(String nome) throws ExcecaoSomenteLetras {
 		if (Utilitaria.verificarNome(nome) == false) throw new ExcecaoSomenteLetras("Nome");
 		this.nome = nome;
@@ -66,16 +62,16 @@ public class Cliente {
 		if (Utilitaria.verificarRG(rg) == false) throw new ExcecaoParametroPreenchidoErrado("RG");
 		this.rg = rg;
 	}
-	
+
 	private void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	
+
 	private void setCep(String cep) throws ExcecaoParametroPreenchidoErrado {
 		if (Utilitaria.verificarCEP(cep) == false) throw new ExcecaoParametroPreenchidoErrado("CEP");
 		this.cep = cep;
 	}
-	
+
 	private void setCelular(String celular) throws ExcecaoDDDInvalido, ExcecaoParametroPreenchidoErrado {
 		if (Utilitaria.verificarCelular(celular) == false) throw new ExcecaoParametroPreenchidoErrado("Celular");
 		this.celular = celular;
@@ -89,38 +85,38 @@ public class Cliente {
 	public void setTelefoneComercial(String telefoneComercial) throws ExcecaoDDDInvalido, ExcecaoParametroPreenchidoErrado {
 		boolean telefoneComercialECelular = Utilitaria.verificarCelular(telefoneComercial);
 		boolean telefoneComercialETelefoneFixo = Utilitaria.verificarTelefoneFixo(telefoneComercial);
-		
-		if (telefoneComercialECelular || telefoneComercialETelefoneFixo) 
+
+		if (telefoneComercialECelular || telefoneComercialETelefoneFixo)
 			this.telefoneComercial = telefoneComercial;
 		else
 			throw new ExcecaoParametroPreenchidoErrado("Telefone comercial");
 	}
-	
+
 	private void setEmail(String email) {
 		if (Utilitaria.verificarEmail(email) == false) throw new ExcecaoParametroPreenchidoErrado("Email");
 		this.email = email;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public String getCpf() {
 		return cpf;
 	}
-	
+
 	public String getRg() {
 		return rg;
 	}
-	
+
 	public String getEndereco() {
 		return endereco;
 	}
-	
+
 	public String getCep() {
 		return cep;
 	}
-	
+
 	public String getCelular() {
 		return celular;
 	}
@@ -135,6 +131,31 @@ public class Cliente {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public static Cliente getCliente(String cpf) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		return clienteDAO.get(cpf);
+	}
+
+	public static void deletarCliente(String cpf) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.deletar(cpf);
+	}
+
+	public static void atualizarCliente(Cliente cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.atualizar(cliente);
+	}
+
+	public static void cadastrarCliente(Cliente cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.criar(cliente);
+	}
+
+	public static ArrayList<Cliente> getAllCliente() {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		return clienteDAO.getAll();
 	}
 
 }
