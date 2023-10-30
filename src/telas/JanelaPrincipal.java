@@ -4,13 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import controladoras.ControladoraJanela;
 
 public class JanelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 7430438618817551574L;
-		
+	
+	private JPanel jPanelAtual;
+	
 	public JanelaPrincipal() {
 		setSize(new Dimension(1280, 720));
 		setResizable(false);
@@ -23,4 +26,13 @@ public class JanelaPrincipal extends JFrame {
 		setVisible(true);
 	}
 
+	public void trocaPainel(JPanel painel) {
+		if (jPanelAtual != null) getContentPane().remove(jPanelAtual);
+		getContentPane().add(painel, BorderLayout.CENTER);
+		getContentPane().repaint();
+		
+		jPanelAtual = painel;
+		setVisible(true);
+	}
+	
 }
