@@ -21,6 +21,15 @@ public class Data {
         setMes(mes);
         setDia(dia);
     }
+    
+    public Data(String dia, String mes, String ano)  
+    	    throws ExcecaoNaoPreenchido,
+    	    	ExcecaoDiaInvalido,
+    	    	ExcecaoMesInvalido {
+    	        setAno(Integer.parseInt(ano));
+    	        setMes(Integer.parseInt(mes));
+    	        setDia(Integer.parseInt(dia));
+    	    }
 
     private void setDia(int dia) throws ExcecaoNaoPreenchido, ExcecaoDiaInvalido {
     	
