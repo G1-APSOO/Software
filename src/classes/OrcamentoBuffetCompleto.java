@@ -55,8 +55,8 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	}
 
 	private void calcularQuantidades(ArrayList<Salgado> salgados, ArrayList<Doce> doces) {
-		int quantidadeSalgados = calcularQuantidadeDeSalgados() / arraySalgadoSelecionados.size();
-		int quantidadeDoces = calcularQuantidadeDeDoces() / arrayDoceSelecionados.size();
+		int quantidadeSalgados = calcularQuantidadeDeSalgados() / salgados.size();
+		int quantidadeDoces = calcularQuantidadeDeDoces() / doces.size();
 		double pesoBolo = calcularPesoDoBolo();
 
 		for (int i = 0; i < salgados.size(); i++) arraySalgadoSelecionados.add(new SalgadoSelecionado(quantidadeSalgados, salgados.get(i)));
