@@ -8,20 +8,22 @@ import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import componentesDeTelas.ListenerRetornaTudo;
+import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
 import componentesDeTelas.RoundJTextField;
 import controladoras.ControladoraGerenciarCliente;
-import controladoras.ControladoraJanela;
 import controladoras.ControladoraOrcamentoDeBuffetCompleto;
 import excecoes.ExcecaoDDDInvalido;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.ParseException;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
-import classes.OrcamentoBuffetCompleto;
+import classes.Cliente;
 
 public class PainelCriarOuAtualizarCliente extends Painel {
 
@@ -29,15 +31,15 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 	
 	private JLabel labelTituloTela;
 	
-	private RoundJTextField inputNomeCompleto;			// OBRIGATORIO
-	private RoundJTextField inputCPF;					// OBRIGATORIO
-	private RoundJTextField inputRG;					// OPCIONAL
-	private RoundJTextField inputEmail;					// OBRIGATORIO
-	private RoundJTextField inputAlternado;				// OBRIGATORIO
-	private RoundJTextField inputCEP;					// OBRIGATORIO
-	private RoundJTextField inputCelular;				// OBRIGATORIO
-	private RoundJTextField inputTelefoneResidencial;	// OPCIONAL
-	private RoundJTextField inputTelefoneComercial;		// OPCIONAL
+	private RoundJTextField inputNomeCompleto;					// OBRIGATORIO
+	private RoundJFormattedTextField inputCPF;					// OBRIGATORIO
+	private RoundJTextField inputRG;							// OPCIONAL
+	private RoundJTextField inputEmail;							// OBRIGATORIO
+	private RoundJTextField inputAlternado;						// OBRIGATORIO
+	private RoundJTextField inputCEP;							// OBRIGATORIO
+	private RoundJFormattedTextField inputCelular;				// OBRIGATORIO
+	private RoundJFormattedTextField inputTelefoneResidencial;	// OPCIONAL
+	private RoundJFormattedTextField inputTelefoneComercial;	// OPCIONAL
 	
 	private JPanel painelDelimitadorNomeCompleto;
 	private JPanel painelDelimitadorCPF;
@@ -50,6 +52,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 	
 	private JLabel labelAlternado;
 	private boolean usuarioJaPesquisado;
+	private Cliente cliente;
 	
 	public PainelCriarOuAtualizarCliente(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
 		
@@ -64,7 +67,8 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		JPanel painelRetornaTudo = new JPanel();
 		JPanel painelErro = new JPanel();
 		usuarioJaPesquisado = false;
-		
+		cliente = null;
+
 		painelPaginaAnterior.setBackground(getCorDeFundo());
 		painelProximaPagina.setBackground(getCorDeFundo());
 		painelRetornaTudo.setBackground(getCorDeFundo());
@@ -175,9 +179,17 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		labelCPF.setFont(getFonteLabelInterno());
 		labelCPF.setForeground(getCorTexto());
 		
-		inputCPF = new RoundJTextField(25);
+		inputCPF = new RoundJFormattedTextField(25);
 		inputCPF.setColumns(10);
 		inputCPF.setFont(getFonteInputs());
+		
+		try {
+			MaskFormatter mascara;
+			mascara = new MaskFormatter("###.###.###-##");
+			mascara.install(inputCPF);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		GroupLayout gl_painelCPF = new GroupLayout(painelCPF);
 		gl_painelCPF.setHorizontalGroup(
@@ -348,9 +360,17 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		labelCelular.setFont(getFonteLabelInterno());
 		labelCelular.setForeground(getCorTexto());
 		
-		inputCelular = new RoundJTextField(25);
+		inputCelular = new RoundJFormattedTextField(25);
 		inputCelular.setColumns(10);
 		inputCelular.setFont(getFonteInputs());
+		
+		try {
+			MaskFormatter mascara;
+			mascara = new MaskFormatter("## #####-####");
+			mascara.install(inputCelular);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		GroupLayout gl_painelCelular = new GroupLayout(painelCelular);
 		gl_painelCelular.setHorizontalGroup(
@@ -382,9 +402,17 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		labelTelefoneResidencial.setFont(getFonteLabelInterno());
 		labelTelefoneResidencial.setForeground(getCorTexto());
 		
-		inputTelefoneResidencial = new RoundJTextField(25);
+		inputTelefoneResidencial = new RoundJFormattedTextField(25);
 		inputTelefoneResidencial.setColumns(10);
 		inputTelefoneResidencial.setFont(getFonteInputs());
+		
+		try {
+			MaskFormatter mascara;
+			mascara = new MaskFormatter("## ####-####");
+			mascara.install(inputTelefoneResidencial);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		GroupLayout gl_painelTelefoneResidencial = new GroupLayout(painelTelefoneResidencial);
 		gl_painelTelefoneResidencial.setHorizontalGroup(
@@ -416,9 +444,17 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		labelTelefoneComercial.setFont(getFonteLabelInterno());
 		labelTelefoneComercial.setForeground(getCorTexto());
 		
-		inputTelefoneComercial = new RoundJTextField(25);
+		inputTelefoneComercial = new RoundJFormattedTextField(25);
 		inputTelefoneComercial.setColumns(10);
 		inputTelefoneComercial.setFont(getFonteInputs());
+		
+		try {
+			MaskFormatter mascara;
+			mascara = new MaskFormatter("## #####-####");
+			mascara.install(inputTelefoneComercial);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		GroupLayout gl_painelTelefoneComercial = new GroupLayout(painelTelefoneComercial);
 		gl_painelTelefoneComercial.setHorizontalGroup(
@@ -474,14 +510,48 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 				
 				if (usuarioJaPesquisado == false) {
 					
-					if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputCPF.getText())) {
-						//ControladoraGerenciarCliente
+					if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputAlternado.getText())) {
+						usuarioJaPesquisado = true;
+						
+						cliente = ControladoraGerenciarCliente.getCliente(inputAlternado.getText());
+						
+						if (cliente == null) {
+							JOptionPane.showMessageDialog(null, "Cliente não cadastrado"); // TODO Chamar PopUpErroGenerico
+							inputCPF.setText(inputAlternado.getText());
+							inputAlternado.setText("");
+							labelTituloTela.setText("Cadastrar Cliente");
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Cliente já cadastrado, carregando dados...");
+							labelTituloTela.setText("Atualizar Cliente");
+							
+							inputNomeCompleto.setText(cliente.getNome());
+							inputCPF.setText(cliente.getCpf());
+							inputRG.setText(cliente.getRg() == null ? "" : cliente.getRg());
+							inputEmail.setText(cliente.getEmail());
+							inputAlternado.setText(cliente.getEndereco());
+							inputCEP.setText(cliente.getCep());
+							inputCelular.setText(cliente.getCelular());
+							inputTelefoneResidencial.setText(cliente.getTelefoneResidencial() == null ? "" : cliente.getTelefoneResidencial());
+							inputTelefoneComercial.setText(cliente.getTelefoneComercial() == null ? "" : cliente.getTelefoneComercial());
+						}
+						
+						labelAlternado.setText("Endereço");
+						painelDelimitadorNomeCompleto.setVisible(true);
+						painelDelimitadorCPF.setVisible(true);
+						painelDelimitadorRG.setVisible(true);
+						painelDelimitadorEmail.setVisible(true);
+						painelDelimitadorCEP.setVisible(true);
+						painelDelimitadorCelular.setVisible(true);
+						painelDelimitadorTelefoneResidencial.setVisible(true);
+						painelDelimitadorTelefoneComercial.setVisible(true);
+						
+						painel.repaint();
 					
 					} else JOptionPane.showMessageDialog(null, "CPF inválido"); // TODO Chamar PopUpErroGenerico
 					
 					return;
 				}
-				
 				
 				boolean erro = false;
 				
@@ -499,9 +569,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 					JOptionPane.showMessageDialog(null, "Email inválido"); // TODO Chamar PopUpErroGenerico
 					erro = true;
 				}
-				
-				// Verificação abaixo pode falhar
-				// TODO Testar!
+
 				if (inputAlternado.getText().isBlank() || inputAlternado.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Endereço vazio"); // TODO Chamar PopUpErroGenerico
 					erro = true;
@@ -556,6 +624,11 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 
 	@Override
 	public void limparCampos() {
+		labelTituloTela.setText("Cliente");
+		labelAlternado.setText("CPF");
+		usuarioJaPesquisado = false;
+		cliente = null;
+		
 		inputNomeCompleto.setText("");
 		inputCPF.setText("");
 		inputRG.setText("");
@@ -566,14 +639,14 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		inputTelefoneResidencial.setText("");
 		inputTelefoneComercial.setText("");
 		
-		painelDelimitadorNomeCompleto.setEnabled(false);
-		painelDelimitadorCPF.setEnabled(false);
-		painelDelimitadorRG.setEnabled(false);
-		painelDelimitadorEmail.setEnabled(false);
-		painelDelimitadorCEP.setEnabled(false);
-		painelDelimitadorCelular.setEnabled(false);
-		painelDelimitadorTelefoneResidencial.setEnabled(false);
-		painelDelimitadorTelefoneComercial.setEnabled(false);
+		painelDelimitadorNomeCompleto.setVisible(false);
+		painelDelimitadorCPF.setVisible(false);
+		painelDelimitadorRG.setVisible(false);
+		painelDelimitadorEmail.setVisible(false);
+		painelDelimitadorCEP.setVisible(false);
+		painelDelimitadorCelular.setVisible(false);
+		painelDelimitadorTelefoneResidencial.setVisible(false);
+		painelDelimitadorTelefoneComercial.setVisible(false);
 		
 	}
 }

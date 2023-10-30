@@ -2,6 +2,7 @@ package controladoras;
 
 import javax.swing.JPanel;
 
+import componentesDeTelas.PopUpErroGenerico;
 import telas.JanelaPrincipal;
 import telas.Painel;
 import telas.PainelEscolhaDeOrcamento;
@@ -20,6 +21,11 @@ public class ControladoraJanela {
 	public static void voltarPainelInicial() {
 		janela.trocaPainel(painelInicial.getPainel());
 
+	}
+	
+	public static void ativarPopUp(Painel painelDeRetorno, String mensagemPrincipal, String mensagemInstrucao, String mensagemDoBotao) {
+		PopUpErroGenerico popUp = new PopUpErroGenerico(painelDeRetorno, mensagemPrincipal, mensagemInstrucao, mensagemDoBotao);
+		trocaPainel(popUp.getPainel());
 	}
 	
 }

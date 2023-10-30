@@ -20,13 +20,18 @@ public class SemVFXJButton extends JButton {
     private Color corBorda;
     private int arco;
 
-    public SemVFXJButton(String mensagemLabel) {
+    public SemVFXJButton(String mensagemLabel, Color corBotao, Color corBorda) {
         arco = 35;
         
-        corBotao 					= Color.WHITE; 
-        corBorda 					= Color.WHITE;
-        corQuandoMouseEntrarNoBotao = new Color(219, 219, 219);
-        corQuandoMouseClickar 		= new Color(138, 138, 138, 120);
+//        corBotao 					= Color.WHITE; 
+//        corBorda 					= Color.WHITE;
+//        corQuandoMouseEntrarNoBotao = new Color(219, 219, 219);
+//        corQuandoMouseClickar 		= new Color(138, 138, 138, 120);
+        
+        this.corBotao 				= corBotao; 
+        this.corBorda 				= corBorda;
+      	corQuandoMouseEntrarNoBotao = new Color(219, 219, 219);
+      	corQuandoMouseClickar 		= new Color(138, 138, 138, 120);
         
         setText(mensagemLabel);
         setFocusable(false);

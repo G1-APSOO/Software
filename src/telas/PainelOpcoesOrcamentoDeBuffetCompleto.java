@@ -42,6 +42,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	private JRadioButton botaoSalgadoRisolesDeFrango;
 	private JRadioButton botaoSalgadoRisolesDePresuntoQueijo;
 	private JRadioButton botaoSalgadoEnroladinhoPresuntoQueijo;
+	
 	private boolean[] salgadosSelecionados;
 	private ArrayList<Salgado> arraySalgados;
 	
@@ -764,7 +765,6 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoDoceCasadinho.setSelected(false);
 		botaoDoceCajuzinho.setSelected(false);
 		for (int i = 0; i < docesSelecionados.length; i++) docesSelecionados[i] = false;
-
 	
 		botaoBoloBrigadeiro.setSelected(false);
 		botaoBoloPrestigio.setSelected(false);

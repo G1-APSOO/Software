@@ -4,26 +4,29 @@ import java.util.ArrayList;
 
 import bancoDeDados.ClienteDAO;
 import excecoes.ExcecaoDDDInvalido;
-import excecoes.ExcecaoNaoPreenchido;
 import excecoes.ExcecaoParametroPreenchidoErrado;
 import excecoes.ExcecaoSomenteLetras;
 import excecoes.ExcecaoSomenteNumeros;
 
 public class Cliente {
 
-	private String nome; // OBRIGATORIO
-	private String cpf; // OBRIGATORIO
-	private String rg; // OPCIONAL
-	private String endereco; // OBRIGATORIO
-	private String cep; // OBRIGATORIO
-	private String celular; // OBRIGATORIO
+	private String nome; 				// OBRIGATORIO
+	private String cpf; 				// OBRIGATORIO
+	private String rg; 					// OPCIONAL
+	private String endereco;			// OBRIGATORIO
+	private String cep; 				// OBRIGATORIO
+	private String celular; 			// OBRIGATORIO
 	private String telefoneResidencial; // OPCIONAL
-	private String telefoneComercial; // OPCIONAL
-	private String email; // OBRIGATORIO
+	private String telefoneComercial; 	// OPCIONAL
+	private String email; 				// OBRIGATORIO
 
 	/* Construtor minimo */
 	public Cliente(String nome, String cpf, String endereco, String cep, String celular, String email)
-			throws ExcecaoSomenteLetras, ExcecaoSomenteNumeros, ExcecaoParametroPreenchidoErrado, ExcecaoDDDInvalido {
+		throws ExcecaoSomenteLetras, 
+		ExcecaoSomenteNumeros, 
+		ExcecaoParametroPreenchidoErrado, 
+		ExcecaoDDDInvalido {
+		
 		setNome(nome);
 		setCpf(cpf);
 		setEndereco(endereco);
@@ -34,9 +37,13 @@ public class Cliente {
 	}
 
 	// Construtor Completo
-	public Cliente(String nome, String cpf, String endereco, String cep, String celular, String email, String rg,
-			String telefoneResidencial, String telefoneComercial)
-			throws ExcecaoSomenteLetras, ExcecaoSomenteNumeros, ExcecaoParametroPreenchidoErrado, ExcecaoDDDInvalido {
+	public Cliente(String nome, String cpf, String endereco, String cep, 
+				   String celular, String email, String rg, String telefoneResidencial, String telefoneComercial)
+		throws ExcecaoSomenteLetras, 
+		ExcecaoSomenteNumeros, 
+		ExcecaoParametroPreenchidoErrado, 
+		ExcecaoDDDInvalido {
+		
 		setNome(nome);
 		setCpf(cpf);
 		setRg(rg);
@@ -83,13 +90,8 @@ public class Cliente {
 	}
 	
 	public void setTelefoneComercial(String telefoneComercial) throws ExcecaoDDDInvalido, ExcecaoParametroPreenchidoErrado {
-		boolean telefoneComercialECelular = Utilitaria.verificarCelular(telefoneComercial);
-		boolean telefoneComercialETelefoneFixo = Utilitaria.verificarTelefoneFixo(telefoneComercial);
-
-		if (telefoneComercialECelular || telefoneComercialETelefoneFixo)
-			this.telefoneComercial = telefoneComercial;
-		else
-			throw new ExcecaoParametroPreenchidoErrado("Telefone comercial");
+		if (Utilitaria.verificarCelular(telefoneComercial) == false) throw new ExcecaoParametroPreenchidoErrado("Telefone comercial");
+		this.telefoneComercial = telefoneComercial;
 	}
 
 	private void setEmail(String email) {

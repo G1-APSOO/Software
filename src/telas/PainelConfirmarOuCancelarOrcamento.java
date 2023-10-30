@@ -16,6 +16,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.border.EmptyBorder;
 
 public class PainelConfirmarOuCancelarOrcamento extends Painel {
@@ -85,7 +87,7 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		painelBotoes.add(painelCancelar);
 		painelCancelar.setLayout(new BorderLayout(0, 0));
 		
-		SemVFXJButton botaoCancelar = new SemVFXJButton("CANCELAR");
+		SemVFXJButton botaoCancelar = new SemVFXJButton("CANCELAR", Color.WHITE, Color.WHITE);
 		botaoCancelar.setFont(getFonteLabelInterno());
 		botaoCancelar.setForeground(getCorInputs());
 		painelCancelar.add(botaoCancelar);
@@ -96,7 +98,7 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		painelBotoes.add(painelConfirmar);
 		painelConfirmar.setLayout(new BorderLayout(0, 0));
 		
-		SemVFXJButton botaoConfirmar = new SemVFXJButton("CONFIRMAR");
+		SemVFXJButton botaoConfirmar = new SemVFXJButton("CONFIRMAR", Color.WHITE, Color.WHITE);
 		botaoConfirmar.setFont(getFonteLabelInterno());
 		botaoConfirmar.setForeground(getCorInputs());
 		painelConfirmar.add(botaoConfirmar);
@@ -170,7 +172,7 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 	
 	@Override 
 	protected void configurarBotoes() {
-		// TODO
+		//todo
 	}
 	
 	@Override

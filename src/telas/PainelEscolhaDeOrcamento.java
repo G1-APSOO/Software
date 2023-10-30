@@ -9,6 +9,8 @@ import componentesDeTelas.RoundJPanel;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -94,7 +96,7 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		painelDivisorBotoes.add(painelExternoOrcamentoBuffetCompleto);
 		painelExternoOrcamentoBuffetCompleto.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		botaoOrcamentoBuffetCompleto = new SemVFXJButton("Orçamento de buffet completo");
+		botaoOrcamentoBuffetCompleto = new SemVFXJButton("Orçamento de buffet completo", Color.WHITE, Color.WHITE);
 		botaoOrcamentoBuffetCompleto.setFont(getFonteLabelInterno());
 		botaoOrcamentoBuffetCompleto.setFocusable(false);
 		painelExternoOrcamentoBuffetCompleto.add(botaoOrcamentoBuffetCompleto);
@@ -105,7 +107,7 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		painelDivisorBotoes.add(painelExternoOrcamentoLocacao);
 		painelExternoOrcamentoLocacao.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		botaoOrcamentoLocacao = new SemVFXJButton("Orçamento de locação de espaço");
+		botaoOrcamentoLocacao = new SemVFXJButton("Orçamento de locação de espaço", Color.WHITE, Color.WHITE);
 		botaoOrcamentoLocacao.setFont(getFonteLabelInterno());
 		botaoOrcamentoLocacao.setFocusable(false);
 		botaoOrcamentoLocacao.setEnabled(false);
@@ -116,7 +118,7 @@ public class PainelEscolhaDeOrcamento extends Painel {
 	}
 
 	@Override
-	protected void configurarBotoes() {
+	protected void configurarBotoes() { 
 		botaoOrcamentoBuffetCompleto.addActionListener(e -> ControladoraJanela.trocaPainel(painelOrganizadorOrcamentoDeBuffetCompleto.getPainel()));
 		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(this));
 	}

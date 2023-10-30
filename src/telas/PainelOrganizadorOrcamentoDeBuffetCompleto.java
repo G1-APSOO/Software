@@ -100,6 +100,7 @@ public class PainelOrganizadorOrcamentoDeBuffetCompleto extends Painel {
 
 	@Override
 	public void limparCampos() {
+		etapaOrcamento = 1;
 		painelEtapa1.limparCampos();
 		painelEtapa2.limparCampos();
 		painelEtapa3.limparCampos();

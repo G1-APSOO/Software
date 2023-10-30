@@ -17,6 +17,8 @@ import javax.swing.text.MaskFormatter;
 import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
+import controladoras.ControladoraJanela;
+
 import javax.swing.JFormattedTextField;
 
 public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
@@ -208,7 +210,7 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	}
 	
 	private void setInputNumeroDeConvidados() {
-		inputNumeroDeConvidados = new RoundJFormattedTextField();
+		inputNumeroDeConvidados = new RoundJFormattedTextField(35);
 		inputNumeroDeConvidados.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		inputNumeroDeConvidados.setFont(getFonteInputs());
 		
@@ -222,7 +224,7 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	}
 	
 	private void setInputNumeroDeColaboradores() {
-		inputNumeroDeColaboradores = new RoundJFormattedTextField();
+		inputNumeroDeColaboradores = new RoundJFormattedTextField(35);
 		inputNumeroDeColaboradores.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		inputNumeroDeColaboradores.setFont(getFonteInputs());
 
@@ -236,7 +238,7 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	}
 	
 	private void setInputData() {
-		inputData = new RoundJFormattedTextField();
+		inputData = new RoundJFormattedTextField(35);
 		inputData.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		inputData.setFont(getFonteInputs());
 
@@ -251,7 +253,7 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	}
 	
 	private void setInputHoraDeInicio() {
-		inputHoraDeInicio = new RoundJFormattedTextField();
+		inputHoraDeInicio = new RoundJFormattedTextField(35);
 		inputHoraDeInicio.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		inputHoraDeInicio.setFont(getFonteInputs());
 
@@ -304,30 +306,35 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 			if (estaVazio) {
 				JOptionPane.showMessageDialog(null, "Numero de convidados não está preenchido"); // TODO Substituir depois por um JPanel de erro
 				resposta = false;
+				ControladoraJanela.ativarPopUp(this, "Numero de convidados não está preenchido", "Para continuar, preencha o campo número de convidados", "Preencher Número de Convidados");
 			}
 			
 			estaVazio = inputData.getText().equals("  /  /    "); 
 			
 			if (estaVazio) {
-				JOptionPane.showMessageDialog(null, "Data não está preenchido"); // TODO Substituir depois por um JPanel de erro
+				JOptionPane.showMessageDialog(null, "Data não está preenchida"); // TODO Substituir depois por um JPanel de erro
 				resposta = false;
+				ControladoraJanela.ativarPopUp(this, "Data não está preenchida", "Para continuar, preencha o campo data", "Preencher Data");
 			} else {
 				if (inputData.getText().matches("(\\d{2}|\\d\s|\s\\d)/(\\d{2}|\\d\\s|\s\\d)/\\d{4}") == false) {
 					JOptionPane.showMessageDialog(null, "Data inválida"); // TODO Substituir depois por um JPanel de erro
 					resposta = false;
+					ControladoraJanela.ativarPopUp(this, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
 				}
 			}
 			
 			estaVazio = inputHoraDeInicio.getText().equals("  :  ");
 			
 			if (estaVazio) {
-				JOptionPane.showMessageDialog(null, "Hora de inicio não está preenchido"); // TODO Substituir depois por um JPanel de erro
+				JOptionPane.showMessageDialog(null, "Hora de inicio não está preenchida"); // TODO Substituir depois por um JPanel de erro
 				resposta = false;
+				ControladoraJanela.ativarPopUp(this, "Hora de inicio do evento não está preenchida", "Para continuar, preencha o campo hora de inicio do evento", "Preencher Hora de Inicio");
 				
 			} else {
 				if (inputHoraDeInicio.getText().matches("\\d{2}:\\d{2}") == false) {
 					JOptionPane.showMessageDialog(null, "Hora inválida"); // TODO Substituir depois por um JPanel de erro
 					resposta = false;
+					ControladoraJanela.ativarPopUp(this, "Hora de Inicio do Evento está Inválida", "Para continuar, insira uma hora de inicio válida", "Mudar Hora de Início");
 				}
 			}
 			
@@ -353,10 +360,11 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 
 	@Override
 	public void limparCampos() {
-		inputNumeroDeConvidados.setText("###");
-		inputNumeroDeColaboradores.setText("###");
-		inputData.setText("##/##/####");
-		inputHoraDeInicio.setText("##:##");
+		inputNumeroDeConvidados.setText("");
+		inputNumeroDeColaboradores.setText("");
+		inputData.setText("");
+		inputHoraDeInicio.setText("");
+		painel.repaint();
 	}
 	
 }

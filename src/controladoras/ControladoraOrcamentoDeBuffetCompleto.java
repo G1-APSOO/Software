@@ -11,7 +11,6 @@ import classes.OrcamentoBuffetCompleto;
 import classes.Data;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -20,18 +19,18 @@ import classes.Bolo;
 public class ControladoraOrcamentoDeBuffetCompleto {
 
 	private ControladoraOrcamentoDeBuffetCompleto() {
-		throw new IllegalAcessException("Controladora Orcamento de BuffetCompleto é estática");
+		throw new IllegalAccessError("Controladora Orcamento de BuffetCompleto é estática");
 	} 
 
-	public double consultarValorDoOrcamento(OrcamentoBuffetCompleto orcamento) {
+	public static double consultarValorDoOrcamento(OrcamentoBuffetCompleto orcamento) {
 		return orcamento.calcularValorTotal();
 	}
 
-	public void cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffetCompleto) {
+	public static void cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffetCompleto) {
 		 OrcamentoBuffetCompleto.cadastrarOrcamento(orcamentoBuffetCompleto);
 	}
 
-	public OrcamentoBuffetCompleto criarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
+	public static OrcamentoBuffetCompleto criarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
 			Cliente cliente, String horaDeInicio, boolean teraCerveja, ArrayList<Salgado> opcoesDeSalgado,
 			ArrayList<Doce> opcoesDeDoces, Bolo opcaoDeBolo) {
 		// necessario incluir Pagamento nos parametros
