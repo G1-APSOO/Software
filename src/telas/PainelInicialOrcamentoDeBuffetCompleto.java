@@ -3,11 +3,18 @@ package telas;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
-import java.awt.GridLayout;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 
+import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
+
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
+import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
 import javax.swing.JFormattedTextField;
@@ -15,69 +22,44 @@ import javax.swing.JFormattedTextField;
 public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 
 	private JPanel painel;
+	
+	private PainelOrganizadorOrcamentoDeBuffetCompleto organizador;
+	
 	private RoundJFormattedTextField inputNumeroDeConvidados;
 	private RoundJFormattedTextField inputNumeroDeColaboradores;
 	private RoundJFormattedTextField inputData;
 	private RoundJFormattedTextField inputHoraDeInicio;
-	private JLabel labelVoltarTudo;
+	private JLabel labelRetornarTudo;
 	private JLabel labelAvancar;
 	
-	public PainelInicialOrcamentoDeBuffetCompleto() {
+	public PainelInicialOrcamentoDeBuffetCompleto(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
 		super();
+		
+		this.organizador = organizador;
 		
 		painel = new JPanel();
 		painel.setBackground(getCorDeFundo());
 		
 		JLabel labelTitulo = new JLabel("Informações do evento");
+		labelTitulo.setBounds(40, 34, 571, 85);
 		labelTitulo.setForeground(getCorTitulo());
 		labelTitulo.setFont(getFonteTitulo());
 		
 		JPanel painelDivisor = new JPanel();
+		painelDivisor.setBounds(40, 125, 1180, 344);
 		painelDivisor.setBackground(getCorDeFundo());
 		
 		JPanel painelAvancar = new JPanel();
+		painelAvancar.setBounds(1177, 577, 70, 70);
 		painelAvancar.setBackground(getCorDeFundo());
 		
 		JPanel painelVoltarTudo = new JPanel();
+		painelVoltarTudo.setBounds(1177, 20, 70, 70);
 		painelVoltarTudo.setBackground(getCorDeFundo());
-		GroupLayout gl_painel = new GroupLayout(painel);
-		gl_painel.setHorizontalGroup(
-			gl_painel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_painel.createSequentialGroup()
-					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_painel.createSequentialGroup()
-							.addGap(40)
-							.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_painel.createSequentialGroup()
-									.addComponent(labelTitulo, GroupLayout.PREFERRED_SIZE, 571, GroupLayout.PREFERRED_SIZE)
-									.addGap(566)
-									.addComponent(painelVoltarTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
-								.addComponent(painelDivisor, GroupLayout.PREFERRED_SIZE, 1180, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_painel.createSequentialGroup()
-							.addGap(1177)
-							.addComponent(painelAvancar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
-					.addGap(20))
-		);
-		gl_painel.setVerticalGroup(
-			gl_painel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painel.createSequentialGroup()
-					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_painel.createSequentialGroup()
-							.addGap(34)
-							.addComponent(labelTitulo, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_painel.createSequentialGroup()
-							.addGap(20)
-							.addComponent(painelVoltarTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(painelDivisor, GroupLayout.PREFERRED_SIZE, 344, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
-					.addComponent(painelAvancar, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-					.addGap(20))
-		);
 		painelVoltarTudo.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		setLabelVoltarTudo();
-		painelVoltarTudo.add(labelVoltarTudo);
+		setLabelRetornarTudo(new ListenerRetornaTudo(organizador));
+		painelVoltarTudo.add(labelRetornarTudo);
 		painelAvancar.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		setLabelAvancar();
@@ -217,52 +199,151 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 					.addGap(12))
 		);
 		painelHoraDeInicio.setLayout(gl_painelHoraDeInicio);
-		painel.setLayout(gl_painel);
+		painel.setLayout(null);
+		painel.add(labelTitulo);
+		painel.add(painelVoltarTudo);
+		painel.add(painelDivisor);
+		painel.add(painelAvancar);
 		
 	}
 	
 	private void setInputNumeroDeConvidados() {
-		inputNumeroDeConvidados = new RoundJFormattedTextField(0);
+		inputNumeroDeConvidados = new RoundJFormattedTextField();
 		inputNumeroDeConvidados.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		inputNumeroDeConvidados.setFont(getFonteInputs());
-		inputNumeroDeConvidados.setText("");
-		// TODO Adiciona mascara aqui até 3 digitos
+		
+		try {
+			MaskFormatter mascara;
+			mascara = new MaskFormatter("###");
+			mascara.install(inputNumeroDeConvidados);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void setInputNumeroDeColaboradores() {
-		inputNumeroDeColaboradores = new RoundJFormattedTextField(0);
+		inputNumeroDeColaboradores = new RoundJFormattedTextField();
 		inputNumeroDeColaboradores.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		inputNumeroDeColaboradores.setFont(getFonteInputs());
-		inputNumeroDeColaboradores.setText("");
-		// TODO Adiciona mascara aqui até 3 digitos
+
+		try {
+			MaskFormatter mascara;
+			mascara = new MaskFormatter("###");
+			mascara.install(inputNumeroDeColaboradores);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void setInputData() {
-		inputData = new RoundJFormattedTextField(0);
+		inputData = new RoundJFormattedTextField();
 		inputData.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		inputData.setFont(getFonteInputs());
-		inputData.setText("");
-		// TODO Adiciona mascara aqui
+
+		try {
+			MaskFormatter mascara;
+			mascara = new MaskFormatter("##/##/####");
+			mascara.install(inputData);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	private void setInputHoraDeInicio() {
-		inputHoraDeInicio = new RoundJFormattedTextField(0);
+		inputHoraDeInicio = new RoundJFormattedTextField();
 		inputHoraDeInicio.setFocusLostBehavior(JFormattedTextField.COMMIT);
 		inputHoraDeInicio.setFont(getFonteInputs());
-		inputHoraDeInicio.setText("");
-		// TODO Adiciona mascara aqui
+
+		try {
+			MaskFormatter mascara;
+			mascara = new MaskFormatter("##:##");
+			mascara.install(inputHoraDeInicio);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private void setLabelVoltarTudo() {
-		labelVoltarTudo = new JLabel("");
-		labelVoltarTudo.setIcon(getIconeRetornaTudo());
-		// TODO Adionar MouseListener
+	private void setLabelRetornarTudo(ListenerRetornaTudo listenerRetornaTudo) {
+		labelRetornarTudo = new JLabel("");
+		labelRetornarTudo.setIcon(getIconeRetornaTudo());
+		labelRetornarTudo.addMouseListener(listenerRetornaTudo);
 	}
 	
 	private void setLabelAvancar() {
 		labelAvancar = new JLabel("");
 		labelAvancar.setIcon(getIconeProximaPagina());
-		// TODO Adionar MouseListener
+		labelAvancar.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
+			@Override
+			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mousePressed(MouseEvent e) { 
+				if(verificarPreenchimentoCampos())
+					organizador.proximaPagina();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
+		});
+	}
+	
+	public boolean verificarPreenchimentoCampos() {
+		try {
+			boolean estaVazio;
+			boolean resposta = true;
+			
+			estaVazio = inputNumeroDeConvidados.getText().isBlank() || inputNumeroDeConvidados.getText().isEmpty();
+			
+			if (estaVazio) {
+				JOptionPane.showMessageDialog(null, "Numero de convidados não está preenchido"); // TODO Substituir depois por um JPanel de erro
+				resposta = false;
+			}
+			
+			estaVazio = inputData.getText().equals("  /  /    "); 
+			
+			if (estaVazio) {
+				JOptionPane.showMessageDialog(null, "Data não está preenchido"); // TODO Substituir depois por um JPanel de erro
+				resposta = false;
+			} else {
+				if (inputData.getText().matches("(\\d{2}|\\d\s|\s\\d)/(\\d{2}|\\d\\s|\s\\d)/\\d{4}") == false) {
+					JOptionPane.showMessageDialog(null, "Data inválida"); // TODO Substituir depois por um JPanel de erro
+					resposta = false;
+				}
+			}
+			
+			estaVazio = inputHoraDeInicio.getText().equals("  :  ");
+			
+			if (estaVazio) {
+				JOptionPane.showMessageDialog(null, "Hora de inicio não está preenchido"); // TODO Substituir depois por um JPanel de erro
+				resposta = false;
+				
+			} else {
+				if (inputHoraDeInicio.getText().matches("\\d{2}:\\d{2}") == false) {
+					JOptionPane.showMessageDialog(null, "Hora inválida"); // TODO Substituir depois por um JPanel de erro
+					resposta = false;
+				}
+			}
+			
+			// Numero de colaboradores é um parametro opcional
+			
+			return resposta;
+			
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	
+	@Override 
+	protected void configurarBotoes() {
+		// TODO
 	}
 	
 	@Override
@@ -272,8 +353,10 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 
 	@Override
 	public void limparCampos() {
-		// TODO Auto-generated method stub
-		
+		inputNumeroDeConvidados.setText("###");
+		inputNumeroDeColaboradores.setText("###");
+		inputData.setText("##/##/####");
+		inputHoraDeInicio.setText("##:##");
 	}
 	
 }

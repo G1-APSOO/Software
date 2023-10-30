@@ -4,17 +4,23 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJPanel;
 import componentesDeTelas.RoundJTextField;
 
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.border.EmptyBorder;
 
 public class PainelCriarOuAtualizarCliente extends Painel {
 
 	private JPanel painel;
+	
 	private JLabel labelTituloTela;
 	
 	private RoundJTextField inputNomeCompleto;
@@ -38,7 +44,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 	
 	private JLabel labelAlternado;
 	
-	public PainelCriarOuAtualizarCliente() {
+	public PainelCriarOuAtualizarCliente(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
 		
 		painel = new JPanel();
 		painel.setBackground(getCorDeFundo());
@@ -424,21 +430,72 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		painelPaginaAnterior.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel labelPaginaAnterior = new JLabel("");
+		labelPaginaAnterior.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
+			@Override
+			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mousePressed(MouseEvent e) { 
+				organizador.paginaAnterior();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
+		});
+		
 		labelPaginaAnterior.setIcon(getIconeVoltarPagina());
 		painelPaginaAnterior.add(labelPaginaAnterior);
 		painelProximaPagina.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel labelProximaPagina = new JLabel("");
+		labelProximaPagina.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
+			@Override
+			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mousePressed(MouseEvent e) { 
+				
+				boolean erro = false;
+				
+				if (inputCPF.getText().matches("\\d{3}.\\d{3}.\\d{3}-\\d{2}") == false) {
+					JOptionPane.showMessageDialog(null, "") //
+				}
+				
+				organizador.proximaPagina();
+			
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
+		});
 		labelProximaPagina.setIcon(getIconeProximaPagina());
 		painelProximaPagina.add(labelProximaPagina);
 		painelRetornaTudo.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel labelRetornaTudo = new JLabel("");
+		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(organizador));
 		labelRetornaTudo.setIcon(getIconeRetornaTudo());
 		painelRetornaTudo.add(labelRetornaTudo);
 		
 		painel.setLayout(gl_painel);
 		
+	}
+	
+	@Override 
+	protected void configurarBotoes() {
+		// TODO
 	}
 	
 	@Override
@@ -448,7 +505,24 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 
 	@Override
 	public void limparCampos() {
-		// TODO Auto-generated method stub
+		inputNomeCompleto.setText("");
+		inputCPF.setText("");
+		inputRG.setText("");
+		inputEmail.setText("");
+		inputAlternado.setText("");
+		inputCEP.setText("");
+		inputCelular.setText("");
+		inputTelefoneResidencial.setText("");
+		inputTelefoneComercial.setText("");
+		
+		painelDelimitadorNomeCompleto.setEnabled(false);
+		painelDelimitadorCPF.setEnabled(false);
+		painelDelimitadorRG.setEnabled(false);
+		painelDelimitadorEmail.setEnabled(false);
+		painelDelimitadorCEP.setEnabled(false);
+		painelDelimitadorCelular.setEnabled(false);
+		painelDelimitadorTelefoneResidencial.setEnabled(false);
+		painelDelimitadorTelefoneComercial.setEnabled(false);
 		
 	}
 }
