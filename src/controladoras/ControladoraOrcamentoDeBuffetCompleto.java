@@ -2,6 +2,10 @@ package controladoras;
 
 import classes.Cliente;
 import classes.Salgado;
+import classes.Utilitaria;
+import excecoes.ExcecaoDDDInvalido;
+import excecoes.ExcecaoDiaInvalido;
+import excecoes.ExcecaoMesInvalido;
 import classes.Doce;
 import classes.OrcamentoBuffetCompleto;
 import classes.Data;
@@ -9,21 +13,25 @@ import classes.Data;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import classes.Bolo;
 
 public class ControladoraOrcamentoDeBuffetCompleto {
 	
+	private ControladoraOrcamentoDeBuffetCompleto() {} // Classe statica
+	
 	// necessario aprimorar para verificar se id ja foi utilizado
-	public int criaId() {
+	public static int criaId() {
 		Random rand = new Random();
 		return rand.nextInt(2147483646);
 	}
 	
-	public double consultarValorDoOrcamento(OrcamentoBuffetCompleto orcamento) {
+	public static double consultarValorDoOrcamento(OrcamentoBuffetCompleto orcamento) {
 		return orcamento.calcularValorTotal();
 	}
 
-	public OrcamentoBuffetCompleto criarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
+	public static OrcamentoBuffetCompleto criarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
 			Cliente cliente, String horaDeInicio, boolean teraCerveja, ArrayList<Salgado> opcoesDeSalgado,
 			ArrayList<Doce> opcoesDeDoces, Bolo opcaoDeBolo) {
 		// necessario incluir Pagamento nos parametros
@@ -31,43 +39,83 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 			return orcamentoBuffetCompleto;
 	}
 	
-	public void cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffetCompleto) {
+	public static void cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffetCompleto) {
 		//OrcamentoBuffetCompleto.cadastrarOrcamento(orcamentoBuffetCompleto);
 	}
 
-	public boolean verificarNumeroDeConvidados(int numeroDeConvidados) {
-		return numeroDeConvidados >= 50 && numeroDeConvidados <= 180;
+	public static boolean verificarNumeroDeConvidados(int numeroDeConvidados) {
+		return Utilitaria.verificarNumeroConvidados(numeroDeConvidados);
 	}
 
-	public boolean verificarData(Data data) {
+	public static boolean verificarData(String dataString) {
+		
+		String[] aux = dataString.split("/");
+		
+		int dia = Integer.parseInt(aux[0]);
+		int mes = Integer.parseInt(aux[1]);
+		int ano = Integer.parseInt(aux[2]);
+		
+		Data data = null;
+		
+		try {
+			data = new Data(dia, mes, ano);
+			
+		} catch (ExcecaoDiaInvalido e) {
+			JOptionPane.showMessageDialog(null, "Dia inválido"); // TODO Chamar PopUp
+			return false;
+		} catch (ExcecaoMesInvalido e) {
+			JOptionPane.showMessageDialog(null, "Mes inválido"); // TODO Chamar PopUp
+			return false;
+		}
+		
 		return OrcamentoBuffetCompleto.verificarData(data);
 	}
 
-	public boolean verificarValidezHorario(String horaDeInicio) {
-		return false;
+	public static boolean verificarValidezHorario(String horaDeInicio) {
+		return Utilitaria.verificarValidezHorario(horaDeInicio);
+	}
+	
+	public static boolean verificarNomeCompleto(String nome) {
+		return Utilitaria.verificarNome(nome);
+	}
+	
+	public static boolean verificarCPF(String cpf) {
+		return Utilitaria.verificarCPF(cpf);
+	}
+	
+	public static boolean verificarEmail(String email) {
+		return Utilitaria.verificarEmail(email);
+	}
+	
+	public static boolean verificarCEP(String cep) {
+		return Utilitaria.verificarCEP(cep);
+	}
+	
+	public static boolean verificarCelular(String celular) throws ExcecaoDDDInvalido {
+		return Utilitaria.verificarCelular(celular);
 	}
 
-	public boolean verificarOpcoesSalgados(ArrayList<Salgado> opcoesDeSalgado) {
-		return false;
+	public static boolean verificarOpcoesSalgados(int qtdSalgados) {
+		return Utilitaria.verificarOpcoesSalgados(qtdSalgados);
 	}
 
-	public boolean verificarOpcoesDoces(ArrayList<Doce> opcoesDeDoces) {
-		return false;
+	public static boolean verificarOpcoesDoces(int qtdDoces) {
+		return Utilitaria.verificarOpcoesDoces(qtdDoces);
 	}
 
-	public void cancelarOrcamento() {
+	public static void cancelarOrcamento() {
 	
 	}
 
-	public ArrayList<Salgado> getAllSalgados() {
+	public static ArrayList<Salgado> getAllSalgados() {
 		return OrcamentoBuffetCompleto.getAllSalgados();
 	}
 
-	public ArrayList<Doce> getAllDoces() {
+	public static ArrayList<Doce> getAllDoces() {
 		return OrcamentoBuffetCompleto.getAllDoces();
 	}
 
-	public ArrayList<Bolo> getAllBolos() {
+	public static ArrayList<Bolo> getAllBolos() {
 		return OrcamentoBuffetCompleto.getAllBolos();
 	}
 }
