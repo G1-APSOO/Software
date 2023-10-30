@@ -14,10 +14,14 @@ import java.text.ParseException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import classes.Data;
 import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
 import controladoras.ControladoraJanela;
+import excecoes.ExcecaoDiaInvalido;
+import excecoes.ExcecaoMesInvalido;
+import excecoes.ExcecaoNaoPreenchido;
 
 import javax.swing.JFormattedTextField;
 
@@ -31,6 +35,7 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	private RoundJFormattedTextField inputNumeroDeColaboradores;
 	private RoundJFormattedTextField inputData;
 	private RoundJFormattedTextField inputHoraDeInicio;
+	
 	private JLabel labelRetornarTudo;
 	private JLabel labelAvancar;
 	
@@ -299,48 +304,43 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	public boolean verificarPreenchimentoCampos() {
 		try {
 			boolean estaVazio;
-			boolean resposta = true;
 			
 			estaVazio = inputNumeroDeConvidados.getText().isBlank() || inputNumeroDeConvidados.getText().isEmpty();
 			
 			if (estaVazio) {
-				JOptionPane.showMessageDialog(null, "Numero de convidados não está preenchido"); // TODO Substituir depois por um JPanel de erro
-				resposta = false;
 				ControladoraJanela.ativarPopUp(this, "Numero de convidados não está preenchido", "Para continuar, preencha o campo número de convidados", "Preencher Número de Convidados");
+				return false;
+			
 			}
 			
 			estaVazio = inputData.getText().equals("  /  /    "); 
 			
 			if (estaVazio) {
-				JOptionPane.showMessageDialog(null, "Data não está preenchida"); // TODO Substituir depois por um JPanel de erro
-				resposta = false;
 				ControladoraJanela.ativarPopUp(this, "Data não está preenchida", "Para continuar, preencha o campo data", "Preencher Data");
+				return false;
 			} else {
 				if (inputData.getText().matches("(\\d{2}|\\d\s|\s\\d)/(\\d{2}|\\d\\s|\s\\d)/\\d{4}") == false) {
-					JOptionPane.showMessageDialog(null, "Data inválida"); // TODO Substituir depois por um JPanel de erro
-					resposta = false;
 					ControladoraJanela.ativarPopUp(this, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
+					return false;
 				}
 			}
 			
 			estaVazio = inputHoraDeInicio.getText().equals("  :  ");
 			
 			if (estaVazio) {
-				JOptionPane.showMessageDialog(null, "Hora de inicio não está preenchida"); // TODO Substituir depois por um JPanel de erro
-				resposta = false;
 				ControladoraJanela.ativarPopUp(this, "Hora de inicio do evento não está preenchida", "Para continuar, preencha o campo hora de inicio do evento", "Preencher Hora de Inicio");
+				return false;
 				
 			} else {
 				if (inputHoraDeInicio.getText().matches("\\d{2}:\\d{2}") == false) {
-					JOptionPane.showMessageDialog(null, "Hora inválida"); // TODO Substituir depois por um JPanel de erro
-					resposta = false;
 					ControladoraJanela.ativarPopUp(this, "Hora de Inicio do Evento está Inválida", "Para continuar, insira uma hora de inicio válida", "Mudar Hora de Início");
+					return false;
 				}
 			}
 			
 			// Numero de colaboradores é um parametro opcional
 			
-			return resposta;
+			return true;
 			
 		} catch (Exception e) {
 			return false;
@@ -348,6 +348,23 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 		
 	}
 	
+	public int getInputNumeroDeConvidados(){
+		return Integer.parseInt(inputNumeroDeConvidados.getText().strip());
+	}
+	public int getInputNumeroDeColaboradores(){
+		return Integer.parseInt(inputNumeroDeConvidados.getText().strip());
+	}
+	public Data getData() throws ExcecaoNaoPreenchido, ExcecaoDiaInvalido, ExcecaoMesInvalido{
+		String[] aux = inputData.getText().split("/");
+		
+		return new Data(aux[0], aux[1], aux[2]);
+		
+	}
+	public String getInputHoraDeInicio(){
+		return inputHoraDeInicio.getText();
+	}
+
+
 	@Override 
 	protected void configurarBotoes() {
 		// TODO
@@ -357,7 +374,7 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	public JPanel getPainel() {
 		return painel;
 	}
-
+	
 	@Override
 	public void limparCampos() {
 		inputNumeroDeConvidados.setText("");
