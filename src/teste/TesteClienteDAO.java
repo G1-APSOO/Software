@@ -10,8 +10,8 @@ public class TesteClienteDAO {
 		System.out.print(ConexaoBanco.getConexao());
 		System.out.print(ConexaoBanco.status);
 
-		Cliente c = new Cliente("Pedro Paulo", "08010842109", "Rua Gumercindo Annes", "12345-678", "67 99988-1718",
-				"pedroapsilva22@gmail.com", "267584288", "67 9999-4444", "67 88888-4545");
+		Cliente c = new Cliente("Jonas da Silva", "88149699066", "Rua Gumercindo Alves", "12345-678", "67 99988-1235",
+				"jonasgames123@gmail.com", "267584288", "67 9999-4444", "67 88888-4545");
 
 		ClienteDAO cDao = new ClienteDAO();
 
