@@ -21,11 +21,7 @@ public class PainelOrganizadorOrcamentoDeBuffetCompleto extends Painel {
 	private PainelCriarOuAtualizarCliente 			painelEtapa3;
 	private PainelConfirmarOuCancelarOrcamento      painelEtapa4;
 	
-	private ControladoraOrcamentoDeBuffetCompleto controladoraOrcamentoBuffetCompleto;
-		
 	public PainelOrganizadorOrcamentoDeBuffetCompleto() {
-		controladoraOrcamentoBuffetCompleto = new ControladoraOrcamentoDeBuffetCompleto();
-		
 		// Sem o servidor não funciona
 //		ArrayList<Salgado> salgados = controladoraOrcamentoBuffetCompleto.getAllSalgados();
 //		ArrayList<Doce> doces = controladoraOrcamentoBuffetCompleto.getAllDoces();
@@ -85,7 +81,7 @@ public class PainelOrganizadorOrcamentoDeBuffetCompleto extends Painel {
 			ControladoraJanela.trocaPainel(painelEtapa3.getPainel());
 			
 		} else if (etapaOrcamento == 5) {
-			controladoraOrcamentoBuffetCompleto.cadastrarOrcamento((OrcamentoBuffetCompleto) painelEtapa4.getOrcamento());
+			ControladoraOrcamentoDeBuffetCompleto.cadastrarOrcamento((OrcamentoBuffetCompleto) painelEtapa4.getOrcamento());
 			
 			limparCampos();
 			ControladoraJanela.voltarPainelInicial();
