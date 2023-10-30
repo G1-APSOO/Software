@@ -1,6 +1,5 @@
 package classes;
 
-import bancoDeDados.OrcamentoBuffetCompletoDAO;
 import excecoes.ExcecaoDDDInvalido;
 
 public class Utilitaria {
@@ -9,6 +8,10 @@ public class Utilitaria {
 		throw new IllegalAccessError();
 	}
 
+	public static boolean verificarNome(String nome) {
+		return nome.matches("[a-zA-Z]([ a-zA-Zçãõ])*+");
+	}
+	
 	public static boolean verificarNumeroConvidados(int numeroDeConvidados) {
 		return 50 <= numeroDeConvidados && numeroDeConvidados <= 180;
 	}
@@ -30,6 +33,9 @@ public class Utilitaria {
 	}
 
 	public static boolean verificarCPF(String cpf) {
+		cpf = cpf.replace(".", "");
+		cpf = cpf.replace("-", "");
+		
 		// considera-se erro CPF's formados por uma sequencia de numeros iguais
 		if (cpf.equals("00000000000") || cpf.equals("11111111111") ||
 				cpf.equals("22222222222") || cpf.equals("33333333333") ||
@@ -89,7 +95,6 @@ public class Utilitaria {
 
 	public static boolean verificarDDD(String ddd) {
 		return ddd.matches("(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])");
-
 	}
 
 	public static boolean verificarCelular(String celular) throws ExcecaoDDDInvalido {
@@ -143,5 +148,13 @@ public class Utilitaria {
         return true;
 
 	}
+	
+	public static boolean verificarCEP(String cep) {
+		return cep.matches("\\d{5}-\\d{3}");
+	}
 
+	public static boolean verificarEmail(String email) {
+		return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]+");
+	}
+	
 }
