@@ -467,7 +467,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 				boolean erro = false;
 				
 				if (inputCPF.getText().matches("\\d{3}.\\d{3}.\\d{3}-\\d{2}") == false) {
-					JOptionPane.showMessageDialog(null, "") //
+					//JOptionPane.showMessageDialog(null, "") //
 				}
 				
 				organizador.proximaPagina();

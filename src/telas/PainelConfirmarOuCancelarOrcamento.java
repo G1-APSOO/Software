@@ -4,25 +4,63 @@ import javax.swing.JPanel;
 
 import classes.OrcamentoEvento;
 import componentesDeTelas.SemVFXJButton;
+import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJPanel;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
-import java.awt.FlowLayout;
-import javax.swing.JButton;
 
 public class PainelConfirmarOuCancelarOrcamento extends Painel {
 
 	OrcamentoEvento orcamentoEvento;
 	
-	JPanel painel;
+	PainelOrganizadorOrcamentoDeBuffetCompleto organizador;
 	
-	public PainelConfirmarOuCancelarOrcamento() {
+	JPanel painel;
+	private JLabel labelVoltaPagina;
+	private JLabel labelRetornaTudo;
+	private JLabel labelValor;
+	
+	public PainelConfirmarOuCancelarOrcamento(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
+		super();
+		this.organizador = organizador;
+		
+		labelRetornaTudo = new JLabel("");
+		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(organizador));
+		
+		labelVoltaPagina = new JLabel("");
+		labelVoltaPagina.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
+			@Override
+			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mousePressed(MouseEvent e) { 
+				organizador.paginaAnterior();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
+			
+		});
+		
+		construtorDaTela();
+	}
+	
+	private void construtorDaTela() {
 		painel = new JPanel();
 		painel.setBackground(getCorDeFundo());
 		orcamentoEvento = null;
@@ -35,10 +73,10 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		painelBotoes.setBackground(getCorDeFundo());
 		painelValor.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel = new JLabel("R$ ");
-		lblNewLabel.setFont(getFonteValor());
-		lblNewLabel.setForeground(getCorValor());
-		painelValor.add(lblNewLabel, BorderLayout.CENTER);
+		labelValor = new JLabel("R$ ");
+		labelValor.setFont(getFonteValor());
+		labelValor.setForeground(getCorValor());
+		painelValor.add(labelValor, BorderLayout.CENTER);
 		painelBotoes.setLayout(new GridLayout(1, 0, 30, 0));
 		
 		RoundJPanel painelCancelar = new RoundJPanel(25, 25, 25, 25);
@@ -113,20 +151,26 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		);
 		painelRetornaTudo.setLayout(new BorderLayout(0, 0));
 		
-		JLabel labelRetornaTudo = new JLabel("");
 		labelRetornaTudo.setIcon(getIconeRetornaTudo());
+		labelVoltaPagina.setIcon(getIconeVoltarPagina());
 		painelRetornaTudo.add(labelRetornaTudo, BorderLayout.CENTER);
 		painelVoltaPagina.setLayout(new BorderLayout(0, 0));
 		
-		JLabel labelVoltaPagina = new JLabel("");
-		labelVoltaPagina.setIcon(getIconeVoltarPagina());
 		painelVoltaPagina.add(labelVoltaPagina, BorderLayout.CENTER);
 		painel.setLayout(gl_painel);
-		
 	}
 	
 	public void setOrcamento(OrcamentoEvento orcamentoEvento) {
 		this.orcamentoEvento = orcamentoEvento;
+	}
+	
+	public OrcamentoEvento getOrcamento() {
+		return orcamentoEvento;
+	}
+	
+	@Override 
+	protected void configurarBotoes() {
+		// TODO
 	}
 	
 	@Override
@@ -137,7 +181,8 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 	@Override
 	public void limparCampos() {
 		orcamentoEvento = null;
-		//TODO Limpar o resto
+		labelValor.setText("R$ ");
+
 		
 	}
 }
