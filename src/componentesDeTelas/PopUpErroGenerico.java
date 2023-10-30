@@ -1,4 +1,4 @@
-package telas;
+package componentesDeTelas;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -10,10 +10,11 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
 
-import componentesDeTelas.RoundJPanel;
-import componentesDeTelas.SemVFXJButton;
+import controladoras.ControladoraJanela;
+import telas.Painel;
+
+import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class PopUpErroGenerico extends Painel {
@@ -26,6 +27,7 @@ public class PopUpErroGenerico extends Painel {
 		
 		RoundJPanel painelExterno = new RoundJPanel(25,25,25,25);
 		painelExterno.setBackground(getCorJanelaErro());
+		
 		GroupLayout gl_painel = new GroupLayout(painel);
 		gl_painel.setHorizontalGroup(
 			gl_painel.createParallelGroup(Alignment.LEADING)
@@ -46,21 +48,17 @@ public class PopUpErroGenerico extends Painel {
 		JLabel aviso = new JLabel("");
 		aviso.setIcon(getIconeErro());
 		
-		
 		JLabel labelMensagemPrincipal = new JLabel("Mensagem de erro");
 		labelMensagemPrincipal.setText(mensagemPrincipal);
 		labelMensagemPrincipal.setFont(new Font("Arial", Font.PLAIN, 20));
 		labelMensagemPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		SemVFXJButton botao = new SemVFXJButton("Mensagem");
+		SemVFXJButton botao = new SemVFXJButton("Mensagem", getCorJanelaErro(), getCorJanelaErro());
 		botao.setText(mensagemDoBotao);
 		botao.setForeground(new Color(240, 240, 240));
 		botao.setBackground(new Color(25, 25, 25));
-		botao.setFont(new Font("Arial", Font.PLAIN, 18));
-		botao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		botao.setFont(new Font("Arial", Font.PLAIN, 16));
+		botao.addActionListener(e -> ControladoraJanela.trocaPainel(painelDeRetorno.getPainel()));
 		
 		JLabel labelMensagemInstrucao = new JLabel("Mensagem de erro secundária");
 		labelMensagemInstrucao.setText(mensagemInstrucao);
