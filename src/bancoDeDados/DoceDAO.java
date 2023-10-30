@@ -136,7 +136,7 @@ public class DoceDAO implements DAO<Doce, Integer> {
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT FROM Doce WHERE id = ?";
+		String sql = "SELECT * FROM Doce WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);

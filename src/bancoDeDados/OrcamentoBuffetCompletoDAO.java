@@ -278,7 +278,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT FROM OrcamentoBuffetCompleto WHERE id = ?";
+		String sql = "SELECT * FROM OrcamentoBuffetCompleto WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
