@@ -13,6 +13,7 @@ import classes.Doce;
 import classes.Salgado;
 import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJPanel;
+import controladoras.ControladoraJanela;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -254,12 +255,15 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 					.addGap(1))
 		);
 		
+		ButtonGroup grupoBolos = new ButtonGroup();
+		
 		botaoBoloBrigadeiro = new JRadioButton("Brigadeiro");
 		botaoBoloBrigadeiro.setFont(fonteRadioButton);
 		botaoBoloBrigadeiro.setForeground(getCorTexto());
 		botaoBoloBrigadeiro.setBackground(getCorDeJanelaInterna());
 		botaoBoloBrigadeiro.setFocusable(false);
 		botaoBoloBrigadeiro.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloBrigadeiro);
 		
 		botaoBoloPrestigio = new JRadioButton("Prestigio");
 		botaoBoloPrestigio.setFont(fonteRadioButton);
@@ -267,12 +271,15 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoBoloPrestigio.setBackground(getCorDeJanelaInterna());
 		botaoBoloPrestigio.setFocusable(false);
 		botaoBoloPrestigio.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloPrestigio);
 		
 		botaoBoloAbacaxi = new JRadioButton("Abacaxi");
 		botaoBoloAbacaxi.setFont(fonteRadioButton);
 		botaoBoloAbacaxi.setForeground(getCorTexto());
 		botaoBoloAbacaxi.setBackground(getCorDeJanelaInterna());
 		botaoBoloAbacaxi.setFocusable(false);
+		botaoBoloAbacaxi.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloAbacaxi);
 		
 		botaoBoloPessego = new JRadioButton("Pêssego");
 		botaoBoloPessego.setFont(fonteRadioButton);
@@ -280,6 +287,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoBoloPessego.setBackground(getCorDeJanelaInterna());
 		botaoBoloPessego.setFocusable(false);
 		botaoBoloPessego.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloPessego);
 		
 		botaoBoloDoisAmores = new JRadioButton("Dois amores");
 		botaoBoloDoisAmores.setFont(fonteRadioButton);
@@ -287,6 +295,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoBoloDoisAmores.setBackground(getCorDeJanelaInterna());
 		botaoBoloDoisAmores.setFocusable(false);
 		botaoBoloDoisAmores.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloDoisAmores);
 		
 		botaoBoloViuvaNegra = new JRadioButton("Viúva negra");
 		botaoBoloViuvaNegra.setFont(fonteRadioButton);
@@ -294,6 +303,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoBoloViuvaNegra.setBackground(getCorDeJanelaInterna());
 		botaoBoloViuvaNegra.setFocusable(false);
 		botaoBoloViuvaNegra.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloViuvaNegra);
 		
 		GroupLayout gl_painelBotoesBolo = new GroupLayout(painelBotoesBolo);
 		gl_painelBotoesBolo.setHorizontalGroup(
@@ -601,8 +611,8 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 			
 			@Override
 			public void mousePressed(MouseEvent e) { 
-				// TODO Verificar antes de prosseguir
-				organizador.proximaPagina();
+				if (verificarPreenchimentoCampos())
+					organizador.proximaPagina();
 			}
 			
 			@Override
@@ -612,30 +622,6 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
 		});
 		labelAvancaPagina.setIcon(getIconeProximaPagina());
-		labelAvancaPagina.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				// TODO Verifica as informaçoes
-				
-				organizador.proximaPagina();
-			} 
-			
-			@Override
-			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mousePressed(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
-			
-			
-		});
 		
 		painelAvancaPagina.add(labelAvancaPagina);
 		painel.add(labelTitulo);
@@ -675,7 +661,6 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 			
 			salgadosSelecionados[index] = botaoPressionado.isSelected();
 		}
-		
 	}
 	
 	private class ListenerDoce implements ActionListener {
@@ -721,9 +706,47 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	
 	public boolean verificarPreenchimentoCampos() {
 		try {
-			boolean estaVazio;
 			
-			// TODO Implementar verificação
+			int qtdSalgados = 0;
+			int qtdDoces = 0;
+			
+			for (int i = 0; i < salgadosSelecionados.length; i++) {
+				if (salgadosSelecionados[i]) qtdSalgados += 1;
+			}
+			
+			for (int i = 0; i < docesSelecionados.length; i++) {
+				if (docesSelecionados[i]) qtdDoces += 1;
+			}
+			
+			if (qtdSalgados == 0) {
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione pelo menos 7 opções de salgado", "Selecionar Salgados"); 
+				return false;
+			}
+			
+			if (qtdSalgados < 7) { // Quantidade salgado menor
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione mais opções de salgado", "Selecionar Salgados"); 
+				return false;
+			}
+			
+			if (qtdSalgados > 9) { // Quantidade salgado errada
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione menos opções de salgado", "Selecionar Salgados"); 
+				return false;
+			}
+			
+			if (qtdDoces == 0) {
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Doces Inválido", "Para continuar, selecione pelo menos 3 opções de doce", "Selecionar Doces");
+				return false;
+			}
+			
+			if (qtdDoces != 3) { // Quantidade doce errada
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Doces Inválido", "Para continuar, selecione apenas 3 opções de doces", "Selecionar Doces");
+				return false;
+			}
+			
+			if (boloSelecionado == null) { // Bolo não está selecionado
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Bolo Inválido", "Para continuar, selecione apenas uma opção de bolo", "Selecionar Bolo");
+				return false;
+			}
 			
 			return true;
 			
@@ -731,6 +754,37 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 			return false;
 		}
 		
+	}
+	public boolean getTeraCerveja(){
+		return teraCerveja;
+	}
+	
+	public ArrayList<Salgado> getSalgadosEscolhidos() {
+		ArrayList<Salgado> listaParaRetorno = new ArrayList<>();
+		
+		for(int i = 0; i < arraySalgados.size(); i++) {
+			if (salgadosSelecionados[i]) {
+				listaParaRetorno.add(arraySalgados.get(i));
+			}
+		}
+		
+		return listaParaRetorno;
+	}
+	
+	public ArrayList<Doce> getDocesEscolhidos() {
+		ArrayList<Doce> listaParaRetorno = new ArrayList<>();
+		
+		for(int i = 0; i < arrayDoces.size(); i++) {
+			if (docesSelecionados[i]) {
+				listaParaRetorno.add(arrayDoces.get(i));
+			}
+		}
+		
+		return listaParaRetorno;
+	}
+	
+	public Bolo getBoloEscolhido() {
+		return boloSelecionado;
 	}
 	
 	@Override 
