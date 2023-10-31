@@ -23,15 +23,9 @@ public class PainelOrganizadorOrcamentoDeBuffetCompleto extends Painel {
 	
 	public PainelOrganizadorOrcamentoDeBuffetCompleto() {
 		// Sem o servidor não funciona
-//		ArrayList<Salgado> salgados = controladoraOrcamentoBuffetCompleto.getAllSalgados();
-//		ArrayList<Doce> doces = controladoraOrcamentoBuffetCompleto.getAllDoces();
-//		ArrayList<Bolo> bolos = controladoraOrcamentoBuffetCompleto.getAllBolos();
-		
-		//! Debug
-		ArrayList<Salgado> salgados = new ArrayList<>();
-		ArrayList<Doce> doces = new ArrayList<>();
-		ArrayList<Bolo> bolos = new ArrayList<>();
-		//! Fim Debug
+		ArrayList<Salgado> salgados = ControladoraOrcamentoDeBuffetCompleto.getAllSalgados();
+		ArrayList<Doce> doces = ControladoraOrcamentoDeBuffetCompleto.getAllDoces();
+		ArrayList<Bolo> bolos = ControladoraOrcamentoDeBuffetCompleto.getAllBolos();
 		
 		painelEtapa1 = new PainelInicialOrcamentoDeBuffetCompleto(this);
 		painelEtapa2 = new PainelOpcoesOrcamentoDeBuffetCompleto(this, salgados, doces, bolos);
@@ -53,8 +47,13 @@ public class PainelOrganizadorOrcamentoDeBuffetCompleto extends Painel {
 		} else if (etapaOrcamento == 3) {
 			OrcamentoBuffetCompleto orcamento = null;
 
-			// TODO Pegar as infos e passar na linha abaixo, (além de tirar o comentario)
-			// orcamento = controladoraOrcamentoBuffetCompleto.criarOrcamento(numeroDeConvidados, numeroDeColaboradores, dataDoEvento, cliente, horaDeInicio, teraCerveja, opcoesDeSalgado, opcoesDeDoces, opcaoDeBolo)
+			try {
+				orcamento = ControladoraOrcamentoDeBuffetCompleto.criarOrcamento(painelEtapa1.getInputNumeroDeConvidados(), painelEtapa1.getInputNumeroDeColaboradores(), painelEtapa1.getData(), painelEtapa3.getCliente(), painelEtapa1.getInputHoraDeInicio(), painelEtapa2.getTeraCerveja(), painelEtapa2.getSalgadosEscolhidos(), painelEtapa2.getDocesEscolhidos(), painelEtapa2.getBoloEscolhido());
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			
 			painelEtapa4.setOrcamento(orcamento);
 			ControladoraJanela.trocaPainel(painelEtapa4.getPainel());
