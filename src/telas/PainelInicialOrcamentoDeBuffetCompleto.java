@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import classes.Data;
+import classes.Utilitaria;
 import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
@@ -303,31 +304,38 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	
 	public boolean verificarPreenchimentoCampos() {
 		try {
-			boolean estaVazio;
 			
-			estaVazio = inputNumeroDeConvidados.getText().isBlank() || inputNumeroDeConvidados.getText().isEmpty();
-			
-			if (estaVazio) {
+			if (inputNumeroDeConvidados.getText().isBlank() || inputNumeroDeConvidados.getText().isEmpty()) {
 				ControladoraJanela.ativarPopUp(this, "Numero de convidados não está preenchido", "Para continuar, preencha o campo número de convidados", "Preencher Número de Convidados");
 				return false;
-			
-			}
-			
-			estaVazio = inputData.getText().equals("  /  /    "); 
-			
-			if (estaVazio) {
-				ControladoraJanela.ativarPopUp(this, "Data não está preenchida", "Para continuar, preencha o campo data", "Preencher Data");
-				return false;
 			} else {
-				if (inputData.getText().matches("(\\d{2}|\\d\s|\s\\d)/(\\d{2}|\\d\\s|\s\\d)/\\d{4}") == false) {
-					ControladoraJanela.ativarPopUp(this, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
+				if (Utilitaria.verificarNumeroConvidados(getInputNumeroDeConvidados()) == false) {
+					ControladoraJanela.ativarPopUp(this, "Número de convidados inválido", "Para continuar, insira entre 50 e 180 convidados", "Mudar Número de Convidados");
 					return false;
 				}
 			}
 			
-			estaVazio = inputHoraDeInicio.getText().equals("  :  ");
+			if (inputData.getText().equals("  /  /    ")) {
+				ControladoraJanela.ativarPopUp(this, "Data não está preenchida", "Para continuar, preencha o campo data", "Preencher Data");
+				return false;
+				
+			} else {
+				Painel estePainel = this;
+				boolean naoPassouNoTeste = true;
+				try {
+					// Caso ele consiga criar a data, então ele passa no teste, caso contrário é invalido
+					Data data = getData();
+					naoPassouNoTeste = false;
+					
+				} catch (ExcecaoNaoPreenchido | ExcecaoDiaInvalido | ExcecaoMesInvalido | NumberFormatException e) {
+					ControladoraJanela.ativarPopUp(estePainel, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
+					
+				}
+				
+				if (naoPassouNoTeste) return false;
+			}
 			
-			if (estaVazio) {
+			if (inputHoraDeInicio.getText().equals("  :  ")) {
 				ControladoraJanela.ativarPopUp(this, "Hora de inicio do evento não está preenchida", "Para continuar, preencha o campo hora de inicio do evento", "Preencher Hora de Inicio");
 				return false;
 				
@@ -357,7 +365,7 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	public Data getData() throws ExcecaoNaoPreenchido, ExcecaoDiaInvalido, ExcecaoMesInvalido{
 		String[] aux = inputData.getText().split("/");
 		
-		return new Data(aux[0], aux[1], aux[2]);
+		return new Data(aux[0].strip(), aux[1].strip(), aux[2].strip());
 		
 	}
 	public String getInputHoraDeInicio(){
