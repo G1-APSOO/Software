@@ -34,12 +34,12 @@ DROP TABLE IF EXISTS `dbname`.`Cliente` ;
 CREATE TABLE IF NOT EXISTS `dbname`.`Cliente` (
   `cpf` VARCHAR(11) NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
-  `RG` VARCHAR(20) NOT NULL,
+  `RG` VARCHAR(20),
   `endereco` VARCHAR(100) NOT NULL,
   `CEP` VARCHAR(20) NOT NULL,
   `celular` VARCHAR(13) NOT NULL,
-  `telefoneResidencial` VARCHAR(13) NOT NULL,
-  `telefoneComercial` VARCHAR(13) NOT NULL,
+  `telefoneResidencial` VARCHAR(13),
+  `telefoneComercial` VARCHAR(13),
   `email` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`cpf`))
 ENGINE = InnoDB;
@@ -106,12 +106,12 @@ CREATE TABLE IF NOT EXISTS `dbname`.`OrcamentoBuffetCompleto` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_idBolo`
-    FOREIGN KEY (`id`)
+    FOREIGN KEY (`fk_idBolo`)
     REFERENCES `dbname`.`Bolo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_idPagamento`
-    FOREIGN KEY (`id`)
+    FOREIGN KEY (`fk_idPagamento`)
     REFERENCES `dbname`.`Pagamento` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
