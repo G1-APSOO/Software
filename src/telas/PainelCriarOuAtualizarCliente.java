@@ -2,6 +2,7 @@ package telas;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import controladoras.ControladoraGerenciarCliente;
 import controladoras.ControladoraJanela;
 import controladoras.ControladoraOrcamentoDeBuffetCompleto;
 import excecoes.ExcecaoDDDInvalido;
+import excecoes.ExcecaoParametroPreenchidoErrado;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
@@ -42,6 +44,8 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 	private RoundJFormattedTextField inputTelefoneResidencial;	// OPCIONAL
 	private RoundJFormattedTextField inputTelefoneComercial;	// OPCIONAL
 	
+	private RoundJPanel painelErro;
+	
 	private JPanel painelDelimitadorNomeCompleto;
 	private JPanel painelDelimitadorCPF;
 	private JPanel painelDelimitadorRG;
@@ -67,68 +71,17 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		JPanel painelPaginaAnterior = new JPanel();
 		JPanel painelProximaPagina = new JPanel();
 		JPanel painelRetornaTudo = new JPanel();
-		JPanel painelErro = new JPanel();
+		painelErro = new RoundJPanel(25, 25, 25, 25);
 		usuarioJaPesquisado = false;
 		cliente = null;
 
 		painelPaginaAnterior.setBackground(getCorDeFundo());
 		painelProximaPagina.setBackground(getCorDeFundo());
 		painelRetornaTudo.setBackground(getCorDeFundo());
-		painelErro.setBackground(getCorDeFundo());
+		painelErro.setBackground(getCorDeJanelaInterna());
 		
 		JPanel painelDelimitadorCampos = new JPanel();
 		painelDelimitadorCampos.setBackground(getCorDeFundo());
-		
-		GroupLayout gl_painel = new GroupLayout(painel);
-		gl_painel.setHorizontalGroup(
-			gl_painel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_painel.createSequentialGroup()
-					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_painel.createSequentialGroup()
-							.addGap(20)
-							.addComponent(painelPaginaAnterior, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-							.addGap(300)
-							.addComponent(painelErro, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
-							.addGap(300))
-						.addGroup(gl_painel.createSequentialGroup()
-							.addGap(67)
-							.addComponent(labelTituloTela, GroupLayout.PREFERRED_SIZE, 555, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
-						.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-						.addComponent(painelProximaPagina, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
-					.addGap(20))
-				.addGroup(gl_painel.createSequentialGroup()
-					.addContainerGap(63, Short.MAX_VALUE)
-					.addComponent(painelDelimitadorCampos, GroupLayout.PREFERRED_SIZE, 1157, GroupLayout.PREFERRED_SIZE)
-					.addGap(50))
-		);
-		gl_painel.setVerticalGroup(
-			gl_painel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_painel.createSequentialGroup()
-					.addGap(25)
-					.addGroup(gl_painel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelTituloTela, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addComponent(painelDelimitadorCampos, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)
-					.addGap(47)
-					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(painelPaginaAnterior, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(painelProximaPagina, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-						.addComponent(painelErro, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(20))
-		);
-		GroupLayout gl_painelErro = new GroupLayout(painelErro);
-		gl_painelErro.setHorizontalGroup(
-			gl_painelErro.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 431, Short.MAX_VALUE)
-		);
-		gl_painelErro.setVerticalGroup(
-			gl_painelErro.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 70, Short.MAX_VALUE)
-		);
-		painelErro.setLayout(gl_painelErro);
 		painelDelimitadorCampos.setLayout(new GridLayout(3, 3, 20, 20));
 		
 		painelDelimitadorNomeCompleto = new JPanel();
@@ -519,7 +472,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 						cliente = ControladoraGerenciarCliente.getCliente(inputAlternado.getText());
 						
 						if (cliente == null) {
-							JOptionPane.showMessageDialog(null, "Cliente não cadastrado"); // TODO Chamar PopUpErroGenerico
+							ControladoraJanela.ativarPopUp(estePainel, "Cliente não cadastrado", "Para continuar, efetue o cadastro do cliente", "Cadastrar Cliente");
 							inputCPF.setText(inputAlternado.getText());
 							inputAlternado.setText("");
 							labelTituloTela.setText("Cadastrar Cliente");
@@ -551,66 +504,89 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 						
 						painel.repaint();
 					
-					} else JOptionPane.showMessageDialog(null, "CPF inválido"); // TODO Chamar PopUpErroGenerico
+					} else {
+						ControladoraJanela.ativarPopUp(estePainel, "CPF informado está inválido", "Para continuar, forneça um CPF válido", "Preencher CPF");
+					}
 					
 					return;
 				}
 				
-				boolean erro = false;
-				
 				if (ControladoraOrcamentoDeBuffetCompleto.verificarNomeCompleto(inputNomeCompleto.getText()) == false) {
 					ControladoraJanela.ativarPopUp(estePainel, "Nome informado está inválido", "Para continuar, forneça um nome válido", "Preencher Nome");
-					erro = true;
+					painelErro.setVisible(true);
+					return;
 				}
 				
 				if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputCPF.getText()) == false) {
 					ControladoraJanela.ativarPopUp(estePainel, "CPF informado está inválido", "Para continuar, forneça um CPF válido", "Preencher CPF");
-					erro = true;
+					painelErro.setVisible(true);
+					return;
 				}
 
 				if (ControladoraOrcamentoDeBuffetCompleto.verificarEmail(inputEmail.getText()) == false) {
 					ControladoraJanela.ativarPopUp(estePainel, "Email está inválido", "Para continuar, forneça um Email válido", "Preencher Email");
-					erro = true;
+					painelErro.setVisible(true);
+					return;
 				}
 
 				if (inputAlternado.getText().isBlank() || inputAlternado.getText().isEmpty()) {
 					ControladoraJanela.ativarPopUp(estePainel, "Endereço não está preenchido", "Para continuar, preencha o campo Endereço", "Preencher Endereço");
-					erro = true;
+					painelErro.setVisible(true);
+					return;
 				}
 				
 				if (ControladoraOrcamentoDeBuffetCompleto.verificarCEP(inputCEP.getText()) == false) {
 					ControladoraJanela.ativarPopUp(estePainel, "CEP está inválido", "Para continuar, forneça um CEP válido", "Preencher CEP");
-					erro = true;
+					painelErro.setVisible(true);
+					return;
 				}
 				
 				try {
 					if (ControladoraOrcamentoDeBuffetCompleto.verificarCelular(inputCelular.getText()) == false) {
 						ControladoraJanela.ativarPopUp(estePainel, "Celular está inválido", "Para continuar, forneça um Celular válido", "Preencher Celular");
-						erro = true;
+						painelErro.setVisible(true);
+						return;
 					}					
 				} catch (ExcecaoDDDInvalido eDDD) {
 					ControladoraJanela.ativarPopUp(estePainel, "DDD informado está inválido", "Para continuar, forneça um DDD válido", "Preencher DDD");
-					erro = true;
+					painelErro.setVisible(true);
+					return;
 				}
 				
-				if (erro == false) {
-					
-					cliente = new Cliente(inputNomeCompleto.getText(), inputCPF.getText(), inputAlternado.getText(), inputCEP.getText(), inputCelular.getText(), inputEmail.getText());						
-					
-					if (inputRG.getText().isBlank() == false && inputRG.getText().isEmpty() == false) {
-						cliente.setRg(inputRG.getText());
-					}
-					
-					if (inputTelefoneResidencial.getText().equals("       -    ") == false) {
-						cliente.setTelefoneResidencial(inputTelefoneResidencial.getText());
-					}
-					
-					if (inputTelefoneComercial.getText().equals("        -    ") == false) {
-						cliente.setTelefoneComercial(inputTelefoneComercial.getText());
-					}
-					
-					organizador.proximaPagina();
+				String cpf = inputCPF.getText();
+				cpf = cpf.replace(".", "");
+				cpf = cpf.replace("-", "");
+				
+				cliente = new Cliente(inputNomeCompleto.getText(), cpf, inputAlternado.getText(), inputCEP.getText(), inputCelular.getText(), inputEmail.getText());						
+				
+				if (inputRG.getText().isBlank() == false && inputRG.getText().isEmpty() == false) {
+					cliente.setRg(inputRG.getText());
 				}
+				
+				if (inputTelefoneResidencial.getText().equals("       -    ") == false) {
+					try {
+						cliente.setTelefoneResidencial(inputTelefoneResidencial.getText());
+						
+					} catch (ExcecaoDDDInvalido | ExcecaoParametroPreenchidoErrado | NumberFormatException erro) {
+						ControladoraJanela.ativarPopUp(estePainel, "Telefone Residencial", "Para continuar, insira um telefone válido", "Mudar Telefone Residencial");
+						cliente = null;
+						return;
+					}
+				}
+				
+				if (inputTelefoneComercial.getText().equals("        -    ") == false) {
+					try {
+						cliente.setTelefoneComercial(inputTelefoneComercial.getText());
+						
+					} catch (ExcecaoDDDInvalido | ExcecaoParametroPreenchidoErrado | NumberFormatException erro) {
+						ControladoraJanela.ativarPopUp(estePainel, "Telefone Comercial", "Para continuar, insira um celular válido", "Mudar Telefone Comercial");
+						cliente = null;
+						return;
+					}
+				}
+				
+				organizador.proximaPagina();
+				
 			}
 			
 			@Override
@@ -627,9 +603,74 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(organizador));
 		labelRetornaTudo.setIcon(getIconeRetornaTudo());
 		painelRetornaTudo.add(labelRetornaTudo);
+		GroupLayout gl_painel = new GroupLayout(painel);
+		gl_painel.setHorizontalGroup(
+			gl_painel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painel.createSequentialGroup()
+					.addGap(67)
+					.addComponent(labelTituloTela, GroupLayout.PREFERRED_SIZE, 555, GroupLayout.PREFERRED_SIZE)
+					.addGap(505)
+					.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_painel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(painelDelimitadorCampos, GroupLayout.PREFERRED_SIZE, 1157, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_painel.createSequentialGroup()
+					.addGap(20)
+					.addComponent(painelPaginaAnterior, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+					.addGap(310)
+					.addComponent(painelErro, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE)
+					.addGap(360)
+					.addComponent(painelProximaPagina, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_painel.setVerticalGroup(
+			gl_painel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painel.createSequentialGroup()
+					.addGap(25)
+					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_painel.createSequentialGroup()
+							.addGap(20)
+							.addComponent(labelTituloTela, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+						.addComponent(painelRetornaTudo, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(painelDelimitadorCampos, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)
+					.addGap(47)
+					.addGroup(gl_painel.createParallelGroup(Alignment.LEADING)
+						.addComponent(painelPaginaAnterior, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+						.addComponent(painelProximaPagina, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_painel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(painelErro, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))))
+		);
 		
+		JLabel iconeErro = new JLabel("");
+		iconeErro.setIcon(new ImageIcon("imgs/erroPequeno.png"));
+		
+		JLabel labelErro = new JLabel("Preencha todos os campos");
+		labelErro.setFont(getFonteLabelInterno());
+		labelErro.setForeground(getCorTextoErro());
+		
+		GroupLayout gl_painelErro = new GroupLayout(painelErro);
+		gl_painelErro.setHorizontalGroup(
+			gl_painelErro.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelErro.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(iconeErro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(labelErro, GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+					.addGap(14))
+		);
+		gl_painelErro.setVerticalGroup(
+			gl_painelErro.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelErro.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_painelErro.createParallelGroup(Alignment.LEADING)
+						.addComponent(labelErro, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+						.addComponent(iconeErro, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		painelErro.setLayout(gl_painelErro);
 		painel.setLayout(gl_painel);
-		
+		painelErro.setVisible(false);
 	}
 	
 	public Cliente getCliente() {
@@ -671,6 +712,8 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		painelDelimitadorCelular.setVisible(false);
 		painelDelimitadorTelefoneResidencial.setVisible(false);
 		painelDelimitadorTelefoneComercial.setVisible(false);
+		
+		painelErro.setVisible(false);
 		
 	}
 }
