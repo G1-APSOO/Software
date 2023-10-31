@@ -2,8 +2,11 @@ package telas;
 
 import javax.swing.JPanel;
 
+import classes.OrcamentoBuffetCompleto;
 import classes.OrcamentoEvento;
 import componentesDeTelas.SemVFXJButton;
+import controladoras.ControladoraJanela;
+import controladoras.ControladoraOrcamentoDeBuffetCompleto;
 import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJPanel;
 
@@ -30,6 +33,8 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 	private JLabel labelVoltaPagina;
 	private JLabel labelRetornaTudo;
 	private JLabel labelValor;
+	private SemVFXJButton botaoConfirmar;
+	private SemVFXJButton botaoCancelar;
 	
 	public PainelConfirmarOuCancelarOrcamento(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
 		super();
@@ -57,6 +62,14 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 			@Override
 			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
 			
+		});
+		
+		botaoCancelar = new SemVFXJButton("CANCELAR", Color.WHITE, Color.WHITE);
+		botaoCancelar.setFont(getFonteLabelInterno());
+		botaoCancelar.setForeground(getCorInputs());
+		botaoCancelar.addActionListener(e -> {
+			ControladoraJanela.voltarPainelInicial();
+			organizador.limparCampos();
 		});
 		
 		construtorDaTela();
@@ -87,9 +100,6 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		painelBotoes.add(painelCancelar);
 		painelCancelar.setLayout(new BorderLayout(0, 0));
 		
-		SemVFXJButton botaoCancelar = new SemVFXJButton("CANCELAR", Color.WHITE, Color.WHITE);
-		botaoCancelar.setFont(getFonteLabelInterno());
-		botaoCancelar.setForeground(getCorInputs());
 		painelCancelar.add(botaoCancelar);
 		
 		RoundJPanel painelConfirmar = new RoundJPanel(25, 25, 25, 25);
@@ -98,7 +108,7 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		painelBotoes.add(painelConfirmar);
 		painelConfirmar.setLayout(new BorderLayout(0, 0));
 		
-		SemVFXJButton botaoConfirmar = new SemVFXJButton("CONFIRMAR", Color.WHITE, Color.WHITE);
+		botaoConfirmar = new SemVFXJButton("CONFIRMAR", Color.WHITE, Color.WHITE);
 		botaoConfirmar.setFont(getFonteLabelInterno());
 		botaoConfirmar.setForeground(getCorInputs());
 		painelConfirmar.add(botaoConfirmar);
@@ -160,6 +170,7 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		
 		painelVoltaPagina.add(labelVoltaPagina, BorderLayout.CENTER);
 		painel.setLayout(gl_painel);
+		configurarBotoes();
 	}
 	
 	public void setOrcamento(OrcamentoEvento orcamentoEvento) {
@@ -174,7 +185,11 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 	
 	@Override 
 	protected void configurarBotoes() {
-		//todo
+		botaoConfirmar.addActionListener( e -> {
+			ControladoraOrcamentoDeBuffetCompleto.cadastrarOrcamento((OrcamentoBuffetCompleto) orcamentoEvento);
+		
+		});
+		
 	}
 	
 	@Override
