@@ -1,6 +1,7 @@
 package telas;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -19,6 +20,7 @@ import classes.Utilitaria;
 import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
+import componentesDeTelas.RoundJTextField;
 import controladoras.ControladoraJanela;
 import excecoes.ExcecaoDiaInvalido;
 import excecoes.ExcecaoMesInvalido;
@@ -32,8 +34,8 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	
 	private PainelOrganizadorOrcamentoDeBuffetCompleto organizador;
 	
-	private RoundJFormattedTextField inputNumeroDeConvidados;
-	private RoundJFormattedTextField inputNumeroDeColaboradores;
+	private RoundJTextField inputNumeroDeConvidados;
+	private RoundJTextField inputNumeroDeColaboradores;
 	private RoundJFormattedTextField inputData;
 	private RoundJFormattedTextField inputHoraDeInicio;
 	
@@ -216,31 +218,15 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 	}
 	
 	private void setInputNumeroDeConvidados() {
-		inputNumeroDeConvidados = new RoundJFormattedTextField(35);
-		inputNumeroDeConvidados.setFocusLostBehavior(JFormattedTextField.COMMIT);
+		inputNumeroDeConvidados = new RoundJTextField(35);
 		inputNumeroDeConvidados.setFont(getFonteInputs());
-		
-		try {
-			MaskFormatter mascara;
-			mascara = new MaskFormatter("###");
-			mascara.install(inputNumeroDeConvidados);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+
 	}
 	
 	private void setInputNumeroDeColaboradores() {
-		inputNumeroDeColaboradores = new RoundJFormattedTextField(35);
-		inputNumeroDeColaboradores.setFocusLostBehavior(JFormattedTextField.COMMIT);
+		inputNumeroDeColaboradores = new RoundJTextField(35);
 		inputNumeroDeColaboradores.setFont(getFonteInputs());
 
-		try {
-			MaskFormatter mascara;
-			mascara = new MaskFormatter("###");
-			mascara.install(inputNumeroDeColaboradores);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private void setInputData() {
@@ -309,7 +295,8 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 				ControladoraJanela.ativarPopUp(this, "Numero de convidados não está preenchido", "Para continuar, preencha o campo número de convidados", "Preencher Número de Convidados");
 				return false;
 			} else {
-				if (Utilitaria.verificarNumeroConvidados(getInputNumeroDeConvidados()) == false) {
+				if (inputNumeroDeConvidados.getText().strip().matches("\\d+") == false || 
+						Utilitaria.verificarNumeroConvidados(getInputNumeroDeConvidados()) == false) {
 					ControladoraJanela.ativarPopUp(this, "Número de convidados inválido", "Para continuar, insira entre 50 e 180 convidados", "Mudar Número de Convidados");
 					return false;
 				}
@@ -346,7 +333,10 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 				}
 			}
 			
-			// Numero de colaboradores é um parametro opcional
+			if (inputNumeroDeColaboradores.getText().strip().matches("\\d+") == false) {
+				ControladoraJanela.ativarPopUp(this, "Número de Colaboradores Inválido", "Para continuar, insira um número de colaboradores válido", "Mudar número de colaboradores");
+				return false;
+			}
 			
 			return true;
 			
