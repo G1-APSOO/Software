@@ -1,5 +1,7 @@
 package classes;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import bancoDeDados.BoloDAO;
@@ -151,7 +153,12 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		if (getNumeroDeConvidados() > 50 && getNumeroDeConvidados() <= 180) {
 			valorTotal = valorTotal + (getNumeroDeConvidados() - 50) * 40.00;
 		}
+		
+		BigDecimal arredondador = BigDecimal.valueOf(valorTotal);
+	    arredondador = arredondador.setScale(2, RoundingMode.HALF_UP);
 
+	    valorTotal = arredondador.doubleValue();
+	    
 		return valorTotal;
 	}
 
