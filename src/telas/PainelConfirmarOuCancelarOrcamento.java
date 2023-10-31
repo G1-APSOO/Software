@@ -164,6 +164,8 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 	
 	public void setOrcamento(OrcamentoEvento orcamentoEvento) {
 		this.orcamentoEvento = orcamentoEvento;
+		
+		if (orcamentoEvento != null) labelValor.setText("R$ " + orcamentoEvento.calcularValorTotal());
 	}
 	
 	public OrcamentoEvento getOrcamento() {
