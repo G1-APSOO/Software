@@ -22,9 +22,12 @@ import componentesDeTelas.RoundJFormattedTextField;
 import componentesDeTelas.RoundJPanel;
 import componentesDeTelas.RoundJTextField;
 import controladoras.ControladoraJanela;
+import controladoras.ControladoraOrcamentoDeBuffetCompleto;
+import excecoes.ExcecaoDataEmUmFuturoDistante;
 import excecoes.ExcecaoDiaInvalido;
 import excecoes.ExcecaoMesInvalido;
 import excecoes.ExcecaoNaoPreenchido;
+import excecoes.ExcecaoOrcamentoParaHoje;
 
 import javax.swing.JFormattedTextField;
 
@@ -309,17 +312,37 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 			} else {
 				Painel estePainel = this;
 				boolean naoPassouNoTeste = true;
+				Data data;
 				try {
 					// Caso ele consiga criar a data, então ele passa no teste, caso contrário é invalido
-					Data data = getData();
+					data = getData();
 					naoPassouNoTeste = false;
+					
+					if (data.verificarSeDataEstaNoFuturo() == false) {
+						ControladoraJanela.ativarPopUp(estePainel, "Data está no passado", "Para continuar, insira uma data no futuro", "Alterar data");
+						return false;
+					}
+					
+					if (ControladoraOrcamentoDeBuffetCompleto.verificarData(inputData.getText()) == false) {
+						ControladoraJanela.ativarPopUp(estePainel, "Festa coincide com outra festa agendada", "Para continuar, mude a data da festa", "Mudar data"); 
+						return false;
+					}
 					
 				} catch (ExcecaoNaoPreenchido | ExcecaoDiaInvalido | ExcecaoMesInvalido | NumberFormatException e) {
 					ControladoraJanela.ativarPopUp(estePainel, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
+					naoPassouNoTeste = true;
 					
+				} catch (ExcecaoDataEmUmFuturoDistante e) {
+					ControladoraJanela.ativarPopUp(estePainel, "Intervalo muito grande de data", "Para continuar, mude  a data da sua festa", "Mudar Data");
+					naoPassouNoTeste = true;
+					
+				} catch (ExcecaoOrcamentoParaHoje e) {
+					ControladoraJanela.ativarPopUp(estePainel, "A festa não pode ser realizada hoje", "Para continuar, mude a data da sua festa", "Mudar Data");
+					naoPassouNoTeste = true;
 				}
 				
 				if (naoPassouNoTeste) return false;
+				
 			}
 			
 			if (inputHoraDeInicio.getText().equals("  :  ")) {
@@ -333,7 +356,7 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 				}
 			}
 			
-			if (inputNumeroDeColaboradores.getText().strip().matches("\\d+") == false) {
+			if (inputNumeroDeColaboradores.getText().isBlank() == false && inputNumeroDeColaboradores.getText().isEmpty() == false && inputNumeroDeColaboradores.getText().strip().matches("\\d+") == false) {
 				ControladoraJanela.ativarPopUp(this, "Número de Colaboradores Inválido", "Para continuar, insira um número de colaboradores válido", "Mudar número de colaboradores");
 				return false;
 			}
@@ -362,12 +385,6 @@ public class PainelInicialOrcamentoDeBuffetCompleto extends Painel {
 		return inputHoraDeInicio.getText();
 	}
 
-
-	@Override 
-	protected void configurarBotoes() {
-		// TODO
-	}
-	
 	@Override
 	public JPanel getPainel() {
 		return painel;
