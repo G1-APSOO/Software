@@ -149,16 +149,6 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	public double calcularValorTotal() {
 		double valorTotal = 2799.00;
 
-		for (int i = 0; i < arraySalgadoSelecionados.size(); i++) {
-			valorTotal = valorTotal + arraySalgadoSelecionados.get(i).getValor();
-		}
-
-		for (int i = 0; i < arrayDoceSelecionados.size(); i++) {
-			valorTotal = valorTotal + arrayDoceSelecionados.get(i).getValor();
-		}
-
-		valorTotal = valorTotal + bolo.getValor();
-
 		if (getNumeroDeConvidados() > 50 && getNumeroDeConvidados() <= 180) {
 			valorTotal = valorTotal + (getNumeroDeConvidados() - 50) * 40.00;
 		}
