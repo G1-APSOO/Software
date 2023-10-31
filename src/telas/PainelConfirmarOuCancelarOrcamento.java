@@ -18,6 +18,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -68,6 +70,7 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		botaoCancelar.setFont(getFonteLabelInterno());
 		botaoCancelar.setForeground(getCorInputs());
 		botaoCancelar.addActionListener(e -> {
+			JOptionPane.showMessageDialog(null, "Orçamento foi cancelado com sucesso!");
 			ControladoraJanela.voltarPainelInicial();
 			organizador.limparCampos();
 		});
