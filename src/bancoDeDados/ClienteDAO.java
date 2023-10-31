@@ -145,7 +145,7 @@ public class ClienteDAO implements DAO<Cliente, String> {
 
 	@Override
 	public boolean existeEssaChavePrimaria(String chavePrimaria) {
-		String sql = "SELECT FROM Cliente WHERE cpf = ?";
+		String sql = "SELECT * FROM Cliente WHERE cpf = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, chavePrimaria);
