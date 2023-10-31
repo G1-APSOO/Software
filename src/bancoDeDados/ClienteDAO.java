@@ -21,10 +21,18 @@ public class ClienteDAO implements DAO<Cliente, String> {
 
 			try (ResultSet rs = statement.executeQuery()) {
 				while (rs.next()) {
+					String rg = rs.getString("RG");
+					String telefoneResidencial = rs.getString("telefoneResidencial");
+					String telefoneComercial = rs.getString("telefoneComercial");
+					
 					Cliente clienteEncontrado = new Cliente(rs.getString("nome"), rs.getString("cpf"),
 							rs.getString("endereco"), rs.getString("CEP"), rs.getString("celular"),
-							rs.getString("email"), rs.getString("RG"), rs.getString("telefoneResidencial"),
-							rs.getString("telefoneComercial"));
+							rs.getString("email"));
+
+					if (rg != null) clienteEncontrado.setRg(rg);
+					if (telefoneResidencial != null) clienteEncontrado.setTelefoneResidencial(telefoneResidencial);
+					if (telefoneComercial != null) clienteEncontrado.setTelefoneComercial(telefoneComercial);
+					
 					return clienteEncontrado;
 				}
 			}
