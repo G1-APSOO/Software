@@ -150,9 +150,9 @@ public class Cliente {
 		clienteDAO.atualizar(cliente);
 	}
 
-	public static void cadastrarCliente(Cliente cliente) {
+	public static boolean cadastrarCliente(Cliente cliente) {
 		ClienteDAO clienteDAO = new ClienteDAO();
-		clienteDAO.criar(cliente);
+		return clienteDAO.criar(cliente);
 	}
 
 	public static ArrayList<Cliente> getAllCliente() {
