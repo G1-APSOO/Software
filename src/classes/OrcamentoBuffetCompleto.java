@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import bancoDeDados.BoloDAO;
 import bancoDeDados.DoceSelecionadoDAO;
 import bancoDeDados.OrcamentoBuffetCompletoDAO;
@@ -97,7 +99,6 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 
 	public static ArrayList<Doce> getAllDoces() {
 		DoceSelecionadoDAO doceSelecionadoDAO = new DoceSelecionadoDAO();
-
 		return doceSelecionadoDAO.getAllDoces();
 	}
 
@@ -121,17 +122,25 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	public boolean getTeraCerveja() {
 		return teraCerveja;
 	}
+	
+	public ArrayList<SalgadoSelecionado> getArraySalgadoSelecionados() {
+		return arraySalgadoSelecionados;
+	}
 
-	public ArrayList<Salgado> getArraySalgadoSelecionados() {
+	public ArrayList<DoceSelecionado> getArrayDoceSelecionados() {
+		return arrayDoceSelecionados;
+	}
+
+	public static ArrayList<Salgado> getArraySalgadoAssociados(int id) {
 		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
-		return SalgadoSelecionadoDAO.getAllBuffet(this.getId());
+		return SalgadoSelecionadoDAO.getAllBuffet(id);
 	}
-
-	public ArrayList<Doce> getArrayDoceSelecionados() {
+	
+	public static ArrayList<Doce> getArrayDoceAssociados(int id) {
 		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
-		return DoceSelecionadoDAO.getAllBuffet(this.getId());
+		return DoceSelecionadoDAO.getAllBuffet(id);
 	}
-
+	
 	public Bolo getBolo() {
 		return bolo;
 	}
@@ -172,9 +181,38 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		return orcamentoBuffetCompletoDAO.deletar(orcamentoBuffet.getId());
 	}
 
-	public static boolean cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
+	public boolean cadastrarOrcamento() {
 		OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
-		return orcamentoBuffetCompletoDAO.criar(orcamentoBuffet);
+		
+		boolean foiCadastrado = false;
+		
+		foiCadastrado = Cliente.cadastrarCliente(getCliente()); 
+		Cliente.atualizarCliente(getCliente());
+		
+		if (foiCadastrado) {
+			JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso!");
+		}
+		
+		
+		if (orcamentoBuffetCompletoDAO.criar(this)) {
+			JOptionPane.showMessageDialog(null, "Orçamento cadastrado com sucesso!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar o orçamento, ocorreu algum erro", "Erro: Cadastrar Orcamento", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		foiCadastrado = true;
+		
+		for (int i = 0; i < arraySalgadoSelecionados.size(); i++) {
+			foiCadastrado = foiCadastrado && arraySalgadoSelecionados.get(i).cadastrar(getId());
+		}
+		
+		for (int i = 0; i < arrayDoceSelecionados.size(); i++) {
+			arrayDoceSelecionados.get(i).cadastrar(getId());
+		}	
+
+		return true;
 	}
 
 }
