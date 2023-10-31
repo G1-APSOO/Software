@@ -27,7 +27,7 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 	}
 
 	public static void cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffetCompleto) {
-		 OrcamentoBuffetCompleto.cadastrarOrcamento(orcamentoBuffetCompleto);
+		 orcamentoBuffetCompleto.cadastrarOrcamento();
 	}
 
 	public static OrcamentoBuffetCompleto criarOrcamento(int numeroDeConvidados, int numeroDeColaboradores, Data dataDoEvento,
