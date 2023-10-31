@@ -3,9 +3,11 @@ package classes;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import excecoes.ExcecaoDataEmUmFuturoDistante;
 import excecoes.ExcecaoDiaInvalido;
 import excecoes.ExcecaoMesInvalido;
 import excecoes.ExcecaoNaoPreenchido;
+import excecoes.ExcecaoOrcamentoParaHoje;
 
 public class Data {
 
@@ -21,6 +23,15 @@ public class Data {
         setMes(mes);
         setDia(dia);
     }
+    
+    public Data(String dia, String mes, String ano)  
+    	    throws ExcecaoNaoPreenchido,
+    	    	ExcecaoDiaInvalido,
+    	    	ExcecaoMesInvalido {
+    	        setAno(Integer.parseInt(ano));
+    	        setMes(Integer.parseInt(mes));
+    	        setDia(Integer.parseInt(dia));
+    	    }
 
     private void setDia(int dia) throws ExcecaoNaoPreenchido, ExcecaoDiaInvalido {
     	
@@ -69,12 +80,20 @@ public class Data {
 
     }
     
-    public boolean verificarSeDataEstaNoFuturo() {
+    public boolean verificarSeDataEstaNoFuturo() throws ExcecaoDataEmUmFuturoDistante {
     	GregorianCalendar dataAtual = new GregorianCalendar();
-		dataAtual.set(Calendar.MONTH, dataAtual.get(Calendar.MONTH)+1);
 		int diaAtual = dataAtual.get(Calendar.DAY_OF_MONTH);
-		int mesAtual = dataAtual.get(Calendar.MONTH);
+		int mesAtual = dataAtual.get(Calendar.MONTH) + 1;
 		int anoAtual = dataAtual.get(Calendar.YEAR);
+		
+		if (ano - anoAtual > 1) {
+			throw new ExcecaoDataEmUmFuturoDistante();
+			
+		} else if (ano - anoAtual == 1) { // Ano que vem
+			if (mes - mesAtual > 0) {
+				throw new ExcecaoDataEmUmFuturoDistante();
+			} 
+		}
 		
 		if (ano > anoAtual) {
 			return true;
@@ -90,9 +109,9 @@ public class Data {
 		
 		if (dia > diaAtual) {
 			return true;
-		} 
-		
-		return false;
+		} else {
+			throw new ExcecaoOrcamentoParaHoje();
+		}
 		
     }
 

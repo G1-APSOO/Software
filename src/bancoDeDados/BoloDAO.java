@@ -141,7 +141,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT FROM Bolo WHERE id = ?";
+		String sql = "SELECT * FROM Bolo WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);

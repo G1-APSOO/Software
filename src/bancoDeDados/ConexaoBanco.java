@@ -18,10 +18,10 @@ public class ConexaoBanco {
 
 			// Configurando a nossa conexão com um banco de dados//
 			String serverName = "localhost"; // caminho do servidor do BD
-			String mydatabase = "exgrupo"; // nome do seu banco de dados
+			String mydatabase = "dbname"; // nome do seu banco de dados
 			String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
 			String username = "root"; // nome de um usuário de seu BD
-			String password = "pedro1234"; // sua senha de acesso
+			String password = "123456"; // sua senha de acesso
 			connection = DriverManager.getConnection(url, username, password);
 
 			// Testa sua conexão//

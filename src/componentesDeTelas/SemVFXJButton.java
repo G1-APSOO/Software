@@ -20,13 +20,57 @@ public class SemVFXJButton extends JButton {
     private Color corBorda;
     private int arco;
 
-    public SemVFXJButton(String mensagemLabel) {
+    public SemVFXJButton(String mensagemLabel, Color corBotao, Color corBorda) {
         arco = 35;
         
-        corBotao 					= Color.WHITE; 
-        corBorda 					= Color.WHITE;
-        corQuandoMouseEntrarNoBotao = new Color(219, 219, 219);
-        corQuandoMouseClickar 		= new Color(138, 138, 138, 120);
+        this.corBotao 				= corBotao; 
+        this.corBorda 				= corBorda;
+      	corQuandoMouseEntrarNoBotao = new Color(219, 219, 219);
+      	corQuandoMouseClickar 		= new Color(138, 138, 138, 120);
+        
+        setText(mensagemLabel);
+        setFocusable(false);
+        setBorderPainted(false);
+        setCorBotao(corBotao);
+        setContentAreaFilled(false);
+        
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent me) {
+                setBackground(corQuandoMouseEntrarNoBotao);
+                estaDentro = true;
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+                setBackground(corBotao);
+                estaDentro = false;
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+                setBackground(corQuandoMouseClickar);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+                if (estaDentro) {
+                    setBackground(corQuandoMouseEntrarNoBotao);
+                } else {
+                    setBackground(corBotao);
+                }
+            }
+        });
+    }
+    
+    public SemVFXJButton(String mensagemLabel, Color corBotao, Color corBorda, Color corQuandoMouseEntrar, Color corQuandoMouseClickar, int arco) {
+        this.arco = arco;
+        
+        this.corBotao 					 = corBotao; 
+        this.corBorda 					 = corBorda;
+      	this.corQuandoMouseEntrarNoBotao = corQuandoMouseEntrar;
+      	this.corQuandoMouseClickar 		 = corQuandoMouseClickar;
         
         setText(mensagemLabel);
         setFocusable(false);

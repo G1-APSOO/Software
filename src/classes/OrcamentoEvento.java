@@ -1,6 +1,6 @@
 package classes;
 
-public class OrcamentoEvento {
+public abstract class OrcamentoEvento {
 	private int id;
 	private int numeroDeConvidados;
 	private int numeroDeColaboradores;
@@ -28,7 +28,7 @@ public class OrcamentoEvento {
 		setCliente(cliente);
 	}
 	
-	private void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
@@ -84,10 +84,6 @@ public class OrcamentoEvento {
 		return cliente;
 	}
 	
-	public double calcularValorTotal() {
-		double valorTotal = 0.0;
-		
-		return valorTotal;
-	}
+	public abstract double calcularValorTotal();
 
 }

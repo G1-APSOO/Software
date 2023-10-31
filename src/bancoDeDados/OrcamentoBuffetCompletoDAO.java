@@ -166,6 +166,9 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 			while (existeEssaChavePrimaria(id)) {
 				id = random.nextInt(2147483646);
 			}
+			
+			orcamentoBuffet.setId(id);
+			
 			statement.setInt(1, id);
 			statement.setInt(2, orcamentoBuffet.getNumeroDeConvidados());
 			statement.setInt(3, orcamentoBuffet.getNumeroDeColaboradores());
@@ -258,11 +261,12 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 
 	public Boolean verificarData(Data data) {
 		String dataString = data.getData();
+		
 		String sql = "SELECT * FROM OrcamentoBuffetCompleto WHERE data = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setString(1, dataString);
 			try (ResultSet rs = statement.executeQuery()) {
-				statement.setString(1, dataString);
 				if (rs.next()) {
 					return false;
 				} else {
@@ -278,7 +282,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT FROM OrcamentoBuffetCompleto WHERE id = ?";
+		String sql = "SELECT * FROM OrcamentoBuffetCompleto WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);

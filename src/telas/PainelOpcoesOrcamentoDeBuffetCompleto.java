@@ -1,40 +1,36 @@
 package telas;
 
 import javax.swing.JPanel;
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import classes.Bolo;
+import classes.Doce;
+import classes.Salgado;
+import componentesDeTelas.ListenerRetornaTudo;
 import componentesDeTelas.RoundJPanel;
+import controladoras.ControladoraJanela;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
 import javax.swing.JRadioButton;
-import java.awt.FlowLayout;
 
 public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	
 	private JPanel painel;
 	
-	private JRadioButton botaoDoceBrigadeiro;
-	private JRadioButton botaoDoceBrigadeiroBranco;
-	private JRadioButton botaoDoceBrigadeiroColorido;
-	private JRadioButton botaoDoceBeijinhoDeCoco;
-	private JRadioButton botaoDoceCasadinho;
-	private JRadioButton botaoDoceCajuzinho;
-	private JRadioButton botaoBoloBrigadeiro;
-	private JRadioButton botaoBoloPrestigio;
-	private JRadioButton botaoBoloAbacaxi;
-	private JRadioButton botaoBoloPessego;
-	private JRadioButton botaoBoloDoisAmores;
-	private JRadioButton botaoBoloViuvaNegra;
-	private JRadioButton botaoComCerveja;
-	private JRadioButton botaoSemCerveja;
 	private JRadioButton botaoSalgadoCoxinhaDeFrango;
 	private JRadioButton botaoSalgadoCoxinhaDeFrangoComCatupiry;
 	private JRadioButton botaoSalgadoRisolesDeCarne;
@@ -48,11 +44,46 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	private JRadioButton botaoSalgadoRisolesDePresuntoQueijo;
 	private JRadioButton botaoSalgadoEnroladinhoPresuntoQueijo;
 	
-	public PainelOpcoesOrcamentoDeBuffetCompleto() {
+	private boolean[] salgadosSelecionados;
+	private ArrayList<Salgado> arraySalgados;
+	
+	private JRadioButton botaoDoceBrigadeiro;
+	private JRadioButton botaoDoceBrigadeiroBranco;
+	private JRadioButton botaoDoceBrigadeiroColorido;
+	private JRadioButton botaoDoceBeijinhoDeCoco;
+	private JRadioButton botaoDoceCasadinho;
+	private JRadioButton botaoDoceCajuzinho;
+	private boolean[] docesSelecionados;
+	private ArrayList<Doce> arrayDoces;
+	
+	private JRadioButton botaoBoloBrigadeiro;
+	private JRadioButton botaoBoloPrestigio;
+	private JRadioButton botaoBoloAbacaxi;
+	private JRadioButton botaoBoloPessego;
+	private JRadioButton botaoBoloDoisAmores;
+	private JRadioButton botaoBoloViuvaNegra;
+	private Bolo boloSelecionado;
+	private ArrayList<Bolo> arrayBolo;
+	
+	private JRadioButton botaoComCerveja;
+	private JRadioButton botaoSemCerveja;
+	private boolean teraCerveja;
+	
+	public PainelOpcoesOrcamentoDeBuffetCompleto(PainelOrganizadorOrcamentoDeBuffetCompleto organizador, 
+			ArrayList<Salgado> salgados, ArrayList<Doce> doces, ArrayList<Bolo> bolos) {
 		super();
 		
 		painel = new JPanel();
 		painel.setBackground(getCorDeFundo());
+		
+		salgadosSelecionados = new boolean[12];
+		docesSelecionados = new boolean[6];
+		boloSelecionado = null;
+		teraCerveja = false;
+		
+		arraySalgados = salgados;
+		arrayDoces = doces;
+		arrayBolo = bolos;
 		
 		Font fonteRadioButton = new Font("Arial", Font.BOLD, 14);
 		Font fonteRadioButtonSalgados = new Font("Arial", Font.BOLD, 13);
@@ -122,36 +153,42 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoDoceBrigadeiro.setForeground(getCorTexto());
 		botaoDoceBrigadeiro.setBackground(getCorDeJanelaInterna());
 		botaoDoceBrigadeiro.setFocusable(false);
+		botaoDoceBrigadeiro.addActionListener(new ListenerDoce());
 		
 		botaoDoceBrigadeiroBranco = new JRadioButton("Brigadeiro branco");
 		botaoDoceBrigadeiroBranco.setFont(fonteRadioButton);
 		botaoDoceBrigadeiroBranco.setForeground(getCorTexto());
 		botaoDoceBrigadeiroBranco.setBackground(getCorDeJanelaInterna());
 		botaoDoceBrigadeiroBranco.setFocusable(false);
+		botaoDoceBrigadeiroBranco.addActionListener(new ListenerDoce());
 		
 		botaoDoceBrigadeiroColorido = new JRadioButton("Brigadeiro colorido");
 		botaoDoceBrigadeiroColorido.setFont(fonteRadioButton);
 		botaoDoceBrigadeiroColorido.setForeground(getCorTexto());
 		botaoDoceBrigadeiroColorido.setBackground(getCorDeJanelaInterna());
 		botaoDoceBrigadeiroColorido.setFocusable(false);
+		botaoDoceBrigadeiroColorido.addActionListener(new ListenerDoce());
 		
 		botaoDoceBeijinhoDeCoco = new JRadioButton("Beijinho de coco");
 		botaoDoceBeijinhoDeCoco.setFont(fonteRadioButton);
 		botaoDoceBeijinhoDeCoco.setForeground(getCorTexto());
 		botaoDoceBeijinhoDeCoco.setBackground(getCorDeJanelaInterna());
 		botaoDoceBeijinhoDeCoco.setFocusable(false);
+		botaoDoceBeijinhoDeCoco.addActionListener(new ListenerDoce());
 		
 		botaoDoceCasadinho = new JRadioButton("Casadinho");
 		botaoDoceCasadinho.setFont(fonteRadioButton);
 		botaoDoceCasadinho.setForeground(getCorTexto());
 		botaoDoceCasadinho.setBackground(getCorDeJanelaInterna());
 		botaoDoceCasadinho.setFocusable(false);
+		botaoDoceCasadinho.addActionListener(new ListenerDoce());
 		
 		botaoDoceCajuzinho = new JRadioButton("Cajuzinho");
 		botaoDoceCajuzinho.setFont(fonteRadioButton);
 		botaoDoceCajuzinho.setForeground(getCorTexto());
 		botaoDoceCajuzinho.setBackground(getCorDeJanelaInterna());
 		botaoDoceCajuzinho.setFocusable(false);
+		botaoDoceCajuzinho.addActionListener(new ListenerDoce());
 		
 		GroupLayout gl_painelBotoesDoce = new GroupLayout(painelBotoesDoce);
 		gl_painelBotoesDoce.setHorizontalGroup(
@@ -218,41 +255,55 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 					.addGap(1))
 		);
 		
+		ButtonGroup grupoBolos = new ButtonGroup();
+		
 		botaoBoloBrigadeiro = new JRadioButton("Brigadeiro");
 		botaoBoloBrigadeiro.setFont(fonteRadioButton);
 		botaoBoloBrigadeiro.setForeground(getCorTexto());
 		botaoBoloBrigadeiro.setBackground(getCorDeJanelaInterna());
 		botaoBoloBrigadeiro.setFocusable(false);
+		botaoBoloBrigadeiro.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloBrigadeiro);
 		
 		botaoBoloPrestigio = new JRadioButton("Prestigio");
 		botaoBoloPrestigio.setFont(fonteRadioButton);
 		botaoBoloPrestigio.setForeground(getCorTexto());
 		botaoBoloPrestigio.setBackground(getCorDeJanelaInterna());
 		botaoBoloPrestigio.setFocusable(false);
+		botaoBoloPrestigio.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloPrestigio);
 		
 		botaoBoloAbacaxi = new JRadioButton("Abacaxi");
 		botaoBoloAbacaxi.setFont(fonteRadioButton);
 		botaoBoloAbacaxi.setForeground(getCorTexto());
 		botaoBoloAbacaxi.setBackground(getCorDeJanelaInterna());
 		botaoBoloAbacaxi.setFocusable(false);
+		botaoBoloAbacaxi.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloAbacaxi);
 		
 		botaoBoloPessego = new JRadioButton("Pêssego");
 		botaoBoloPessego.setFont(fonteRadioButton);
 		botaoBoloPessego.setForeground(getCorTexto());
 		botaoBoloPessego.setBackground(getCorDeJanelaInterna());
 		botaoBoloPessego.setFocusable(false);
+		botaoBoloPessego.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloPessego);
 		
 		botaoBoloDoisAmores = new JRadioButton("Dois amores");
 		botaoBoloDoisAmores.setFont(fonteRadioButton);
 		botaoBoloDoisAmores.setForeground(getCorTexto());
 		botaoBoloDoisAmores.setBackground(getCorDeJanelaInterna());
 		botaoBoloDoisAmores.setFocusable(false);
+		botaoBoloDoisAmores.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloDoisAmores);
 		
 		botaoBoloViuvaNegra = new JRadioButton("Viúva negra");
 		botaoBoloViuvaNegra.setFont(fonteRadioButton);
 		botaoBoloViuvaNegra.setForeground(getCorTexto());
 		botaoBoloViuvaNegra.setBackground(getCorDeJanelaInterna());
 		botaoBoloViuvaNegra.setFocusable(false);
+		botaoBoloViuvaNegra.addActionListener(new ListenerBolo());
+		grupoBolos.add(botaoBoloViuvaNegra);
 		
 		GroupLayout gl_painelBotoesBolo = new GroupLayout(painelBotoesBolo);
 		gl_painelBotoesBolo.setHorizontalGroup(
@@ -380,72 +431,84 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoSalgadoBolinhaDeQueijo.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoBolinhaDeQueijo.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoBolinhaDeQueijo.setFocusable(false);
+		botaoSalgadoBolinhaDeQueijo.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoBolinhaDeQueijoComMilho = new JRadioButton("Bolinha de queijo com milho");
 		botaoSalgadoBolinhaDeQueijoComMilho.setForeground(getCorTexto());
 		botaoSalgadoBolinhaDeQueijoComMilho.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoBolinhaDeQueijoComMilho.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoBolinhaDeQueijoComMilho.setFocusable(false);
+		botaoSalgadoBolinhaDeQueijoComMilho.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoRisolesDeFrango = new JRadioButton("Risoles de frango");
 		botaoSalgadoRisolesDeFrango.setForeground(getCorTexto());
 		botaoSalgadoRisolesDeFrango.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoRisolesDeFrango.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoRisolesDeFrango.setFocusable(false);
+		botaoSalgadoRisolesDeFrango.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoRisolesDePresuntoQueijo = new JRadioButton("Risoles de presunto e queijo");
 		botaoSalgadoRisolesDePresuntoQueijo.setForeground(getCorTexto());
 		botaoSalgadoRisolesDePresuntoQueijo.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoRisolesDePresuntoQueijo.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoRisolesDePresuntoQueijo.setFocusable(false);
+		botaoSalgadoRisolesDePresuntoQueijo.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoEnroladinhoPresuntoQueijo = new JRadioButton("Enroladinho de presunto e queijo");
 		botaoSalgadoEnroladinhoPresuntoQueijo.setForeground(getCorTexto());
 		botaoSalgadoEnroladinhoPresuntoQueijo.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoEnroladinhoPresuntoQueijo.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoEnroladinhoPresuntoQueijo.setFocusable(false);
+		botaoSalgadoEnroladinhoPresuntoQueijo.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoEnroladinhoDeSalsicha = new JRadioButton("Enroladinho de salsicha");
 		botaoSalgadoEnroladinhoDeSalsicha.setForeground(getCorTexto());
 		botaoSalgadoEnroladinhoDeSalsicha.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoEnroladinhoDeSalsicha.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoEnroladinhoDeSalsicha.setFocusable(false);
+		botaoSalgadoEnroladinhoDeSalsicha.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoCoxinhaDeFrango = new JRadioButton("Coxinha de frango");
 		botaoSalgadoCoxinhaDeFrango.setForeground(getCorTexto());
 		botaoSalgadoCoxinhaDeFrango.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoCoxinhaDeFrango.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoCoxinhaDeFrango.setFocusable(false);
+		botaoSalgadoCoxinhaDeFrango.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoCoxinhaDeFrangoComCatupiry = new JRadioButton("Coxinha de frango com catupiry");
 		botaoSalgadoCoxinhaDeFrangoComCatupiry.setForeground(getCorTexto());
 		botaoSalgadoCoxinhaDeFrangoComCatupiry.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoCoxinhaDeFrangoComCatupiry.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoCoxinhaDeFrangoComCatupiry.setFocusable(false);
+		botaoSalgadoCoxinhaDeFrangoComCatupiry.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoRisolesDeCarne = new JRadioButton("Risoles de carne");
 		botaoSalgadoRisolesDeCarne.setForeground(getCorTexto());
 		botaoSalgadoRisolesDeCarne.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoRisolesDeCarne.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoRisolesDeCarne.setFocusable(false);
+		botaoSalgadoRisolesDeCarne.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoQuibe = new JRadioButton("Quibe");
 		botaoSalgadoQuibe.setForeground(getCorTexto());
 		botaoSalgadoQuibe.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoQuibe.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoQuibe.setFocusable(false);
+		botaoSalgadoQuibe.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoEsfihaDeCarne = new JRadioButton("Esfiha de carne");
 		botaoSalgadoEsfihaDeCarne.setForeground(getCorTexto());
 		botaoSalgadoEsfihaDeCarne.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoEsfihaDeCarne.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoEsfihaDeCarne.setFocusable(false);
+		botaoSalgadoEsfihaDeCarne.addActionListener(new ListenerSalgados());
 		
 		botaoSalgadoEmpadinhaDePalmito = new JRadioButton("Empadinha de palmito");
 		botaoSalgadoEmpadinhaDePalmito.setForeground(getCorTexto());
 		botaoSalgadoEmpadinhaDePalmito.setFont(fonteRadioButtonSalgados);
 		botaoSalgadoEmpadinhaDePalmito.setBackground(getCorDeJanelaInterna());
 		botaoSalgadoEmpadinhaDePalmito.setFocusable(false);
+		botaoSalgadoEmpadinhaDePalmito.addActionListener(new ListenerSalgados());
 		
 		GroupLayout gl_painelBotoesSalgado = new GroupLayout(painelBotoesSalgado);
 		gl_painelBotoesSalgado.setHorizontalGroup(
@@ -502,30 +565,231 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 						.addComponent(botaoSalgadoBolinhaDeQueijoComMilho, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 					.addGap(10))
 		);
+		
 		painelBotoesSalgado.setLayout(gl_painelBotoesSalgado);
 		painelDelimitadorSalgado.setLayout(gl_painelDelimitadorSalgado);
+		
+		ButtonGroup grupoBotaoCerveja = new ButtonGroup();
+		
+		grupoBotaoCerveja.add(botaoComCerveja);
+		grupoBotaoCerveja.add(botaoSemCerveja);
+		
 		painel.setLayout(null);
 		painel.add(painelVoltaPagina);
 		
 		JLabel labelVoltaPagina = new JLabel("");
+		labelVoltaPagina.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
+			@Override
+			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mousePressed(MouseEvent e) { 
+				organizador.paginaAnterior();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
+			
+		});
 		labelVoltaPagina.setIcon(getIconeVoltarPagina());
 		painelVoltaPagina.add(labelVoltaPagina);
 		painel.add(painelAvancaPagina);
 		
 		JLabel labelAvancaPagina = new JLabel("");
+		labelAvancaPagina.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
+			@Override
+			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mousePressed(MouseEvent e) { 
+				if (verificarPreenchimentoCampos())
+					organizador.proximaPagina();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
+			
+			@Override
+			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
+		});
 		labelAvancaPagina.setIcon(getIconeProximaPagina());
+		
 		painelAvancaPagina.add(labelAvancaPagina);
 		painel.add(labelTitulo);
 		painel.add(painelRetornaTudo);
 		painelRetornaTudo.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel labelRetornaTudo = new JLabel("");
+		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(organizador));
 		labelRetornaTudo.setIcon(getIconeRetornaTudo());
 		painelRetornaTudo.add(labelRetornaTudo);
 		painel.add(painelDelimitadorDoceBoloCerveja);
 		painel.add(painelDelimitadorSalgado);
 		
+	}
+	
+	private class ListenerSalgados implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			JRadioButton botaoPressionado = (JRadioButton) e.getSource();
+			int index = -1;
+			
+			if (botaoPressionado.equals(botaoSalgadoCoxinhaDeFrango)) 				  index = 0;
+			else if (botaoPressionado.equals(botaoSalgadoCoxinhaDeFrangoComCatupiry)) index = 1;
+			else if (botaoPressionado.equals(botaoSalgadoRisolesDeCarne)) 			  index = 2;
+			else if (botaoPressionado.equals(botaoSalgadoQuibe)) 					  index = 3;
+			else if (botaoPressionado.equals(botaoSalgadoEsfihaDeCarne)) 			  index = 4;
+			else if (botaoPressionado.equals(botaoSalgadoEmpadinhaDePalmito)) 		  index = 5;
+			else if (botaoPressionado.equals(botaoSalgadoEnroladinhoDeSalsicha)) 	  index = 6;
+			else if (botaoPressionado.equals(botaoSalgadoBolinhaDeQueijo)) 			  index = 7;
+			else if (botaoPressionado.equals(botaoSalgadoBolinhaDeQueijoComMilho)) 	  index = 8;
+			else if (botaoPressionado.equals(botaoSalgadoRisolesDeFrango)) 			  index = 9;
+			else if (botaoPressionado.equals(botaoSalgadoRisolesDePresuntoQueijo)) 	  index = 10;
+			else if (botaoPressionado.equals(botaoSalgadoEnroladinhoPresuntoQueijo))  index = 11;
+			else throw new IllegalCallerException("Erro: Listener Salgados foi implementado em um botão não relacionado a salgado");
+			
+			salgadosSelecionados[index] = botaoPressionado.isSelected();
+		}
+	}
+	
+	private class ListenerDoce implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JRadioButton botaoPressionado = (JRadioButton) e.getSource();
+			int index = -1;
+			
+			if (botaoPressionado.equals(botaoDoceBrigadeiro)) 				index = 0;
+			else if (botaoPressionado.equals(botaoDoceBrigadeiroBranco)) 	index = 1;
+			else if (botaoPressionado.equals(botaoDoceBrigadeiroColorido)) 	index = 2;
+			else if (botaoPressionado.equals(botaoDoceBeijinhoDeCoco)) 		index = 3;
+			else if (botaoPressionado.equals(botaoDoceCasadinho))			index = 4;
+			else if (botaoPressionado.equals(botaoDoceCajuzinho)) 			index = 5;
+			else throw new IllegalCallerException("Erro: Listener Doces foi implementado em um botão não relacionado a doce");
+			
+			docesSelecionados[index] = botaoPressionado.isSelected();
+		}
 		
+	}
+
+	private class ListenerBolo implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JRadioButton botaoPressionado = (JRadioButton) e.getSource();
+			int index = -1;
+			
+			if (botaoPressionado.equals(botaoBoloBrigadeiro)) 		index = 0;
+			else if (botaoPressionado.equals(botaoBoloPrestigio)) 	index = 1;
+			else if (botaoPressionado.equals(botaoBoloAbacaxi)) 	index = 2;
+			else if (botaoPressionado.equals(botaoBoloPessego)) 	index = 3;
+			else if (botaoPressionado.equals(botaoBoloDoisAmores)) 	index = 4;
+			else if (botaoPressionado.equals(botaoBoloViuvaNegra)) 	index = 5;
+			else throw new IllegalCallerException("Erro: Listener Bolos foi implementado em um botão não relacionado a bolo");
+			
+			if (botaoPressionado.isSelected()) {
+				boloSelecionado = arrayBolo.get(index);
+			}
+		}
+	}
+	
+	public boolean verificarPreenchimentoCampos() {
+		try {
+			
+			int qtdSalgados = 0;
+			int qtdDoces = 0;
+			
+			for (int i = 0; i < salgadosSelecionados.length; i++) {
+				if (salgadosSelecionados[i]) qtdSalgados += 1;
+			}
+			
+			for (int i = 0; i < docesSelecionados.length; i++) {
+				if (docesSelecionados[i]) qtdDoces += 1;
+			}
+			
+			if (qtdSalgados == 0) {
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione pelo menos 7 opções de salgado", "Selecionar Salgados"); 
+				return false;
+			}
+			
+			if (qtdSalgados < 7) { // Quantidade salgado menor
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione mais opções de salgado", "Selecionar Salgados"); 
+				return false;
+			}
+			
+			if (qtdSalgados > 9) { // Quantidade salgado errada
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione menos opções de salgado", "Selecionar Salgados"); 
+				return false;
+			}
+			
+			if (qtdDoces == 0) {
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Doces Inválido", "Para continuar, selecione pelo menos 3 opções de doce", "Selecionar Doces");
+				return false;
+			}
+			
+			if (qtdDoces != 3) { // Quantidade doce errada
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Doces Inválido", "Para continuar, selecione apenas 3 opções de doces", "Selecionar Doces");
+				return false;
+			}
+			
+			if (boloSelecionado == null) { // Bolo não está selecionado
+				ControladoraJanela.ativarPopUp(this,"Número de Opções de Bolo Inválido", "Para continuar, selecione apenas uma opção de bolo", "Selecionar Bolo");
+				return false;
+			}
+			
+			return true;
+			
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	public boolean getTeraCerveja(){
+		return teraCerveja;
+	}
+	
+	public ArrayList<Salgado> getSalgadosEscolhidos() {
+		ArrayList<Salgado> listaParaRetorno = new ArrayList<>();
+		
+		for(int i = 0; i < arraySalgados.size(); i++) {
+			if (salgadosSelecionados[i]) {
+				listaParaRetorno.add(arraySalgados.get(i));
+			}
+		}
+		
+		return listaParaRetorno;
+	}
+	
+	public ArrayList<Doce> getDocesEscolhidos() {
+		ArrayList<Doce> listaParaRetorno = new ArrayList<>();
+		
+		for(int i = 0; i < arrayDoces.size(); i++) {
+			if (docesSelecionados[i]) {
+				listaParaRetorno.add(arrayDoces.get(i));
+			}
+		}
+		
+		return listaParaRetorno;
+	}
+	
+	public Bolo getBoloEscolhido() {
+		return boloSelecionado;
+	}
+	
+	@Override 
+	protected void configurarBotoes() {
+		// TODO
 	}
 
 	@Override
@@ -535,7 +799,37 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 
 	@Override
 	public void limparCampos() {
-		// TODO Auto-generated method stub
+		botaoSalgadoCoxinhaDeFrango.setSelected(false);
+		botaoSalgadoRisolesDeCarne.setSelected(false);
+		botaoSalgadoQuibe.setSelected(false);
+		botaoSalgadoEsfihaDeCarne.setSelected(false);
+		botaoSalgadoEmpadinhaDePalmito.setSelected(false);
+		botaoSalgadoEnroladinhoDeSalsicha.setSelected(false);
+		botaoSalgadoBolinhaDeQueijo.setSelected(false);
+	 	botaoSalgadoBolinhaDeQueijoComMilho.setSelected(false);
+		botaoSalgadoRisolesDeFrango.setSelected(false);
+		botaoSalgadoRisolesDePresuntoQueijo.setSelected(false);
+		botaoSalgadoEnroladinhoPresuntoQueijo.setSelected(false);
+		for (int i = 0; i < salgadosSelecionados.length; i++) salgadosSelecionados[i] = false;
 		
+		botaoDoceBrigadeiro.setSelected(false);
+		botaoDoceBrigadeiroBranco.setSelected(false);
+		botaoDoceBrigadeiroColorido.setSelected(false);
+		botaoDoceBeijinhoDeCoco.setSelected(false);
+		botaoDoceCasadinho.setSelected(false);
+		botaoDoceCajuzinho.setSelected(false);
+		for (int i = 0; i < docesSelecionados.length; i++) docesSelecionados[i] = false;
+	
+		botaoBoloBrigadeiro.setSelected(false);
+		botaoBoloPrestigio.setSelected(false);
+		botaoBoloAbacaxi.setSelected(false);
+		botaoBoloPessego.setSelected(false);
+		botaoBoloDoisAmores.setSelected(false);
+		botaoBoloViuvaNegra.setSelected(false);
+		boloSelecionado = null;
+		
+		botaoComCerveja.setSelected(false);
+		botaoSemCerveja.setSelected(true);
+		teraCerveja = false;
 	}
 }

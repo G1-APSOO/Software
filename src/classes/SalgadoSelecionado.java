@@ -1,5 +1,7 @@
 package classes;
 
+import bancoDeDados.SalgadoSelecionadoDAO;
+
 public class SalgadoSelecionado {
 	private int quantidade;
 	private Salgado salgado;
@@ -27,6 +29,11 @@ public class SalgadoSelecionado {
 
 	public double getValor() {
 		return salgado.getValorUnitario() * quantidade;
+	}
+	
+	public boolean cadastrar(int idBuffet) {
+		SalgadoSelecionadoDAO salgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
+		return salgadoSelecionadoDAO.criarBuffet(this, idBuffet);
 	}
 
 }

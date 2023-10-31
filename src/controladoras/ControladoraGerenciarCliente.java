@@ -5,31 +5,36 @@ import java.util.ArrayList;
 import classes.Cliente;
 
 public class ControladoraGerenciarCliente {
-	public Cliente getCliente(String cpf) {
+	
+	private ControladoraGerenciarCliente() {
+		throw new IllegalAccessError("Controladora Gerenciar Cliente é estatica");
+	}
+	
+	public static Cliente getCliente(String cpf) {
 		return Cliente.getCliente(cpf);
 	}
 
-	public void cadastrarCliente(Cliente cliente) {
+	public static void cadastrarCliente(Cliente cliente) {
 		Cliente.cadastrarCliente(cliente);
 	}
 
-	public Cliente criar(String nome, String cpf, String rg, String endereco, String cep, String celular,
+	public static Cliente criar(String nome, String cpf, String rg, String endereco, String cep, String celular,
 			String telefoneResidencial, String telefoneComercial, String email) {
 		return new Cliente(nome, cpf, endereco, cep, celular, email, rg, telefoneResidencial, telefoneComercial);
 	}
 
-	public void atualizar(String nome, String cpf, String rg, String endereco, String cep, String celular,
+	public static void atualizar(String nome, String cpf, String rg, String endereco, String cep, String celular,
 			String telefoneResidencial, String telefoneComercial, String email) {
 		Cliente cliente = new Cliente(nome, cpf, endereco, cep, celular, email, rg, telefoneResidencial,
 				telefoneComercial);
 		Cliente.atualizarCliente(cliente);
 	}
 
-	public void deletar(String cpf) {
+	public static void deletar(String cpf) {
 		Cliente.deletarCliente(cpf);
 	}
 
-	public ArrayList<Cliente> getAllClientes() {
+	public static ArrayList<Cliente> getAllClientes() {
 		return Cliente.getAllCliente();
 	}
 }

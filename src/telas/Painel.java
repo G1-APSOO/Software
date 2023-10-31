@@ -34,7 +34,7 @@ public abstract class Painel {
 	}
 	
 	public abstract JPanel getPainel();
-	public abstract void limparCampos();
+	public void limparCampos() {} 
 	
 	private void setCores() {
 		Path caminhoDeConfig = Path.of(urlDeConfig);
@@ -139,6 +139,8 @@ public abstract class Painel {
 		fonteValor = new Font("Arial", Font.BOLD, 40);
 		// Fim do Debug
 	}
+	
+	protected void configurarBotoes() {}
 	
 	protected ImageIcon getIconeRetornaTudo() {
 		return new ImageIcon("imgs/retornaTudo.png");

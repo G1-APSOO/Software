@@ -1,6 +1,10 @@
 package classes;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import bancoDeDados.BoloDAO;
 import bancoDeDados.DoceSelecionadoDAO;
@@ -10,14 +14,15 @@ import bancoDeDados.SalgadoSelecionadoDAO;
 public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	private boolean teraCerveja;
 
+	private static final OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 	private ArrayList<SalgadoSelecionado> arraySalgadoSelecionados = new ArrayList<>();
 	private ArrayList<DoceSelecionado> arrayDoceSelecionados = new ArrayList<>();
 	private Bolo bolo;
-	private static final OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento,
 			Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces,
 			Bolo bolo) {
+		
 		super(id, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
@@ -26,6 +31,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento,
 			Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados, ArrayList<Doce> doces, Bolo bolo) {
+		
 		super(-1, numeroDeConvidados, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
@@ -35,6 +41,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data,
 			Pagamento pagamento, Cliente cliente, int id, boolean teraCerveja, ArrayList<Salgado> salgados,
 			ArrayList<Doce> doces, Bolo bolo) {
+		
 		super(id, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
@@ -44,6 +51,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data,
 			Pagamento pagamento, Cliente cliente, boolean teraCerveja, ArrayList<Salgado> salgados,
 			ArrayList<Doce> doces, Bolo bolo) {
+		
 		super(-1, numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, pagamento, cliente);
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
@@ -51,33 +59,27 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	}
 
 	private void calcularQuantidades(ArrayList<Salgado> salgados, ArrayList<Doce> doces) {
-		int quantidadeSalgados = calcularQuantidadeDeSalgados() / arraySalgadoSelecionados.size();
-		int quantidadeDoces = calcularQuantidadeDeDoces() / arrayDoceSelecionados.size();
+		int quantidadeSalgados = calcularQuantidadeDeSalgados() / salgados.size();
+		int quantidadeDoces = calcularQuantidadeDeDoces() / doces.size();
 		double pesoBolo = calcularPesoDoBolo();
 
-		for (int i = 0; i < salgados.size(); i++)
-			arraySalgadoSelecionados.add(new SalgadoSelecionado(quantidadeSalgados, salgados.get(i)));
-
-		for (int i = 0; i < doces.size(); i++)
-			arrayDoceSelecionados.add(new DoceSelecionado(quantidadeDoces, doces.get(i)));
+		for (int i = 0; i < salgados.size(); i++) arraySalgadoSelecionados.add(new SalgadoSelecionado(quantidadeSalgados, salgados.get(i)));
+		for (int i = 0; i < doces.size(); i++) arrayDoceSelecionados.add(new DoceSelecionado(quantidadeDoces, doces.get(i)));
 
 		bolo.setPeso(pesoBolo);
 
 	}
 
 	private int calcularQuantidadeDeSalgados() {
-		int quantidadeSalgados = 12 * getNumeroDeConvidados();
-		return quantidadeSalgados;
+		return 12 * getNumeroDeConvidados();
 	}
 
 	private int calcularQuantidadeDeDoces() {
-		int quantidadeDoces = 3 * getNumeroDeConvidados();
-		return quantidadeDoces;
+		return 3 * getNumeroDeConvidados();
 	}
 
 	private double calcularPesoDoBolo() {
-		double pesoDoBolo = getNumeroDeConvidados() * 0.1;
-		return pesoDoBolo;
+		return getNumeroDeConvidados() * 0.1;
 	}
 
 	private int calcularNumeroMinimoDeColaboradores() {
@@ -97,7 +99,6 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 
 	public static ArrayList<Doce> getAllDoces() {
 		DoceSelecionadoDAO doceSelecionadoDAO = new DoceSelecionadoDAO();
-
 		return doceSelecionadoDAO.getAllDoces();
 	}
 
@@ -121,17 +122,25 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 	public boolean getTeraCerveja() {
 		return teraCerveja;
 	}
+	
+	public ArrayList<SalgadoSelecionado> getArraySalgadoSelecionados() {
+		return arraySalgadoSelecionados;
+	}
 
-	public ArrayList<Salgado> getArraySalgadoSelecionados() {
+	public ArrayList<DoceSelecionado> getArrayDoceSelecionados() {
+		return arrayDoceSelecionados;
+	}
+
+	public static ArrayList<Salgado> getArraySalgadoAssociados(int id) {
 		SalgadoSelecionadoDAO SalgadoSelecionadoDAO = new SalgadoSelecionadoDAO();
-		return SalgadoSelecionadoDAO.getAllBuffet(this.getId());
+		return SalgadoSelecionadoDAO.getAllBuffet(id);
 	}
-
-	public ArrayList<Doce> getArrayDoceSelecionados() {
+	
+	public static ArrayList<Doce> getArrayDoceAssociados(int id) {
 		DoceSelecionadoDAO DoceSelecionadoDAO = new DoceSelecionadoDAO();
-		return DoceSelecionadoDAO.getAllBuffet(this.getId());
+		return DoceSelecionadoDAO.getAllBuffet(id);
 	}
-
+	
 	public Bolo getBolo() {
 		return bolo;
 	}
@@ -153,7 +162,12 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		if (getNumeroDeConvidados() > 50 && getNumeroDeConvidados() <= 180) {
 			valorTotal = valorTotal + (getNumeroDeConvidados() - 50) * 40.00;
 		}
+		
+		BigDecimal arredondador = BigDecimal.valueOf(valorTotal);
+	    arredondador = arredondador.setScale(2, RoundingMode.HALF_UP);
 
+	    valorTotal = arredondador.doubleValue();
+	    
 		return valorTotal;
 	}
 
@@ -167,9 +181,38 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		return orcamentoBuffetCompletoDAO.deletar(orcamentoBuffet.getId());
 	}
 
-	public static boolean cadastrarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
+	public boolean cadastrarOrcamento() {
 		OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
-		return orcamentoBuffetCompletoDAO.criar(orcamentoBuffet);
+		
+		boolean foiCadastrado = false;
+		
+		foiCadastrado = Cliente.cadastrarCliente(getCliente()); 
+		Cliente.atualizarCliente(getCliente());
+		
+		if (foiCadastrado) {
+			JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso!");
+		}
+		
+		
+		if (orcamentoBuffetCompletoDAO.criar(this)) {
+			JOptionPane.showMessageDialog(null, "Orçamento cadastrado com sucesso!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar o orçamento, ocorreu algum erro", "Erro: Cadastrar Orcamento", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		foiCadastrado = true;
+		
+		for (int i = 0; i < arraySalgadoSelecionados.size(); i++) {
+			foiCadastrado = foiCadastrado && arraySalgadoSelecionados.get(i).cadastrar(getId());
+		}
+		
+		for (int i = 0; i < arrayDoceSelecionados.size(); i++) {
+			arrayDoceSelecionados.get(i).cadastrar(getId());
+		}	
+
+		return true;
 	}
 
 }

@@ -190,7 +190,7 @@ public class UsuarioDAO implements DAO<Usuario, String> {
 
 	@Override
 	public boolean existeEssaChavePrimaria(String chavePrimaria) {
-		String sql = "SELECT FROM Usuario WHERE login = ?";
+		String sql = "SELECT * FROM Usuario WHERE login = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, chavePrimaria);
