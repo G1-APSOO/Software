@@ -166,6 +166,9 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 			while (existeEssaChavePrimaria(id)) {
 				id = random.nextInt(2147483646);
 			}
+			
+			orcamentoBuffet.setId(id);
+			
 			statement.setInt(1, id);
 			statement.setInt(2, orcamentoBuffet.getNumeroDeConvidados());
 			statement.setInt(3, orcamentoBuffet.getNumeroDeColaboradores());
