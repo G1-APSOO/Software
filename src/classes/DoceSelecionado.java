@@ -1,5 +1,7 @@
 package classes;
 
+import bancoDeDados.DoceSelecionadoDAO;
+
 public class DoceSelecionado {
 	private int quantidade;
 	private Doce doce;
@@ -24,11 +26,18 @@ public class DoceSelecionado {
 	public Doce getDoce() {
 		return doce;
 	}
+	
 	public double getValor() {
 		double valorDoce;
 		
 		valorDoce = doce.getValorUnitario() * quantidade;
 		return valorDoce;
 	}
+	
+	public void cadastrar(int idBuffet) {
+		DoceSelecionadoDAO doceSelecionadoDAO = new DoceSelecionadoDAO();
+		doceSelecionadoDAO.criarBuffet(this, idBuffet);
+	}
+
 	
 }
