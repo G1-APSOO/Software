@@ -261,11 +261,12 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 
 	public Boolean verificarData(Data data) {
 		String dataString = data.getData();
+		
 		String sql = "SELECT * FROM OrcamentoBuffetCompleto WHERE data = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setString(1, dataString);
 			try (ResultSet rs = statement.executeQuery()) {
-				statement.setString(1, dataString);
 				if (rs.next()) {
 					return false;
 				} else {
