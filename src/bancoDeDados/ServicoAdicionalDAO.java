@@ -1,44 +1,165 @@
 package bancoDeDados;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
+
+import classes.Salgado;
 import classes.ServicoAdicional;
+import excecoes.ExcecaoValorNaoSetado;
 
 public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 	@Override
 	public ServicoAdicional get(Integer chavePrimaria) {
-		// TODO Auto-generated method stub
-		return null;
+		int id = chavePrimaria.intValue();
+
+		String sql = "SELECT * FROM ServicoAdicional WHERE id = ?";
+
+		try {
+
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, id);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				while (rs.next()) {
+					ServicoAdicional servicoAdicionalEncontrado = new ServicoAdicional(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor"));
+					return servicoAdicionalEncontrado;
+				}
+			}
+			return null;
+
+		} catch (SQLException e) {
+			System.out.println(e);
+			return null;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
-		// TODO Auto-generated method stub
-		return false;
+		int chavePrimariaInt = chavePrimaria.intValue();
+		String sql = "SELECT * FROM ServicoAdicional WHERE id = ?";
+		try {
+
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, chavePrimariaInt);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				if (rs.next()) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			return true;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return true;
+		}
 	}
 
 	@Override
 	public ArrayList<ServicoAdicional> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM ServicoAdicional";
+
+		try {
+
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+
+			try (ResultSet rs = statement.executeQuery()) {
+				ArrayList<ServicoAdicional> servicosAdicionaisEncontrados = new ArrayList<ServicoAdicional>();
+				while (rs.next()) {
+					ServicoAdicional servicoAdicionalEncontrado = new ServicoAdicional(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor"));
+					servicosAdicionaisEncontrados.add(servicoAdicionalEncontrado);
+				}
+				return servicosAdicionaisEncontrados;
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e);
+			return null;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 
 	@Override
-	public boolean criar(ServicoAdicional objeto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean criar(ServicoAdicional servicoAdicional) {
+		String sql = "INSERT INTO ServicoAdicional VALUES (?, ?, ?)";
+
+		try {
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			Random random = new Random();
+			int id = random.nextInt(2147483646);
+			while (existeEssaChavePrimaria(id)) {
+				id = random.nextInt(2147483646);
+			}
+			statement.setInt(1, id);
+			statement.setString(2, servicoAdicional.getNome());
+			statement.setDouble(3, servicoAdicional.getValor());
+
+			int rowsInserted = statement.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("ServicoAdicional inserido com sucesso!");
+			}
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return false;
+		}
 	}
 
 	@Override
-	public boolean atualizar(ServicoAdicional objeto) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean atualizar(ServicoAdicional servicoAdicional) {
+		String sql = "UPDATE ServicoAdicional SET nome = ?, valorUnitario = ? WHERE id = ?";
+
+		try {
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setString(1, servicoAdicional.getNome());
+			statement.setDouble(2, servicoAdicional.getValor());
+			statement.setInt(3, servicoAdicional.getId());
+
+			int rowsInserted = statement.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("ServicoAdicional atualizado com sucesso!");
+			}
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		} catch (ExcecaoValorNaoSetado e) {
+			System.out.println(e);
+			return false;
+		}
 	}
 
 	@Override
 	public boolean deletar(Integer chavePrimaria) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "DELETE FROM ServicoAdicional WHERE id = ?";
+		int id = chavePrimaria.intValue();
+		try {
+			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
+			statement.setInt(1, id);
+			int rowsInserted = statement.executeUpdate();
+			if (rowsInserted > 0) {
+				System.out.println("ServicoAdicional deletado com sucesso!");
+			}
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		}
 	}
 
 }
