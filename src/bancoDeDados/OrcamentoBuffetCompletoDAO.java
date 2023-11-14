@@ -134,7 +134,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 
 					OrcamentoBuffetCompleto orcamentoBuffetCompletoEncontrado = new OrcamentoBuffetCompleto(
 							rs.getInt("numeroDeConvidados"), rs.getInt("numeroDeColaboradores"),
-							rs.getString("horaDeInicio"), dataOrcamento, null, clienteDAO.get(rs.getString("cpf")),
+							rs.getString("horaDeInicio"), dataOrcamento, null, clienteDAO.get(cpfCliente),
 							rs.getInt("id"), teraCerveja, salgados, doces, bolo);
 					orcamentoBuffetCompletoEncontrados.add(orcamentoBuffetCompletoEncontrado);
 				}
@@ -259,7 +259,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 		}
 	}
 
-	public Boolean verificarData(Data data) {
+	public boolean verificarData(Data data) {
 		String dataString = data.getData();
 		
 		String sql = "SELECT * FROM OrcamentoBuffetCompleto WHERE data = ?";
