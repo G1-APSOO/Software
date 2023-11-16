@@ -2,10 +2,10 @@ package controladoras;
 
 import javax.swing.JPanel;
 
-import componentesDeTelas.PopUpErroGenerico;
-import telas.JanelaPrincipal;
-import telas.Painel;
-import telas.PainelEscolhaDeOrcamento;
+import interface_usuario.JanelaPrincipal;
+import interface_usuario.Painel;
+import interface_usuario.PainelEscolhaDeOrcamento;
+import interface_usuario.PopUpErroGenerico;
 
 public class ControladoraJanela {
 	private static Painel painelInicial = new PainelEscolhaDeOrcamento(); // Atualmente o inicio é em EscolhaOrcamento
