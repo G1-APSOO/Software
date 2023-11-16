@@ -2,7 +2,7 @@ package controladoras;
 
 import java.util.ArrayList;
 
-import classes.Cliente;
+import negocio.Cliente;
 
 public class ControladoraGerenciarCliente {
 	
@@ -11,6 +11,8 @@ public class ControladoraGerenciarCliente {
 	}
 	
 	public static Cliente getCliente(String cpf) {
+		cpf = cpf.replace(".", "");
+		cpf = cpf.replace("-", "");
 		return Cliente.getCliente(cpf);
 	}
 

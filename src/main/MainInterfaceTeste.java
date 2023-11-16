@@ -1,6 +1,6 @@
 package main;
 
-import telas.JanelaPrincipal;
+import interface_usuario.JanelaPrincipal;
 
 public class MainInterfaceTeste {
 	public static void main(String[] args) {
