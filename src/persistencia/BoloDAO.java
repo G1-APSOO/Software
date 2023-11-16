@@ -16,7 +16,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 	public Bolo get(Integer objetoInteger) {
 		int id = objetoInteger.intValue();
 
-		String sql = "SELECT * FROM Bolo WHERE id = ?";
+		String sql = "SELECT * FROM bolo WHERE id = ?";
 
 		try {
 
@@ -44,7 +44,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 	@Override
 	public ArrayList<Bolo> getAll() {
-		String sql = "SELECT * FROM Bolo";
+		String sql = "SELECT * FROM bolo";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -67,7 +67,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 	@Override
 	public boolean criar(Bolo bolo) {
-		String sql = "INSERT INTO Bolo VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO bolo VALUES (?, ?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -97,7 +97,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 	@Override
 	public boolean atualizar(Bolo bolo) {
-		String sql = "UPDATE Bolo SET descricao = ?, valorUnitario = ?, peso = ? WHERE id = ?";
+		String sql = "UPDATE bolo SET descricao = ?, valorUnitario = ?, peso = ? WHERE id = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -122,7 +122,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 
 	@Override
 	public boolean deletar(Integer objetoInteger) {
-		String sql = "DELETE FROM Bolo WHERE id = ?";
+		String sql = "DELETE FROM bolo WHERE id = ?";
 		int id = objetoInteger.intValue();
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -141,7 +141,7 @@ public class BoloDAO implements DAO<Bolo, Integer> {
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT * FROM Bolo WHERE id = ?";
+		String sql = "SELECT * FROM bolo WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);

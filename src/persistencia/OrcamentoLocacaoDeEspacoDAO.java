@@ -23,7 +23,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 	public OrcamentoLocacaoDeEspaco get(Integer chavePrimaria) {
 		int id = chavePrimaria.intValue();
 
-		String sql = "SELECT * FROM OrcamentoLocacaoDeEspaco WHERE id = ?";
+		String sql = "SELECT * FROM orcamentolocacaodeespaco WHERE id = ?";
 
 		try {
 
@@ -64,7 +64,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT * FROM OrcamentoLocacaoDeEspaco WHERE id = ?";
+		String sql = "SELECT * FROM orcamentolocacaodeespaco WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -88,7 +88,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 	@Override
 	public ArrayList<OrcamentoLocacaoDeEspaco> getAll() {
-		String sql = "SELECT * FROM OrcamentoLocacaoDeEspaco";
+		String sql = "SELECT * FROM orcamentolocacaodeespaco";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -126,7 +126,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 	@Override
 	public boolean criar(OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspaco) {
-		String sql = "INSERT INTO OrcamentoLocacaoDeEspaco VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO orcamentolocacaodeespaco VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -165,7 +165,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 	@Override
 	public boolean atualizar(OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspaco) {
-		String sql = "UPDATE OrcamentoLocacaoDeEspaco SET numeroDeConvidados = ?, numeroDeColaboradores = ?, horaDeInicio = ?, data = ?, fk_cpfCliente = ?, fk_idPagamento = ? WHERE id = ?";
+		String sql = "UPDATE orcamentolocacaodeespaco SET numeroDeConvidados = ?, numeroDeColaboradores = ?, horaDeInicio = ?, data = ?, fk_cpfCliente = ?, fk_idPagamento = ? WHERE id = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -200,7 +200,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 		servicoContratadoDAO.deletar(Integer.toString(chavePrimaria));
 
-		String sql = "DELETE FROM OrcamentoLocacaoDeEspaco WHERE id = ?";
+		String sql = "DELETE FROM orcamentolocacaodeespaco WHERE id = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, id);
@@ -218,7 +218,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 	public boolean verificarData(Data data) {
 		String dataString = data.getData();
 
-		String sql = "SELECT * FROM OrcamentoLocacaoDeEspaco WHERE data = ?";
+		String sql = "SELECT * FROM orcamentolocacaodeespaco WHERE data = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, dataString);

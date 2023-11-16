@@ -16,7 +16,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 	public ServicoAdicional get(Integer chavePrimaria) {
 		int id = chavePrimaria.intValue();
 
-		String sql = "SELECT * FROM ServicoAdicional WHERE id = ?";
+		String sql = "SELECT * FROM servicoadicional WHERE id = ?";
 
 		try {
 
@@ -43,7 +43,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT * FROM ServicoAdicional WHERE id = ?";
+		String sql = "SELECT * FROM servicoadicional WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -67,7 +67,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 	@Override
 	public ArrayList<ServicoAdicional> getAll() {
-		String sql = "SELECT * FROM ServicoAdicional";
+		String sql = "SELECT * FROM servicoadicional";
 
 		try {
 
@@ -93,7 +93,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 	@Override
 	public boolean criar(ServicoAdicional servicoAdicional) {
-		String sql = "INSERT INTO ServicoAdicional VALUES (?, ?, ?)";
+		String sql = "INSERT INTO servicoadicional VALUES (?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -122,7 +122,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 	@Override
 	public boolean atualizar(ServicoAdicional servicoAdicional) {
-		String sql = "UPDATE ServicoAdicional SET nome = ?, valorUnitario = ? WHERE id = ?";
+		String sql = "UPDATE servicoadicional SET nome = ?, valorUnitario = ? WHERE id = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -146,7 +146,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 	@Override
 	public boolean deletar(Integer chavePrimaria) {
-		String sql = "DELETE FROM ServicoAdicional WHERE id = ?";
+		String sql = "DELETE FROM servicoadicional WHERE id = ?";
 		int id = chavePrimaria.intValue();
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
