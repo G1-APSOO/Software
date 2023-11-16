@@ -1,7 +1,7 @@
-package bancoDeDados;
+package persistencia;
 
 import java.util.ArrayList;
-import classes.ServicoContratado;
+import negocio.ServicoContratado;
 
 public class ServicoContratadoDAO implements DAO<ServicoContratado, String>{
 

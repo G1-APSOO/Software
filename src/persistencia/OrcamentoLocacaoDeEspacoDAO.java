@@ -1,4 +1,4 @@
-package bancoDeDados;
+package persistencia;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,15 +6,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import classes.Bolo;
-import classes.Cliente;
-import classes.Data;
-import classes.Doce;
-import classes.OrcamentoBuffetCompleto;
-import classes.OrcamentoLocacaoDeEspaco;
-import classes.Pagamento;
-import classes.Salgado;
-import classes.ServicoContratado;
+import negocio.Bolo;
+import negocio.Cliente;
+import negocio.Data;
+import negocio.Doce;
+import negocio.OrcamentoBuffetCompleto;
+import negocio.OrcamentoLocacaoDeEspaco;
+import negocio.Pagamento;
+import negocio.Salgado;
+import negocio.ServicoContratado;
 import excecoes.ExcecaoValorNaoSetado;
 
 public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco, Integer> {

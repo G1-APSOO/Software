@@ -1,4 +1,4 @@
-package bancoDeDados;
+package persistencia;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import classes.Salgado;
-import classes.ServicoAdicional;
+import negocio.Salgado;
+import negocio.ServicoAdicional;
 import excecoes.ExcecaoValorNaoSetado;
 
 public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{

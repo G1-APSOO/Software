@@ -10,10 +10,8 @@ import excecoes.ExcecaoValorNaoSetado;
 import negocio.Bolo;
 import negocio.Data;
 import negocio.Doce;
-import negocio.DoceSelecionado;
 import negocio.OrcamentoBuffetCompleto;
 import negocio.Salgado;
-import negocio.SalgadoSelecionado;
 
 public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, Integer> {
 
