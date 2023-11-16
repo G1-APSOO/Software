@@ -1,9 +1,9 @@
 package main;
 
-import bancoDeDados.ConexaoBanco;
-import componentesDeTelas.PopUpErroGenerico;
 import controladoras.ControladoraJanela;
-import telas.Painel;
+import interface_usuario.Painel;
+import interface_usuario.PopUpErroGenerico;
+import persistencia.ConexaoBanco;
 
 public class Principal {
 
