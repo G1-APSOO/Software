@@ -7,14 +7,22 @@ public class ServicoContratado {
 	
 	public ServicoContratado(int quantidade, ServicoAdicional servicoAdicional) {
 		setQuantidade(quantidade);
-		this.servicoAdicional = servicoAdicional;
+		setServicoAdicional(servicoAdicional);
 	}
 	
 	private void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
+	private void setServicoAdicional(ServicoAdicional servicoAdicional) {
+		this.servicoAdicional = servicoAdicional;
+	}
+
 	public int getQuantidade() {
 		return quantidade;
+	}
+
+	public ServicoAdicional getServicoAdicional() {
+		return servicoAdicional;
 	}
 }
