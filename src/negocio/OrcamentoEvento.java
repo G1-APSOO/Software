@@ -1,7 +1,5 @@
 package negocio;
 
-import utilitaria.Utilitaria;
-
 public abstract class OrcamentoEvento {
 	private int id;
 	private int numeroDeConvidados;
