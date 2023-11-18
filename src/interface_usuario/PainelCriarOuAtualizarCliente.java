@@ -9,15 +9,13 @@ import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import controladoras.ControladoraGerenciarCliente;
-import controladoras.ControladoraJanela;
 import controladoras.ControladoraOrcamentoDeBuffetCompleto;
 import excecoes.ExcecaoDDDInvalido;
-import excecoes.ExcecaoParametroPreenchidoErrado;
 import negocio.Cliente;
 
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.text.ParseException;
 
@@ -62,11 +60,10 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 	
 	private MaskFormatter mascaraCPF;
 	
-	public PainelCriarOuAtualizarCliente(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
+	public PainelCriarOuAtualizarCliente(MouseListener retornaTelaInicial, MouseListener avancaPagina, MouseListener voltaPagina) {
 		
 		painel = new JPanel();
 		painel.setBackground(getCorDeFundo());
-		Painel estePainel = this;
 		
 		labelTituloTela = new JLabel("Cliente");
 		labelTituloTela.setFont(getFonteTitulo());
@@ -450,24 +447,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		painelPaginaAnterior.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel labelPaginaAnterior = new JLabel("");
-		labelPaginaAnterior.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
-			@Override
-			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mousePressed(MouseEvent e) { 
-				organizador.paginaAnterior();
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
-		});
+		labelPaginaAnterior.addMouseListener(voltaPagina);
 		
 		labelPaginaAnterior.setIcon(getIconeVoltarPagina());
 		painelPaginaAnterior.add(labelPaginaAnterior);
@@ -475,154 +455,13 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		
 		JLabel labelProximaPagina = new JLabel("");
 		
-		labelProximaPagina.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
-			@Override
-			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mousePressed(MouseEvent e) { 
-				
-				if (usuarioJaPesquisado == false) {
-					
-					if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputAlternado.getText())) {
-						usuarioJaPesquisado = true;
-						
-						cliente = ControladoraGerenciarCliente.getCliente(inputAlternado.getText());
-						mascaraCPF.uninstall();
-						
-						if (cliente == null) { // Cliente não cadastrado
-							ControladoraJanela.ativarPopUp(estePainel, "Cliente não cadastrado", "Para continuar, efetue o cadastro do cliente", "Cadastrar Cliente");
-							inputCPF.setText(inputAlternado.getText());
-							inputAlternado.setText("");
-							labelTituloTela.setText("Cadastrar Cliente");
-							
-						} else { // Cliente cadastrado
-							JOptionPane.showMessageDialog(null, "Cliente já cadastrado, carregando dados...");
-							labelTituloTela.setText("Atualizar Cliente");
-							
-							inputNomeCompleto.setText(cliente.getNome());
-							inputCPF.setText(cliente.getCpf());
-							inputRG.setText(cliente.getRg() == null ? "" : cliente.getRg());
-							inputEmail.setText(cliente.getEmail());
-							inputAlternado.setText(cliente.getEndereco());
-							inputCEP.setText(cliente.getCep());
-							inputCelular.setText(cliente.getCelular());
-							inputTelefoneResidencial.setText(cliente.getTelefoneResidencial() == null ? "" : cliente.getTelefoneResidencial());
-							inputTelefoneComercial.setText(cliente.getTelefoneComercial() == null ? "" : cliente.getTelefoneComercial());
-						}
-						
-						labelAlternado.setText("Endereço");
-						painelDelimitadorNomeCompleto.setVisible(true);
-						painelDelimitadorCPF.setVisible(true);
-						painelDelimitadorRG.setVisible(true);
-						painelDelimitadorEmail.setVisible(true);
-						painelDelimitadorCEP.setVisible(true);
-						painelDelimitadorCelular.setVisible(true);
-						painelDelimitadorTelefoneResidencial.setVisible(true);
-						painelDelimitadorTelefoneComercial.setVisible(true);
-						
-						painel.repaint();
-					
-					} else {
-						ControladoraJanela.ativarPopUp(estePainel, "CPF informado está inválido", "Para continuar, forneça um CPF válido", "Preencher CPF");
-					}
-					
-					return;
-				}
-				
-				if (ControladoraOrcamentoDeBuffetCompleto.verificarNomeCompleto(inputNomeCompleto.getText()) == false) {
-					ControladoraJanela.ativarPopUp(estePainel, "Nome informado está inválido", "Para continuar, forneça um nome válido", "Preencher Nome");
-					verificarSeTemCamposVazios();
-					return;
-				}
-				
-				if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputCPF.getText()) == false) {
-					ControladoraJanela.ativarPopUp(estePainel, "CPF informado está inválido", "Para continuar, forneça um CPF válido", "Preencher CPF");
-					verificarSeTemCamposVazios();
-					return;
-				}
-
-				if (ControladoraOrcamentoDeBuffetCompleto.verificarEmail(inputEmail.getText()) == false) {
-					ControladoraJanela.ativarPopUp(estePainel, "Email está inválido", "Para continuar, forneça um Email válido", "Preencher Email");
-					verificarSeTemCamposVazios();
-					return;
-				}
-
-				if (inputAlternado.getText().isBlank() || inputAlternado.getText().isEmpty()) {
-					ControladoraJanela.ativarPopUp(estePainel, "Endereço não está preenchido", "Para continuar, preencha o campo Endereço", "Preencher Endereço");
-					verificarSeTemCamposVazios();
-					return;
-				}
-				
-				if (ControladoraOrcamentoDeBuffetCompleto.verificarCEP(inputCEP.getText()) == false) {
-					ControladoraJanela.ativarPopUp(estePainel, "CEP está inválido", "Para continuar, forneça um CEP válido", "Preencher CEP");
-					verificarSeTemCamposVazios();
-					return;
-				}
-				
-				try {
-					if (ControladoraOrcamentoDeBuffetCompleto.verificarCelular(inputCelular.getText()) == false) {
-						ControladoraJanela.ativarPopUp(estePainel, "Celular está inválido", "Para continuar, forneça um Celular válido", "Preencher Celular");
-						verificarSeTemCamposVazios();
-						return;
-					}					
-				} catch (ExcecaoDDDInvalido eDDD) {
-					ControladoraJanela.ativarPopUp(estePainel, "DDD informado está inválido", "Para continuar, forneça um DDD válido", "Preencher DDD");
-					verificarSeTemCamposVazios();
-					return;
-				}
-				
-				String cpf = inputCPF.getText();
-				cpf = cpf.replace(".", "");
-				cpf = cpf.replace("-", "");
-				
-				cliente = new Cliente(inputNomeCompleto.getText(), cpf, inputAlternado.getText(), inputCEP.getText(), inputCelular.getText(), inputEmail.getText());						
-				
-				if (inputRG.getText().isBlank() == false && inputRG.getText().isEmpty() == false) {
-					cliente.setRg(inputRG.getText());
-				}
-				
-				if (inputTelefoneResidencial.getText().equals("       -    ") == false) {
-					try {
-						cliente.setTelefoneResidencial(inputTelefoneResidencial.getText());
-						
-					} catch (ExcecaoDDDInvalido | ExcecaoParametroPreenchidoErrado | NumberFormatException erro) {
-						ControladoraJanela.ativarPopUp(estePainel, "Telefone Residencial", "Para continuar, insira um telefone válido", "Mudar Telefone Residencial");
-						cliente = null;
-						return;
-					}
-				}
-				
-				if (inputTelefoneComercial.getText().equals("        -    ") == false) {
-					try {
-						cliente.setTelefoneComercial(inputTelefoneComercial.getText());
-						
-					} catch (ExcecaoDDDInvalido | ExcecaoParametroPreenchidoErrado | NumberFormatException erro) {
-						ControladoraJanela.ativarPopUp(estePainel, "Telefone Comercial", "Para continuar, insira um celular válido", "Mudar Telefone Comercial");
-						cliente = null;
-						return;
-					}
-				}
-				
-				organizador.proximaPagina();
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
-		});
+		labelProximaPagina.addMouseListener(avancaPagina);
 		labelProximaPagina.setIcon(getIconeProximaPagina());
 		painelProximaPagina.add(labelProximaPagina);
 		painelRetornaTudo.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel labelRetornaTudo = new JLabel("");
-		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(organizador));
+		labelRetornaTudo.addMouseListener(retornaTelaInicial);
 		labelRetornaTudo.setIcon(getIconeRetornaTudo());
 		painelRetornaTudo.add(labelRetornaTudo);
 		
@@ -694,10 +533,6 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		painel.setLayout(gl_painel);
 		painelErro.setVisible(false);
 	}
-	
-	public Cliente getCliente() {
-		return cliente;
-	}
 
 	private void verificarSeTemCamposVazios() {
 		painelErro.setVisible(true);
@@ -705,7 +540,7 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		if (inputNomeCompleto.getText().isEmpty() || inputNomeCompleto.getText().isBlank()) labelNomeCompleto.setForeground(getCorTextoErro());
 		else labelNomeCompleto.setForeground(getCorTexto());
 		
-		if (inputCPF.getText().equals("   .   .   -  ")) labelCPF.setForeground(getCorTextoErro());
+		if (inputCPF.getText().matches("\\d{3}.\\d{3}.\\d{3}-\\d{2}") == false) labelCPF.setForeground(getCorTextoErro());
 		else labelCPF.setForeground(getCorTexto());
 		
 		if (inputEmail.getText().isEmpty() || inputEmail.getText().isBlank()) labelEmail.setForeground(getCorTextoErro());
@@ -720,6 +555,148 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		if (inputCelular.getText().equals("        -    ")) labelCelular.setForeground(getCorTextoErro());
 		else labelCelular.setForeground(getCorTexto());
 		
+	}
+
+	public PopUpErroGenerico verificarPreenchimento(ActionListener listenerVolta) {
+		
+		if (ControladoraOrcamentoDeBuffetCompleto.verificarNomeCompleto(inputNomeCompleto.getText()) == false) {
+			verificarSeTemCamposVazios();
+			return new PopUpErroGenerico(listenerVolta, "Nome informado está inválido", "Para continuar, forneça um nome válido", "Preencher Nome");
+		}
+		
+		if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputCPF.getText()) == false) {
+			verificarSeTemCamposVazios();
+			return new PopUpErroGenerico(listenerVolta, "CPF informado está inválido", "Para continuar, forneça um CPF válido", "Preencher CPF");
+		}
+
+		if (ControladoraOrcamentoDeBuffetCompleto.verificarEmail(inputEmail.getText()) == false) {
+			verificarSeTemCamposVazios();
+			return new PopUpErroGenerico(listenerVolta, "Email está inválido", "Para continuar, forneça um Email válido", "Preencher Email");
+		}
+
+		if (inputAlternado.getText().isBlank() || inputAlternado.getText().isEmpty()) {
+			verificarSeTemCamposVazios();
+			return new PopUpErroGenerico(listenerVolta, "Endereço não está preenchido", "Para continuar, preencha o campo Endereço", "Preencher Endereço");
+		}
+		
+		if (ControladoraOrcamentoDeBuffetCompleto.verificarCEP(inputCEP.getText()) == false) {
+			verificarSeTemCamposVazios();
+			return new PopUpErroGenerico(listenerVolta, "CEP está inválido", "Para continuar, forneça um CEP válido", "Preencher CEP");
+		}
+		
+		try {
+			if (ControladoraOrcamentoDeBuffetCompleto.verificarCelular(inputCelular.getText()) == false) {
+				verificarSeTemCamposVazios();
+				return new PopUpErroGenerico(listenerVolta, "Celular está inválido", "Para continuar, forneça um Celular válido", "Preencher Celular");
+			}					
+		} catch (ExcecaoDDDInvalido eDDD) {
+			verificarSeTemCamposVazios();
+			return new PopUpErroGenerico(listenerVolta, "DDD informado está inválido", "Para continuar, forneça um DDD válido", "Preencher DDD");
+		}
+		
+		return null;
+	}
+
+	public PopUpErroGenerico pesquisarCliente(ActionListener listenerVoltar) {
+		PopUpErroGenerico popUp = null;
+
+		if (ControladoraOrcamentoDeBuffetCompleto.verificarCPF(inputAlternado.getText())) {
+			usuarioJaPesquisado = true;
+			
+			cliente = ControladoraGerenciarCliente.getCliente(inputAlternado.getText());
+			mascaraCPF.uninstall();
+
+			if (cliente == null) { // Cliente não cadastrado
+				popUp = new PopUpErroGenerico(listenerVoltar, "Cliente não cadastrado", "Para continuar, efetue o cadastro do cliente", "Cadastrar Cliente");
+				inputCPF.setText(inputAlternado.getText());
+				inputAlternado.setText("");
+				labelTituloTela.setText("Cadastrar Cliente");
+				
+			} else { // Cliente cadastrado
+				JOptionPane.showMessageDialog(null, "Cliente já cadastrado, carregando dados...");
+				labelTituloTela.setText("Atualizar Cliente");
+				
+				inputNomeCompleto.setText(cliente.getNome());
+				inputCPF.setText(cliente.getCpf());
+				inputRG.setText(cliente.getRg() == null ? "" : cliente.getRg());
+				inputEmail.setText(cliente.getEmail());
+				inputAlternado.setText(cliente.getEndereco());
+				inputCEP.setText(cliente.getCep());
+				inputCelular.setText(cliente.getCelular());
+				inputTelefoneResidencial.setText(cliente.getTelefoneResidencial() == null ? "" : cliente.getTelefoneResidencial());
+				inputTelefoneComercial.setText(cliente.getTelefoneComercial() == null ? "" : cliente.getTelefoneComercial());
+			}
+			
+			labelAlternado.setText("Endereço");
+			painelDelimitadorNomeCompleto.setVisible(true);
+			painelDelimitadorCPF.setVisible(true);
+			painelDelimitadorRG.setVisible(true);
+			painelDelimitadorEmail.setVisible(true);
+			painelDelimitadorCEP.setVisible(true);
+			painelDelimitadorCelular.setVisible(true);
+			painelDelimitadorTelefoneResidencial.setVisible(true);
+			painelDelimitadorTelefoneComercial.setVisible(true);
+			
+			painel.repaint();
+		} else {
+			popUp = new PopUpErroGenerico(listenerVoltar, "CPF informado está inválido", "Para continuar, forneça um CPF válido", "Preencher CPF");
+		}
+		
+		return popUp;
+	}
+
+	public boolean getUsuarioJaPesquisado() {
+		return usuarioJaPesquisado;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public String getAlternado() {
+		return inputAlternado.getText();
+	}
+
+	public String getCPF() {
+		String cpf = inputCPF.getText();
+		cpf = cpf.replace(".", "");
+		cpf = cpf.replace("-", "");
+		
+		return cpf;
+	}
+
+	public String getNome() {
+		return inputNomeCompleto.getText();
+	}
+
+	public String getRG() {
+		String rg = inputRG.getText();
+		return rg;
+	}
+	
+	public String getCEP() {
+		String cep = inputCEP.getText();
+		return cep;
+	}
+
+	public String getEmail() {
+		String email = inputEmail.getText();
+		return email;
+	}
+	
+	public String getCelular() {
+		String celular = inputCelular.getText();
+		return celular;
+	}
+	
+	public String getTelefoneResidencial() {
+		String telefoneResidencial = inputTelefoneResidencial.getText();
+		return telefoneResidencial;
+	}
+
+	public String getTelefoneComercial() {
+		String telefoneComercial = inputTelefoneComercial.getText();
+		return telefoneComercial;
 	}
 	
 	@Override
@@ -760,6 +737,8 @@ public class PainelCriarOuAtualizarCliente extends Painel {
 		painelDelimitadorTelefoneResidencial.setVisible(false);
 		painelDelimitadorTelefoneComercial.setVisible(false);
 		
+		mascaraCPF.install(inputAlternado);
+
 		painelErro.setVisible(false);
 		
 	}

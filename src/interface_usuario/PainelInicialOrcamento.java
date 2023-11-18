@@ -1,21 +1,18 @@
 package interface_usuario;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.text.ParseException;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import controladoras.ControladoraJanela;
 import controladoras.ControladoraOrcamentoDeBuffetCompleto;
 import excecoes.ExcecaoDataEmUmFuturoDistante;
 import excecoes.ExcecaoDiaInvalido;
@@ -31,8 +28,6 @@ public class PainelInicialOrcamento extends Painel {
 
 	private JPanel painel;
 	
-	private PainelOrganizadorOrcamentoDeBuffetCompleto organizador;
-	
 	private RoundJTextField inputNumeroDeConvidados;
 	private RoundJTextField inputNumeroDeColaboradores;
 	private RoundJFormattedTextField inputData;
@@ -41,10 +36,8 @@ public class PainelInicialOrcamento extends Painel {
 	private JLabel labelRetornarTudo;
 	private JLabel labelAvancar;
 	
-	public PainelInicialOrcamento(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
+	public PainelInicialOrcamento(MouseListener retornaTelaInicial, MouseListener proximaPagina) {
 		super();
-		
-		this.organizador = organizador;
 		
 		painel = new JPanel();
 		painel.setBackground(getCorDeFundo());
@@ -67,11 +60,11 @@ public class PainelInicialOrcamento extends Painel {
 		painelVoltarTudo.setBackground(getCorDeFundo());
 		painelVoltarTudo.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		setLabelRetornarTudo(new ListenerRetornaTudo(organizador));
+		setLabelRetornarTudo(retornaTelaInicial);
 		painelVoltarTudo.add(labelRetornarTudo);
 		painelAvancar.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		setLabelAvancar();
+		setLabelAvancar(proximaPagina);
 		painelAvancar.add(labelAvancar);
 		painelDivisor.setLayout(new GridLayout(2, 2, 0, 0));
 		
@@ -257,128 +250,139 @@ public class PainelInicialOrcamento extends Painel {
 		}
 	}
 	
-	private void setLabelRetornarTudo(ListenerRetornaTudo listenerRetornaTudo) {
+	private void setLabelRetornarTudo(MouseListener listenerRetornaTudo) {
 		labelRetornarTudo = new JLabel("");
 		labelRetornarTudo.setIcon(getIconeRetornaTudo());
 		labelRetornarTudo.addMouseListener(listenerRetornaTudo);
 	}
 	
-	private void setLabelAvancar() {
+	private void setLabelAvancar(MouseListener proximaPagina) {
 		labelAvancar = new JLabel("");
 		labelAvancar.setIcon(getIconeProximaPagina());
-		labelAvancar.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
-			@Override
-			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mousePressed(MouseEvent e) { 
-				if(verificarPreenchimentoCampos())
-					organizador.proximaPagina();
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
-		});
-	}
-	
-	public boolean verificarPreenchimentoCampos() {
-		try {
-			
-			if (inputNumeroDeConvidados.getText().isBlank() || inputNumeroDeConvidados.getText().isEmpty()) {
-				ControladoraJanela.ativarPopUp(this, "Numero de convidados não está preenchido", "Para continuar, preencha o campo número de convidados", "Preencher Número de Convidados");
-				return false;
-			} else {
-				if (inputNumeroDeConvidados.getText().strip().matches("\\d+") == false || 
-						Utilitaria.verificarNumeroConvidados(getInputNumeroDeConvidados()) == false) {
-					ControladoraJanela.ativarPopUp(this, "Número de convidados inválido", "Para continuar, insira entre 50 e 180 convidados", "Mudar Número de Convidados");
-					return false;
-				}
-			}
-			
-			if (inputData.getText().equals("  /  /    ")) {
-				ControladoraJanela.ativarPopUp(this, "Data não está preenchida", "Para continuar, preencha o campo data", "Preencher Data");
-				return false;
-				
-			} else {
-				Painel estePainel = this;
-				boolean naoPassouNoTeste = true;
-				Data data;
-				try {
-					// Caso ele consiga criar a data, então ele passa no teste, caso contrário é invalido
-					data = getData();
-					naoPassouNoTeste = false;
-					
-					if (data.verificarSeDataEstaNoFuturo() == false) {
-						ControladoraJanela.ativarPopUp(estePainel, "Data está no passado", "Para continuar, insira uma data no futuro", "Alterar data");
-						return false;
-					}
-					
-					if (ControladoraOrcamentoDeBuffetCompleto.verificarData(inputData.getText()) == false) {
-						ControladoraJanela.ativarPopUp(estePainel, "Festa coincide com outra festa agendada", "Para continuar, mude a data da festa", "Mudar data"); 
-						return false;
-					}
-					
-				} catch (ExcecaoNaoPreenchido | ExcecaoDiaInvalido | ExcecaoMesInvalido | NumberFormatException e) {
-					ControladoraJanela.ativarPopUp(estePainel, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
-					naoPassouNoTeste = true;
-					
-				} catch (ExcecaoDataEmUmFuturoDistante e) {
-					ControladoraJanela.ativarPopUp(estePainel, "Intervalo muito grande de data", "Para continuar, mude  a data da sua festa", "Mudar Data");
-					naoPassouNoTeste = true;
-					
-				} catch (ExcecaoOrcamentoParaHoje e) {
-					ControladoraJanela.ativarPopUp(estePainel, "A festa não pode ser realizada hoje", "Para continuar, mude a data da sua festa", "Mudar Data");
-					naoPassouNoTeste = true;
-				}
-				
-				if (naoPassouNoTeste) return false;
-				
-			}
-			
-			if (inputHoraDeInicio.getText().equals("  :  ")) {
-				ControladoraJanela.ativarPopUp(this, "Hora de inicio do evento não está preenchida", "Para continuar, preencha o campo hora de inicio do evento", "Preencher Hora de Inicio");
-				return false;
-				
-			} else {
-				if (Utilitaria.verificarValidezHorario(inputHoraDeInicio.getText()) == false) {
-					ControladoraJanela.ativarPopUp(this, "Hora de Inicio do Evento está Inválida", "Para continuar, insira uma hora de inicio válida", "Mudar Hora de Início");
-					return false;
-				}
-			}
-			
-			if (inputNumeroDeColaboradores.getText().isBlank() == false && inputNumeroDeColaboradores.getText().isEmpty() == false && inputNumeroDeColaboradores.getText().strip().matches("\\d+") == false) {
-				ControladoraJanela.ativarPopUp(this, "Número de Colaboradores Inválido", "Para continuar, insira um número de colaboradores válido", "Mudar número de colaboradores");
-				return false;
-			}
-			
-			return true;
-			
-		} catch (Exception e) {
-			return false;
-		}
-		
+		labelAvancar.addMouseListener(proximaPagina);
 	}
 	
 	public int getInputNumeroDeConvidados(){
+		
+		if (inputNumeroDeConvidados.getText().isBlank() || inputNumeroDeConvidados.getText().isEmpty()) {
+			return -1;
+
+		} else if(inputNumeroDeConvidados.getText().strip().matches("\\d+") == false || Utilitaria.verificarNumeroConvidados(Integer.parseInt(inputNumeroDeConvidados.getText())) == false) {
+			return -2;
+		}
+
 		return Integer.parseInt(inputNumeroDeConvidados.getText().strip());
 	}
-	public int getInputNumeroDeColaboradores(){
+	public int getInputNumeroDeColaboradores() {
+
+		if (inputNumeroDeColaboradores.getText().isBlank() == false && inputNumeroDeColaboradores.getText().isEmpty() == false && inputNumeroDeColaboradores.getText().strip().matches("\\d+") == false) {
+			return -1;
+		}
+
 		return Integer.parseInt(inputNumeroDeConvidados.getText().strip());
 	}
 	public Data getData() throws ExcecaoNaoPreenchido, ExcecaoDiaInvalido, ExcecaoMesInvalido{
+		
 		String[] aux = inputData.getText().split("/");
+
+		if (aux[0].isEmpty() || aux[1].isEmpty() || aux[2].isEmpty() || aux[0].isBlank() || aux[1].isBlank() || aux[2].isBlank()) { 
+			return null;
+		}
 		
 		return new Data(aux[0].strip(), aux[1].strip(), aux[2].strip());
 		
 	}
+
 	public String getInputHoraDeInicio(){
+
+		if (inputHoraDeInicio.getText().matches("\\d{2}:\\d{2}") == false) {
+			return null;
+		}
+
 		return inputHoraDeInicio.getText();
+	}
+
+	public PopUpErroGenerico verificarPreenchimento(ActionListener listenerVoltar) {
+		try {
+
+			if (getInputNumeroDeConvidados() == -1) {
+				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Numero de convidados não está preenchido", "Para continuar, preencha o campo número de convidados", "Preencher Número de Convidados");
+
+				return popUp;
+
+			} else if (getInputNumeroDeConvidados() == -2) {
+				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Número de convidados inválido", "Para continuar, insira entre 50 e 180 convidados", "Mudar Número de Convidados");
+
+				return popUp;
+			}
+			
+			if (getData() == null) {
+				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Data não está preenchida", "Para continuar, preencha o campo data", "Preencher Data");
+
+				return popUp;
+				
+			} else {
+				Data data;
+
+				try {
+					// Caso ele consiga criar a data, então ele passa no teste, caso contrário é invalido
+					data = getData();
+					
+					if (data.verificarSeDataEstaNoFuturo() == false) {
+						return new PopUpErroGenerico(listenerVoltar, "Data está no passado", "Para continuar, insira uma data no futuro", "Alterar data");
+					}
+					
+					if (ControladoraOrcamentoDeBuffetCompleto.verificarData(data) == false) {
+						return new PopUpErroGenerico(listenerVoltar, "Festa coincide com outra festa agendada", "Para continuar, mude a data da festa", "Mudar data");
+
+					}
+					
+				} catch (ExcecaoNaoPreenchido | ExcecaoDiaInvalido | ExcecaoMesInvalido | NumberFormatException e) {
+					return new PopUpErroGenerico(listenerVoltar, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
+					
+				} catch (ExcecaoDataEmUmFuturoDistante e) {
+					return new PopUpErroGenerico(listenerVoltar,"Intervalo muito grande de data", "Para continuar, mude  a data da sua festa", "Mudar Data");
+					
+				} catch (ExcecaoOrcamentoParaHoje e) {
+					return new PopUpErroGenerico(listenerVoltar, "A festa não pode ser realizada hoje", "Para continuar, mude a data da sua festa", "Mudar Data");
+				}
+	
+			}
+			
+			if (getInputHoraDeInicio() == null) {
+				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Hora de inicio do evento não está preenchida", "Para continuar, preencha o campo hora de inicio do evento", "Preencher Hora de Inicio");
+
+				return popUp;
+				
+			} else if (Utilitaria.verificarValidezHorario(getInputHoraDeInicio()) == false) {
+				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Hora de Inicio do Evento está Inválida", "Para continuar, insira uma hora de inicio válida", "Mudar Hora de Início");
+
+				return popUp;
+			}
+			
+			if (getInputNumeroDeColaboradores() == -1) {
+				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Número de Colaboradores Inválido", "Para continuar, insira um número de colaboradores válido", "Mudar número de colaboradores");
+
+				return popUp;
+			}
+			
+			return null;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new PopUpErroGenerico(listenerVoltar, "Excecao encontrada", "Foi lançada uma exceção em verificarPreenchimento", "Retornar");
+		}
+	}
+
+	public void mudarTipoOrcamento(boolean eBuffetCompleto) {
+		if (eBuffetCompleto) {
+			inputNumeroDeColaboradores.setEnabled(true);
+			inputNumeroDeColaboradores.setText("");
+
+		} else {
+			inputNumeroDeColaboradores.setEnabled(false);
+			inputNumeroDeColaboradores.setText("3");
+		}
 	}
 
 	@Override

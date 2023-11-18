@@ -2,20 +2,16 @@ package interface_usuario;
 
 import javax.swing.JPanel;
 
-import controladoras.ControladoraJanela;
-import controladoras.ControladoraOrcamentoDeBuffetCompleto;
-import negocio.OrcamentoBuffetCompleto;
 import negocio.OrcamentoEvento;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,53 +20,29 @@ import javax.swing.border.EmptyBorder;
 
 public class PainelConfirmarOuCancelarOrcamento extends Painel {
 
-	OrcamentoEvento orcamentoEvento;
+	private OrcamentoEvento orcamentoEvento;
 	
-	PainelOrganizadorOrcamentoDeBuffetCompleto organizador;
-	
-	JPanel painel;
+	private JPanel painel;
 	private JLabel labelVoltaPagina;
 	private JLabel labelRetornaTudo;
 	private JLabel labelValor;
 	private SemVFXJButton botaoConfirmar;
 	private SemVFXJButton botaoCancelar;
 	
-	public PainelConfirmarOuCancelarOrcamento(PainelOrganizadorOrcamentoDeBuffetCompleto organizador) {
+	public PainelConfirmarOuCancelarOrcamento(MouseListener voltarTelaInicial, MouseListener voltarPagina, ActionListener confirmarOrcamento) {
 		super();
-		this.organizador = organizador;
 		
 		labelRetornaTudo = new JLabel("");
-		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(organizador));
+		labelRetornaTudo.addMouseListener(voltarTelaInicial);
 		
 		labelVoltaPagina = new JLabel("");
-		labelVoltaPagina.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
-			@Override
-			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mousePressed(MouseEvent e) { 
-				organizador.paginaAnterior();
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
-			
-		});
+		labelVoltaPagina.addMouseListener(voltarPagina);
 		
 		botaoCancelar = new SemVFXJButton("CANCELAR", Color.WHITE, Color.WHITE);
-		botaoCancelar.setFont(getFonteLabelInterno());
-		botaoCancelar.setForeground(getCorInputs());
-		botaoCancelar.addActionListener(e -> {
-			JOptionPane.showMessageDialog(null, "Orçamento foi cancelado com sucesso!");
-			ControladoraJanela.voltarPainelInicial();
-			organizador.limparCampos();
-		});
+		botaoConfirmar = new SemVFXJButton("CONFIRMAR", Color.WHITE, Color.WHITE);
+	
+		botaoConfirmar.addActionListener(confirmarOrcamento);
+		botaoCancelar.addActionListener(e -> voltarTelaInicial.mousePressed(null));
 		
 		construtorDaTela();
 	}
@@ -100,6 +72,8 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		painelBotoes.add(painelCancelar);
 		painelCancelar.setLayout(new BorderLayout(0, 0));
 		
+		botaoCancelar.setFont(getFonteLabelInterno());
+		botaoCancelar.setForeground(getCorInputs());
 		painelCancelar.add(botaoCancelar);
 		
 		RoundJPanel painelConfirmar = new RoundJPanel(25, 25, 25, 25);
@@ -108,7 +82,6 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		painelBotoes.add(painelConfirmar);
 		painelConfirmar.setLayout(new BorderLayout(0, 0));
 		
-		botaoConfirmar = new SemVFXJButton("CONFIRMAR", Color.WHITE, Color.WHITE);
 		botaoConfirmar.setFont(getFonteLabelInterno());
 		botaoConfirmar.setForeground(getCorInputs());
 		painelConfirmar.add(botaoConfirmar);
@@ -170,7 +143,6 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		
 		painelVoltaPagina.add(labelVoltaPagina, BorderLayout.CENTER);
 		painel.setLayout(gl_painel);
-		configurarBotoes();
 	}
 	
 	public void setOrcamento(OrcamentoEvento orcamentoEvento) {
@@ -183,15 +155,6 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 		return orcamentoEvento;
 	}
 	
-	@Override 
-	protected void configurarBotoes() {
-		botaoConfirmar.addActionListener( e -> {
-			ControladoraOrcamentoDeBuffetCompleto.cadastrarOrcamento((OrcamentoBuffetCompleto) orcamentoEvento);
-		
-		});
-		
-	}
-	
 	@Override
 	public JPanel getPainel() {
 		return painel;
@@ -201,7 +164,6 @@ public class PainelConfirmarOuCancelarOrcamento extends Painel {
 	public void limparCampos() {
 		orcamentoEvento = null;
 		labelValor.setText("R$ ");
-
 		
 	}
 }

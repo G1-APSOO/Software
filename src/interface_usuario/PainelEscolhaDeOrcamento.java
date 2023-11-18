@@ -2,14 +2,12 @@ package interface_usuario;
 
 import javax.swing.JPanel;
 
-import controladoras.ControladoraJanela;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
@@ -20,17 +18,15 @@ import javax.swing.border.EmptyBorder;
 public class PainelEscolhaDeOrcamento extends Painel {
 	
 	private JPanel painel;
-	private PainelOrganizadorOrcamentoDeBuffetCompleto painelOrganizadorOrcamentoDeBuffetCompleto;
 	private SemVFXJButton botaoOrcamentoBuffetCompleto;
 	private SemVFXJButton botaoOrcamentoLocacao;
 	private JLabel labelRetornaTudo;
 	private JLabel labelVoltar;
 	
-	public PainelEscolhaDeOrcamento() {
+	public PainelEscolhaDeOrcamento(MouseListener voltarTelaInicial, ActionListener entrarOrcamentoBuffetCompleto, ActionListener entrarOrcamentoLocacaoDeEspaco) {
 		super();
-		painel = new JPanel();
 		
-		painelOrganizadorOrcamentoDeBuffetCompleto = new PainelOrganizadorOrcamentoDeBuffetCompleto();
+		painel = new JPanel();
 		
 		painel.setBackground(getCorDeFundo());
 		
@@ -96,6 +92,7 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		botaoOrcamentoBuffetCompleto = new SemVFXJButton("Orçamento de buffet completo", Color.WHITE, Color.WHITE);
 		botaoOrcamentoBuffetCompleto.setFont(getFonteLabelInterno());
 		botaoOrcamentoBuffetCompleto.setFocusable(false);
+		botaoOrcamentoBuffetCompleto.addActionListener(entrarOrcamentoBuffetCompleto);
 		painelExternoOrcamentoBuffetCompleto.add(botaoOrcamentoBuffetCompleto);
 		
 		RoundJPanel painelExternoOrcamentoLocacao = new RoundJPanel(25, 25, 25, 25);
@@ -107,17 +104,10 @@ public class PainelEscolhaDeOrcamento extends Painel {
 		botaoOrcamentoLocacao = new SemVFXJButton("Orçamento de locação de espaço", Color.WHITE, Color.WHITE);
 		botaoOrcamentoLocacao.setFont(getFonteLabelInterno());
 		botaoOrcamentoLocacao.setFocusable(false);
-		botaoOrcamentoLocacao.setEnabled(false);
+		botaoOrcamentoLocacao.addActionListener(entrarOrcamentoLocacaoDeEspaco);
 		painelExternoOrcamentoLocacao.add(botaoOrcamentoLocacao);
 		painel.setLayout(gl_painel);
 		
-		configurarBotoes();
-	}
-
-	@Override
-	protected void configurarBotoes() { 
-		botaoOrcamentoBuffetCompleto.addActionListener(e -> ControladoraJanela.trocaPainel(painelOrganizadorOrcamentoDeBuffetCompleto.getPainel()));
-		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(this));
 	}
 	
 	@Override
