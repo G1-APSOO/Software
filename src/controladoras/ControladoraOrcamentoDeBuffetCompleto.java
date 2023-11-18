@@ -1,8 +1,6 @@
 package controladoras;
 
 import excecoes.ExcecaoDDDInvalido;
-import excecoes.ExcecaoDiaInvalido;
-import excecoes.ExcecaoMesInvalido;
 import negocio.Bolo;
 import negocio.Cliente;
 import negocio.Data;
@@ -13,13 +11,11 @@ import utilitaria.Utilitaria;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class ControladoraOrcamentoDeBuffetCompleto {
 
-	private ControladoraOrcamentoDeBuffetCompleto() {
-		throw new IllegalAccessError("Controladora Orcamento de BuffetCompleto é estática");
-	} 
+	private ControladoraOrcamentoDeBuffetCompleto() throws IllegalAccessException {
+		throw new IllegalAccessException("Instanciamento inválido, esta classe é estática");
+	}
 
 	public static double consultarValorDoOrcamento(OrcamentoBuffetCompleto orcamento) {
 		return orcamento.calcularValorTotal();
@@ -41,27 +37,7 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 		return Utilitaria.verificarNumeroConvidados(numeroDeConvidados);
 	}
 
-	public static boolean verificarData(String dataString) {
-		
-		String[] aux = dataString.split("/");
-		
-		int dia = Integer.parseInt(aux[0]);
-		int mes = Integer.parseInt(aux[1]);
-		int ano = Integer.parseInt(aux[2]);
-		
-		Data data = null;
-		
-		try {
-			data = new Data(dia, mes, ano);
-			
-		} catch (ExcecaoDiaInvalido e) {
-			JOptionPane.showMessageDialog(null, "Dia inválido"); // TODO Chamar PopUp
-			return false;
-		} catch (ExcecaoMesInvalido e) {
-			JOptionPane.showMessageDialog(null, "Mes inválido"); // TODO Chamar PopUp
-			return false;
-		}
-		
+	public static boolean verificarData(Data data) {
 		return OrcamentoBuffetCompleto.verificarData(data);
 	}
 
@@ -97,7 +73,7 @@ public class ControladoraOrcamentoDeBuffetCompleto {
 		return Utilitaria.verificarOpcoesDoces(qtdDoces);
 	}
 
-	public void cancelarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
+	public static void cancelarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
 		OrcamentoBuffetCompleto.deletarOrcamento(orcamentoBuffet);
 	}
 
