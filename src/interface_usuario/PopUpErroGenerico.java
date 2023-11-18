@@ -3,15 +3,10 @@ package interface_usuario;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import controladoras.ControladoraJanela;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -20,7 +15,8 @@ public class PopUpErroGenerico extends Painel {
 
 	private JPanel painel;
 	
-	public PopUpErroGenerico(Painel painelDeRetorno,String mensagemPrincipal,String mensagemInstrucao, String mensagemDoBotao) {
+	public PopUpErroGenerico(ActionListener listenerRetorno, String mensagemPrincipal, String mensagemInstrucao, String mensagemDoBotao) {
+		
 		painel = new JPanel();
 		painel.setBackground(getCorDeFundo());
 		
@@ -57,7 +53,7 @@ public class PopUpErroGenerico extends Painel {
 		botao.setForeground(new Color(240, 240, 240));
 		botao.setBackground(new Color(25, 25, 25));
 		botao.setFont(new Font("Arial", Font.PLAIN, 14));
-		botao.addActionListener(e -> ControladoraJanela.trocaPainel(painelDeRetorno.getPainel()));
+		botao.addActionListener(listenerRetorno);
 		
 		JLabel labelMensagemInstrucao = new JLabel("Mensagem de erro secundária");
 		labelMensagemInstrucao.setText(mensagemInstrucao);
