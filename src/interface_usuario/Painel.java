@@ -140,8 +140,6 @@ public abstract class Painel {
 		// Fim do Debug
 	}
 	
-	protected void configurarBotoes() {}
-	
 	protected ImageIcon getIconeRetornaTudo() {
 		return new ImageIcon("imgs/retornaTudo.png");
 	}
