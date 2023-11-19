@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import controladoras.ControladoraOrcamentoDeBuffetCompleto;
+import controladoras.ControladoraOrcamentoLocacaoDeEspaco;
 import excecoes.ExcecaoDDDInvalido;
 import excecoes.ExcecaoParametroPreenchidoErrado;
 
@@ -20,6 +21,8 @@ import negocio.Doce;
 import negocio.Bolo;
 import negocio.OrcamentoBuffetCompleto;
 import negocio.OrcamentoEvento;
+import negocio.OrcamentoLocacaoDeEspaco;
+import negocio.ServicoContratado;
 
 public class JanelaPrincipal extends JFrame {
 
@@ -31,8 +34,14 @@ public class JanelaPrincipal extends JFrame {
 	private PainelEscolhaDeOrcamento painelEscolhaDeOrcamento;
 	private PainelInicialOrcamento painelInicialOrcamento;
 	private PainelOpcoesOrcamentoDeBuffetCompleto painelOpcoesOrcamentoDeBuffetCompleto;
+	private PainelEscolhaDeServico painelEscolhaDeServico;
 	
 	private boolean orcandoBuffetCompleto;
+
+	@FunctionalInterface
+	interface chamarPopUp {
+		void rodar(Painel painel, String msgPrincipal, String msgInstrucao, String msgBotao);
+	}
 
 	public JanelaPrincipal() {
 		setSize(new Dimension(1280, 720));
@@ -100,6 +109,11 @@ public class JanelaPrincipal extends JFrame {
 		ActionListener listenerEntrarEmOrcamentoLocacaoDeEspaco = e -> entrarEmOrcamento(false);
 
 		ActionListener listenerConfirmarOrcamento = e -> cadastrarOrcamento();
+
+		chamarPopUp chamadorPopUp = (Painel painel, String msgPrincipal, String msgInstrucao, String msgBotao) -> {
+			ActionListener listenerVoltar = e -> trocarPainel(painel);
+			trocarPainel(new PopUpErroGenerico(listenerVoltar, msgPrincipal, msgInstrucao, msgBotao));
+		};
 		
 		painelEscolhaDeOrcamento = new PainelEscolhaDeOrcamento(listenerRetornaTelaInicial, listenerEntrarEmOrcamentoBuffetCompleto, listenerEntrarEmOrcamentoLocacaoDeEspaco);
 		
@@ -109,6 +123,8 @@ public class JanelaPrincipal extends JFrame {
 		ArrayList<Doce> doces = ControladoraOrcamentoDeBuffetCompleto.getAllDoces();
 		ArrayList<Bolo> bolos = ControladoraOrcamentoDeBuffetCompleto.getAllBolos();
 		painelOpcoesOrcamentoDeBuffetCompleto = new PainelOpcoesOrcamentoDeBuffetCompleto(listenerRetornaTelaInicial, listenerAvancarOrcamento, listenerVoltarOrcamento, salgados, doces, bolos);
+		
+		painelEscolhaDeServico = new PainelEscolhaDeServico(listenerRetornaTelaInicial, listenerAvancarOrcamento, listenerVoltarOrcamento, chamadorPopUp);
 		
 		painelCriarOuAtualizarCliente = new PainelCriarOuAtualizarCliente(listenerRetornaTelaInicial, listenerAvancarOrcamento, listenerVoltarOrcamento);
 
@@ -141,11 +157,6 @@ public class JanelaPrincipal extends JFrame {
 	}
 	
 	private void proximaPaginaOrcamento() {
-		//* 1. Verificar qual classe é o painel atual com instaceof
-		//* 2. Verificar se é buffetCompleto e voltar para as respectivas paginas de buffet completo
-		//* 	2.1 Caso não for buffet completo seguir com a ordem de telas de locação de espaço
-		//* 3. Fazer as verificações para se pode ou não avançar a tela
-		//* 4. Se não for nenhuma tela for pega nos ifs == Erro
 		
 		if (painelAtual instanceof PainelInicialOrcamento) { 
 			
@@ -162,21 +173,23 @@ public class JanelaPrincipal extends JFrame {
 				trocarPainel(painelOpcoesOrcamentoDeBuffetCompleto);
 					
 			} else {
-				//TODO trocar painel para a contratação de servicos
-				
+				trocarPainel(painelEscolhaDeServico);
 			}
 
-		} else if (painelAtual instanceof PainelOpcoesOrcamentoDeBuffetCompleto) { // É um buffet completo
+		} else if (painelAtual instanceof PainelOpcoesOrcamentoDeBuffetCompleto) {
 			
-			ActionListener listenerVolta = e -> trocarPainel(painelOpcoesOrcamentoDeBuffetCompleto);
+			ActionListener listenerVoltar = e -> trocarPainel(painelOpcoesOrcamentoDeBuffetCompleto);
 
-			PopUpErroGenerico popUp = painelOpcoesOrcamentoDeBuffetCompleto.verificarPreenchimento(listenerVolta);
+			PopUpErroGenerico popUp = painelOpcoesOrcamentoDeBuffetCompleto.verificarPreenchimento(listenerVoltar);
 
 			if (popUp != null) {
 				trocarPainel(popUp);
 				return;
 			}
 
+			trocarPainel(painelCriarOuAtualizarCliente);
+
+		} else if (painelAtual instanceof PainelEscolhaDeServico) {
 			trocarPainel(painelCriarOuAtualizarCliente);
 
 		} else if (painelAtual instanceof PainelCriarOuAtualizarCliente) {
@@ -260,7 +273,11 @@ public class JanelaPrincipal extends JFrame {
 				orcamento = ControladoraOrcamentoDeBuffetCompleto.criarOrcamento(numeroDeConvidados, numeroDeColaboradores, data, cliente, horaDeInicio, teraCerveja, salgados, doces, boloEscolhido);
 
 			} else {
-				//TODO Criar OrcamentoLocacaoDeEspaco
+				ArrayList<ServicoContratado> servicosContratados = painelEscolhaDeServico.getServicosContratados();
+
+				orcamento = ControladoraOrcamentoLocacaoDeEspaco.criarOrcamento(numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, cliente);
+
+				ControladoraOrcamentoLocacaoDeEspaco.anexarServicos((OrcamentoLocacaoDeEspaco) orcamento, servicosContratados);
 			}
 
 			painelConfirmarOuCancelarOrcamento.setOrcamento(orcamento);
@@ -286,7 +303,18 @@ public class JanelaPrincipal extends JFrame {
 			}
 			
 		} else {
-			//TODO Verificar a tela e voltar mediante a ordem das telas de locacao de espaco
+			if (painelAtual instanceof PainelConfirmarOuCancelarOrcamento) {
+				trocarPainel(painelCriarOuAtualizarCliente);
+			
+			} else if (painelAtual instanceof PainelCriarOuAtualizarCliente) {
+				trocarPainel(painelEscolhaDeServico);
+			
+			} else if (painelAtual instanceof PainelEscolhaDeServico) {
+				trocarPainel(painelInicialOrcamento);
+			
+			} else {
+				System.err.println("Ao voltar à página, orçando uma locação de espaço, o painel atual é um erro");
+			}
 		
 		}
 	}
@@ -305,7 +333,8 @@ public class JanelaPrincipal extends JFrame {
 			ControladoraOrcamentoDeBuffetCompleto.cadastrarOrcamento(orcamento);
 
 		} else {
-			//TODO Cadastrar orcamento de locação de espaço 
+			OrcamentoLocacaoDeEspaco orcamento = (OrcamentoLocacaoDeEspaco) painelConfirmarOuCancelarOrcamento.getOrcamento();
+			ControladoraOrcamentoLocacaoDeEspaco.cadastrarOrcamento(orcamento); 
 		}
 
 		retornarTelaInicial();
