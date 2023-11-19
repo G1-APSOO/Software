@@ -28,6 +28,9 @@ public abstract class OrcamentoEvento {
 		setCliente(cliente);
 	}
 	
+	public abstract boolean cadastrarOrcamento();
+	public abstract boolean deletarOrcamento();
+
 	public void setId(int id) {
 		this.id = id;
 	}
