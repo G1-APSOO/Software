@@ -161,11 +161,13 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		return orcamentoBuffetCompletoDAO.verificarData(data);
 	}
 
-	public static boolean deletarOrcamento(OrcamentoBuffetCompleto orcamentoBuffet) {
+	@Override
+	public boolean deletarOrcamento() {
 		OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
-		return orcamentoBuffetCompletoDAO.deletar(orcamentoBuffet.getId());
+		return orcamentoBuffetCompletoDAO.deletar(getId());
 	}
 
+	@Override
 	public boolean cadastrarOrcamento() {
 		OrcamentoBuffetCompletoDAO orcamentoBuffetCompletoDAO = new OrcamentoBuffetCompletoDAO();
 		
