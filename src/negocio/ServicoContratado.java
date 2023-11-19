@@ -10,7 +10,7 @@ public class ServicoContratado {
 		setServicoAdicional(servicoAdicional);
 	}
 	
-	private void setQuantidade(int quantidade) {
+	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
@@ -24,5 +24,10 @@ public class ServicoContratado {
 
 	public ServicoAdicional getServicoAdicional() {
 		return servicoAdicional;
+	}
+
+	@Override
+	public String toString() {
+		return servicoAdicional.getNome() + " (" + servicoAdicional.getValor() + ") - " + quantidade;
 	}
 }
