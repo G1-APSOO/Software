@@ -19,8 +19,8 @@ public class Utilitaria {
 	public static boolean verificarValidezHorario(String horaDeInicio) {
 		String[] horario = horaDeInicio.split(":");
 
-		int horaOk = Integer.parseInt(horario[0]);
-		int minutoOk = Integer.parseInt(horario[1]);
+		int horaOk = Integer.parseInt(horario[0].strip());
+		int minutoOk = Integer.parseInt(horario[1].strip());
 
 		return (11 <= horaOk && horaOk <= 20 && 0 <= minutoOk && minutoOk <= 59);
 	}

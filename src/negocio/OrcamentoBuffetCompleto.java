@@ -1,7 +1,5 @@
 package negocio;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -27,6 +25,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		calcularNumeroMinimoDeColaboradores();
 	}
 
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, String horaDeInicio, Data data, Pagamento pagamento,
@@ -36,6 +35,7 @@ public class OrcamentoBuffetCompleto extends OrcamentoEvento {
 		setTeraCerveja(teraCerveja);
 		setBolo(bolo);
 		calcularQuantidades(salgados, doces);
+		calcularNumeroMinimoDeColaboradores();
 	}
 
 	public OrcamentoBuffetCompleto(int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, Data data,

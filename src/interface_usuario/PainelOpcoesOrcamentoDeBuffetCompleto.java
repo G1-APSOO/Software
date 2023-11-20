@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controladoras.ControladoraJanela;
 import negocio.Bolo;
 import negocio.Doce;
 import negocio.Salgado;
@@ -19,7 +18,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
@@ -67,7 +65,8 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	private JRadioButton botaoSemCerveja;
 	private boolean teraCerveja;
 	
-	public PainelOpcoesOrcamentoDeBuffetCompleto(PainelOrganizadorOrcamentoDeBuffetCompleto organizador, 
+	public PainelOpcoesOrcamentoDeBuffetCompleto(MouseListener retornaTelaInicial, 
+			MouseListener proximaPagina, MouseListener voltaPagina,
 			ArrayList<Salgado> salgados, ArrayList<Doce> doces, ArrayList<Bolo> bolos) {
 		super();
 		
@@ -576,49 +575,13 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		painel.add(painelVoltaPagina);
 		
 		JLabel labelVoltaPagina = new JLabel("");
-		labelVoltaPagina.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
-			@Override
-			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mousePressed(MouseEvent e) { 
-				organizador.paginaAnterior();
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
-			
-		});
+		labelVoltaPagina.addMouseListener(voltaPagina);
 		labelVoltaPagina.setIcon(getIconeVoltarPagina());
 		painelVoltaPagina.add(labelVoltaPagina);
 		painel.add(painelAvancaPagina);
 		
 		JLabel labelAvancaPagina = new JLabel("");
-		labelAvancaPagina.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {/* Não faz nada */}
-			@Override
-			public void mouseReleased(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mousePressed(MouseEvent e) { 
-				if (verificarPreenchimentoCampos())
-					organizador.proximaPagina();
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) { /* Não faz nada */ }
-			
-			@Override
-			public void mouseEntered(MouseEvent e) { /* Não faz nada */ }
-		});
+		labelAvancaPagina.addMouseListener(proximaPagina);
 		labelAvancaPagina.setIcon(getIconeProximaPagina());
 		
 		painelAvancaPagina.add(labelAvancaPagina);
@@ -627,7 +590,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		painelRetornaTudo.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel labelRetornaTudo = new JLabel("");
-		labelRetornaTudo.addMouseListener(new ListenerRetornaTudo(organizador));
+		labelRetornaTudo.addMouseListener(retornaTelaInicial);
 		labelRetornaTudo.setIcon(getIconeRetornaTudo());
 		painelRetornaTudo.add(labelRetornaTudo);
 		painel.add(painelDelimitadorDoceBoloCerveja);
@@ -636,7 +599,6 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	}
 	
 	private class ListenerSalgados implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
@@ -662,7 +624,6 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	}
 	
 	private class ListenerDoce implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JRadioButton botaoPressionado = (JRadioButton) e.getSource();
@@ -682,7 +643,6 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	}
 
 	private class ListenerBolo implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JRadioButton botaoPressionado = (JRadioButton) e.getSource();
@@ -702,57 +662,6 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		}
 	}
 	
-	public boolean verificarPreenchimentoCampos() {
-		try {
-			
-			int qtdSalgados = 0;
-			int qtdDoces = 0;
-			
-			for (int i = 0; i < salgadosSelecionados.length; i++) {
-				if (salgadosSelecionados[i]) qtdSalgados += 1;
-			}
-			
-			for (int i = 0; i < docesSelecionados.length; i++) {
-				if (docesSelecionados[i]) qtdDoces += 1;
-			}
-			
-			if (qtdSalgados == 0) {
-				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione pelo menos 7 opções de salgado", "Selecionar Salgados"); 
-				return false;
-			}
-			
-			if (qtdSalgados < 7) { // Quantidade salgado menor
-				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione mais opções de salgado", "Selecionar Salgados"); 
-				return false;
-			}
-			
-			if (qtdSalgados > 9) { // Quantidade salgado errada
-				ControladoraJanela.ativarPopUp(this,"Número de Opções de Salgados Inválido", "Para continuar, selecione menos opções de salgado", "Selecionar Salgados"); 
-				return false;
-			}
-			
-			if (qtdDoces == 0) {
-				ControladoraJanela.ativarPopUp(this,"Número de Opções de Doces Inválido", "Para continuar, selecione pelo menos 3 opções de doce", "Selecionar Doces");
-				return false;
-			}
-			
-			if (qtdDoces != 3) { // Quantidade doce errada
-				ControladoraJanela.ativarPopUp(this,"Número de Opções de Doces Inválido", "Para continuar, selecione apenas 3 opções de doces", "Selecionar Doces");
-				return false;
-			}
-			
-			if (boloSelecionado == null) { // Bolo não está selecionado
-				ControladoraJanela.ativarPopUp(this,"Número de Opções de Bolo Inválido", "Para continuar, selecione apenas uma opção de bolo", "Selecionar Bolo");
-				return false;
-			}
-			
-			return true;
-			
-		} catch (Exception e) {
-			return false;
-		}
-		
-	}
 	public boolean getTeraCerveja(){
 		return teraCerveja;
 	}
@@ -784,10 +693,44 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	public Bolo getBoloEscolhido() {
 		return boloSelecionado;
 	}
-	
-	@Override 
-	protected void configurarBotoes() {
-		// TODO
+
+	public PopUpErroGenerico verificarPreenchimento(ActionListener listenerVoltar) {
+		try {
+			int qtdSalgados =  getSalgadosEscolhidos().size();
+			int qtdDoces = getDocesEscolhidos().size();
+
+			if (qtdSalgados == 0) {
+				return new PopUpErroGenerico(listenerVoltar, "Número de Opções de Salgados Inválido", "Para continuar, selecione pelo menos 7 opções de salgado", "Selecionar Salgados");
+			}
+			
+			if (qtdSalgados < 7) { // Quantidade salgado menor
+				return new PopUpErroGenerico(listenerVoltar, "Número de Opções de Salgados Inválido", "Para continuar, selecione mais opções de salgado", "Selecionar Salgados");
+
+			}
+			
+			if (qtdSalgados > 9) { // Quantidade salgado errada
+				return new PopUpErroGenerico(listenerVoltar, "Número de Opções de Salgados Inválido", "Para continuar, selecione menos opções de salgado", "Selecionar Salgados");
+
+			}
+			
+			if (qtdDoces == 0) {
+				return new PopUpErroGenerico(listenerVoltar, "Número de Opções de Doces Inválido", "Para continuar, selecione pelo menos 3 opções de doce", "Selecionar Doces");
+			}
+			
+			if (qtdDoces != 3) { // Quantidade doce errada
+				return new PopUpErroGenerico(listenerVoltar, "Número de Opções de Doces Inválido", "Para continuar, selecione apenas 3 opções de doces", "Selecionar Doces");
+
+			}
+			
+			if (boloSelecionado == null) { // Bolo não está selecionado
+				return new PopUpErroGenerico(listenerVoltar,"Número de Opções de Bolo Inválido", "Para continuar, selecione apenas uma opção de bolo", "Selecionar Bolo");
+			}
+			
+			return null;
+			
+		} catch (Exception e) {
+			return new PopUpErroGenerico(listenerVoltar, "Excecao encontrada", "Foi lançada uma exceção em verificarPreenchimento", "Retornar");
+		}
 	}
 
 	@Override
@@ -798,6 +741,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 	@Override
 	public void limparCampos() {
 		botaoSalgadoCoxinhaDeFrango.setSelected(false);
+		botaoSalgadoCoxinhaDeFrangoComCatupiry.setSelected(false);
 		botaoSalgadoRisolesDeCarne.setSelected(false);
 		botaoSalgadoQuibe.setSelected(false);
 		botaoSalgadoEsfihaDeCarne.setSelected(false);
@@ -829,5 +773,7 @@ public class PainelOpcoesOrcamentoDeBuffetCompleto extends Painel {
 		botaoComCerveja.setSelected(false);
 		botaoSemCerveja.setSelected(true);
 		teraCerveja = false;
+
+		painel.repaint();
 	}
 }
