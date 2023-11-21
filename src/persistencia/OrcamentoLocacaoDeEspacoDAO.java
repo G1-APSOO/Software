@@ -39,8 +39,12 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 					OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspacoEncontrado = new OrcamentoLocacaoDeEspaco(
 							rs.getInt("numeroDeConvidados"), rs.getInt("numeroDeColaboradores"),
-							rs.getString("horaDeInicio"), dataOrcamento, null, clienteDAO.get(cpfCliente),
-							servicosContratados);
+							rs.getString("horaDeInicio"), dataOrcamento, clienteDAO.get(cpfCliente));
+					
+					for (int i = 0; i < servicosContratados.size(); i++) {
+						orcamentoLocacaoDeEspacoEncontrado.anexarServico(servicosContratados.get(i));
+					}
+
 					return orcamentoLocacaoDeEspacoEncontrado;
 				}
 			}
@@ -106,8 +110,12 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 					OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspacoEncontrado = new OrcamentoLocacaoDeEspaco(
 							rs.getInt("numeroDeConvidados"), rs.getInt("numeroDeColaboradores"),
-							rs.getString("horaDeInicio"), dataOrcamento, null, clienteDao.get(cpfCliente),
-							servicosContratados);
+							rs.getString("horaDeInicio"), dataOrcamento, clienteDao.get(cpfCliente));
+					
+					for (int i = 0; i < servicosContratados.size(); i++) {
+						orcamentoLocacaoDeEspacoEncontrado.anexarServico(servicosContratados.get(i));
+					}
+
 					orcamentoLocacaoDeEspacoEncontrados.add(orcamentoLocacaoDeEspacoEncontrado);
 				}
 				return orcamentoLocacaoDeEspacoEncontrados;
@@ -120,7 +128,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 	@Override
 	public boolean criar(OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspaco) {
-		String sql = "INSERT INTO orcamentolocacaodeespaco VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO orcamentolocacaodeespaco VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -141,7 +149,6 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 			statement.setString(4, orcamentoLocacaoDeEspaco.getHoraDeInicio());
 			statement.setString(5, orcamentoLocacaoDeEspaco.getData().getData());
 			statement.setString(6, orcamentoLocacaoDeEspaco.getCliente().getCpf());
-			statement.setInt(7, -1);
 			
 			ServicoContratadoDAO serconDAO = new ServicoContratadoDAO();
 			ArrayList<ServicoContratado> servContratados = orcamentoLocacaoDeEspaco.getArrayServicosContratados();

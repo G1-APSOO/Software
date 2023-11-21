@@ -17,7 +17,7 @@ public class TesteServicoContratadoDAO {
 				
 				ServicoAdicional a = servDAO.getAll().get(0);
 				
-				System.out.println("Servico: "+a.getDescricao());
+				System.out.println("Servico: " + a.getNome());
 				
 				ServicoContratado servCon = new ServicoContratado(2,a);
 				

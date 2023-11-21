@@ -24,7 +24,7 @@ public class TesteOrcamentoLocacaoDeEspacoDAO {
 		Data data = new Data(13,11,2023);
 		Pagamento pagamento = new Pagamento(100.23,"debito",1);
 		
-		ServicoAdicional servAd = new ServicoAdicional(10,"Lava Jato",100);
+		ServicoAdicional servAd = new ServicoAdicional(10,"Lava Jato",100, false);
 		ServicoAdicionalDAO serAdDAO = new ServicoAdicionalDAO();
 		
 		servAd.setId(736968052);
@@ -40,7 +40,7 @@ public class TesteOrcamentoLocacaoDeEspacoDAO {
 		
 		System.out.println(cliente.getRg());
 		
-		OrcamentoLocacaoDeEspaco orc = new OrcamentoLocacaoDeEspaco(10,10,"10:30",data,pagamento,cliente,servicos);
+		OrcamentoLocacaoDeEspaco orc = new OrcamentoLocacaoDeEspaco(10,10,"10:30",data,cliente);
 		orcDAO.criar(orc);
 		
 //		//buscar

@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controladoras.ControladoraOrcamentoDeBuffetCompleto;
+import controladoras.ControladoraOrcamentoLocacaoDeEspaco;
 import excecoes.ExcecaoDataEmUmFuturoDistante;
 import excecoes.ExcecaoDiaInvalido;
 import excecoes.ExcecaoMesInvalido;
@@ -274,12 +275,11 @@ public class PainelInicialOrcamento extends Painel {
 		return Integer.parseInt(inputNumeroDeConvidados.getText().strip());
 	}
 	public int getInputNumeroDeColaboradores() {
-
 		if (inputNumeroDeColaboradores.getText().isBlank() == false && inputNumeroDeColaboradores.getText().isEmpty() == false && inputNumeroDeColaboradores.getText().strip().matches("\\d+") == false) {
 			return -1;
 		}
 
-		return Integer.parseInt(inputNumeroDeConvidados.getText().strip());
+		return Integer.parseInt(inputNumeroDeColaboradores.getText().strip());
 	}
 	public Data getData() throws ExcecaoNaoPreenchido, ExcecaoDiaInvalido, ExcecaoMesInvalido{
 		
@@ -303,75 +303,71 @@ public class PainelInicialOrcamento extends Painel {
 	}
 
 	public PopUpErroGenerico verificarPreenchimento(ActionListener listenerVoltar) {
-		try {
 
-			if (getInputNumeroDeConvidados() == -1) {
-				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Numero de convidados não está preenchido", "Para continuar, preencha o campo número de convidados", "Preencher Número de Convidados");
+		if (getInputNumeroDeConvidados() == -1) {
+			PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Numero de convidados não está preenchido", "Para continuar, preencha o campo número de convidados", "Preencher Número de Convidados");
 
-				return popUp;
+			return popUp;
 
-			} else if (getInputNumeroDeConvidados() == -2) {
-				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Número de convidados inválido", "Para continuar, insira entre 50 e 180 convidados", "Mudar Número de Convidados");
+		} else if (getInputNumeroDeConvidados() == -2) {
+			PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Número de convidados inválido", "Para continuar, insira entre 50 e 180 convidados", "Mudar Número de Convidados");
 
-				return popUp;
-			}
-			
-			if (getData() == null) {
-				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Data não está preenchida", "Para continuar, preencha o campo data", "Preencher Data");
-
-				return popUp;
-				
-			} else {
-				Data data;
-
-				try {
-					// Caso ele consiga criar a data, então ele passa no teste, caso contrário é invalido
-					data = getData();
-					
-					if (data.verificarSeDataEstaNoFuturo() == false) {
-						return new PopUpErroGenerico(listenerVoltar, "Data está no passado", "Para continuar, insira uma data no futuro", "Alterar data");
-					}
-					
-					if (ControladoraOrcamentoDeBuffetCompleto.verificarData(data) == false) {
-						return new PopUpErroGenerico(listenerVoltar, "Festa coincide com outra festa agendada", "Para continuar, mude a data da festa", "Mudar data");
-
-					}
-					
-				} catch (ExcecaoNaoPreenchido | ExcecaoDiaInvalido | ExcecaoMesInvalido | NumberFormatException e) {
-					return new PopUpErroGenerico(listenerVoltar, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
-					
-				} catch (ExcecaoDataEmUmFuturoDistante e) {
-					return new PopUpErroGenerico(listenerVoltar,"Intervalo muito grande de data", "Para continuar, mude  a data da sua festa", "Mudar Data");
-					
-				} catch (ExcecaoOrcamentoParaHoje e) {
-					return new PopUpErroGenerico(listenerVoltar, "A festa não pode ser realizada hoje", "Para continuar, mude a data da sua festa", "Mudar Data");
-				}
-	
-			}
-			
-			if (getInputHoraDeInicio() == null) {
-				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Hora de inicio do evento não está preenchida", "Para continuar, preencha o campo hora de inicio do evento", "Preencher Hora de Inicio");
-
-				return popUp;
-				
-			} else if (Utilitaria.verificarValidezHorario(getInputHoraDeInicio()) == false) {
-				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Hora de Inicio do Evento está Inválida", "Para continuar, insira uma hora de inicio válida", "Mudar Hora de Início");
-
-				return popUp;
-			}
-			
-			if (getInputNumeroDeColaboradores() == -1) {
-				PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Número de Colaboradores Inválido", "Para continuar, insira um número de colaboradores válido", "Mudar número de colaboradores");
-
-				return popUp;
-			}
-			
-			return null;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new PopUpErroGenerico(listenerVoltar, "Excecao encontrada", "Foi lançada uma exceção em verificarPreenchimento", "Retornar");
+			return popUp;
 		}
+		
+		Data data;
+
+		try {
+			// Caso ele consiga criar a data, então ele passa no teste, caso contrário é invalido
+			data = getData();
+			
+			if (data == null) {
+				return new PopUpErroGenerico(listenerVoltar, "Data não está preenchida", "Para continuar, preencha o campo data", "Preencher Data");
+			}
+
+			if (data.verificarSeDataEstaNoFuturo() == false) {
+				return new PopUpErroGenerico(listenerVoltar, "Data está no passado", "Para continuar, insira uma data no futuro", "Alterar data");
+			}
+			
+			if (ControladoraOrcamentoDeBuffetCompleto.verificarData(data) == false) {
+				return new PopUpErroGenerico(listenerVoltar, "Festa coincide com outra festa agendada", "Para continuar, mude a data da festa", "Mudar data");
+
+			}
+
+			if (ControladoraOrcamentoLocacaoDeEspaco.verificarData(data) == false) {
+				return new PopUpErroGenerico(listenerVoltar, "Festa coincide com outra festa agendada", "Para continuar, mude a data da festa", "Mudar data");
+			}
+			
+		} catch (ExcecaoNaoPreenchido | ExcecaoDiaInvalido | ExcecaoMesInvalido | NumberFormatException e) {
+			return new PopUpErroGenerico(listenerVoltar, "Data Inválida", "Para continuar, insira uma data válida", "Mudar Data");
+			
+		} catch (ExcecaoDataEmUmFuturoDistante e) {
+			return new PopUpErroGenerico(listenerVoltar,"Intervalo muito grande de data", "Para continuar, mude  a data da sua festa", "Mudar Data");
+			
+		} catch (ExcecaoOrcamentoParaHoje e) {
+			return new PopUpErroGenerico(listenerVoltar, "A festa não pode ser realizada hoje", "Para continuar, mude a data da sua festa", "Mudar Data");
+		}
+
+		if (getInputHoraDeInicio() == null) {
+			PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Hora de inicio do evento não está preenchida", "Para continuar, preencha o campo hora de inicio do evento", "Preencher Hora de Inicio");
+
+			return popUp;
+			
+		} else if (Utilitaria.verificarValidezHorario(getInputHoraDeInicio()) == false) {
+			PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Hora de Inicio do Evento está Inválida", "Para continuar, insira uma hora de inicio válida", "Mudar Hora de Início");
+
+			return popUp;
+		}
+		
+		if (getInputNumeroDeColaboradores() == -1) {
+			PopUpErroGenerico popUp = new PopUpErroGenerico(listenerVoltar, "Número de Colaboradores Inválido", "Para continuar, insira um número de colaboradores válido", "Mudar número de colaboradores");
+
+			return popUp;
+		}
+		
+		return null;
+		
+	
 	}
 
 	public void mudarTipoOrcamento(boolean eBuffetCompleto) {
