@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import negocio.Cliente;
 import negocio.Data;
-import negocio.Doce;
 import negocio.OrcamentoLocacaoDeEspaco;
 import negocio.Pagamento;
-import negocio.Salgado;
 import negocio.ServicoAdicional;
 import negocio.ServicoContratado;
 
@@ -27,6 +25,10 @@ public class TesteOrcamentoLocacaoDeEspacoDAO {
 		Pagamento pagamento = new Pagamento(100.23,"debito",1);
 		
 		ServicoAdicional servAd = new ServicoAdicional(10,"Lava Jato",100);
+		ServicoAdicionalDAO serAdDAO = new ServicoAdicionalDAO();
+		
+		servAd.setId(736968052);
+		serAdDAO.criar(servAd);
 		
 		ArrayList<ServicoContratado> servicos = new ArrayList<ServicoContratado>();
 		ServicoContratado serv = new ServicoContratado(10,servAd);
@@ -42,9 +44,9 @@ public class TesteOrcamentoLocacaoDeEspacoDAO {
 		orcDAO.criar(orc);
 		
 //		//buscar
-		
-		OrcamentoLocacaoDeEspaco orc2 = orcDAO.get(879296661);
-		System.out.println("resultado busca: \n"+ orc2.getHoraDeInicio());
+//		
+//		OrcamentoLocacaoDeEspaco orc2 = orcDAO.get(1658430682);
+//		System.out.println("resultado busca: \n"+ orc2.getHoraDeInicio());
 		
 //		//atualizar 
 //		

@@ -93,7 +93,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 	@Override
 	public boolean criar(ServicoAdicional servicoAdicional) {
-		String sql = "INSERT INTO servicoadicional VALUES (?, ?, ?)";
+		String sql = "INSERT INTO servicoadicional VALUES (?, ?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -105,6 +105,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 			statement.setInt(1, id);
 			statement.setString(2, servicoAdicional.getDescricao());
 			statement.setDouble(3, servicoAdicional.getValor());
+			statement.setBoolean(4, false);
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {

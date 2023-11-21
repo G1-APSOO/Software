@@ -6,16 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import negocio.Bolo;
-import negocio.Cliente;
-import negocio.Data;
-import negocio.Doce;
-import negocio.OrcamentoBuffetCompleto;
-import negocio.OrcamentoLocacaoDeEspaco;
-import negocio.Pagamento;
-import negocio.Salgado;
-import negocio.ServicoContratado;
 import excecoes.ExcecaoValorNaoSetado;
+import negocio.Data;
+import negocio.OrcamentoLocacaoDeEspaco;
+import negocio.ServicoContratado;
 
 public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco, Integer> {
 
@@ -148,11 +142,17 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 			statement.setString(5, orcamentoLocacaoDeEspaco.getData().getData());
 			statement.setString(6, orcamentoLocacaoDeEspaco.getCliente().getCpf());
 			statement.setInt(7, -1);
+			
+			ServicoContratadoDAO serconDAO = new ServicoContratadoDAO();
+			ArrayList<ServicoContratado> servContratados = orcamentoLocacaoDeEspaco.getArrayServicosContratados();
 	
-
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
 				System.out.println("OrcamentoLocacaoDeEspaco inserido com sucesso!");
+			}
+			
+			for (int i = 0; i < servContratados.size(); i++) {
+				serconDAO.criarServCon(servContratados.get(i),orcamentoLocacaoDeEspaco.getId());
 			}
 			return true;
 		} catch (SQLException e) {
