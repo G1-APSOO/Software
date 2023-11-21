@@ -13,7 +13,7 @@ public class ServicoAdicional {
 		setServicoUnico(servicoUnico);
 	}
 	
-	private void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
