@@ -12,7 +12,7 @@ public class ClienteDAO implements DAO<Cliente, String> {
 
 	@Override
 	public Cliente get(String cpf) {
-		String sql = "SELECT * FROM Cliente WHERE cpf = ?";
+		String sql = "SELECT * FROM cliente WHERE cpf = ?";
 
 		try {
 
@@ -49,7 +49,7 @@ public class ClienteDAO implements DAO<Cliente, String> {
 
 	@Override
 	public ArrayList<Cliente> getAll() {
-		String sql = "SELECT * FROM Cliente";
+		String sql = "SELECT * FROM cliente";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -73,7 +73,7 @@ public class ClienteDAO implements DAO<Cliente, String> {
 
 	@Override
 	public boolean criar(Cliente cliente) {
-		String sql = "INSERT INTO Cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		if (existeEssaChavePrimaria(cliente.getCpf())) {
 			System.out.println("Cliente com mesmo cpf ja cadastrado");
 			return false;
@@ -106,7 +106,7 @@ public class ClienteDAO implements DAO<Cliente, String> {
 
 	@Override
 	public boolean atualizar(Cliente cliente) {
-		String sql = "UPDATE Cliente SET nome = ?, RG = ?, endereco = ?, CEP = ?, celular = ?, telefoneResidencial = ?, telefoneComercial = ?, email = ? WHERE CPF = ?";
+		String sql = "UPDATE cliente SET nome = ?, RG = ?, endereco = ?, CEP = ?, celular = ?, telefoneResidencial = ?, telefoneComercial = ?, email = ? WHERE CPF = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -136,7 +136,7 @@ public class ClienteDAO implements DAO<Cliente, String> {
 
 	@Override
 	public boolean deletar(String cpf) {
-		String sql = "DELETE FROM Cliente WHERE cpf = ?";
+		String sql = "DELETE FROM cliente WHERE cpf = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, cpf);
@@ -153,7 +153,7 @@ public class ClienteDAO implements DAO<Cliente, String> {
 
 	@Override
 	public boolean existeEssaChavePrimaria(String chavePrimaria) {
-		String sql = "SELECT * FROM Cliente WHERE cpf = ?";
+		String sql = "SELECT * FROM cliente WHERE cpf = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, chavePrimaria);

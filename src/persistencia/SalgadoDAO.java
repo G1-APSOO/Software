@@ -15,7 +15,7 @@ public class SalgadoDAO implements DAO<Salgado, Integer> {
 	public Salgado get(Integer objetoInteger) {
 		int id = objetoInteger.intValue();
 
-		String sql = "SELECT * FROM Salgado WHERE id = ?";
+		String sql = "SELECT * FROM salgado WHERE id = ?";
 
 		try {
 
@@ -42,7 +42,7 @@ public class SalgadoDAO implements DAO<Salgado, Integer> {
 
 	@Override
 	public ArrayList<Salgado> getAll() {
-		String sql = "SELECT * FROM Salgado";
+		String sql = "SELECT * FROM salgado";
 
 		try {
 
@@ -69,7 +69,7 @@ public class SalgadoDAO implements DAO<Salgado, Integer> {
 
 	@Override
 	public boolean criar(Salgado salgado) {
-		String sql = "INSERT INTO Salgado VALUES (?, ?, ?)";
+		String sql = "INSERT INTO salgado VALUES (?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -98,7 +98,7 @@ public class SalgadoDAO implements DAO<Salgado, Integer> {
 
 	@Override
 	public boolean atualizar(Salgado salgado) {
-		String sql = "UPDATE Salgado SET descricao = ?, valorUnitario = ? WHERE id = ?";
+		String sql = "UPDATE salgado SET descricao = ?, valorUnitario = ? WHERE id = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -122,7 +122,7 @@ public class SalgadoDAO implements DAO<Salgado, Integer> {
 
 	@Override
 	public boolean deletar(Integer objetoInteger) {
-		String sql = "DELETE FROM Salgado WHERE id = ?";
+		String sql = "DELETE FROM salgado WHERE id = ?";
 		int id = objetoInteger.intValue();
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -141,7 +141,7 @@ public class SalgadoDAO implements DAO<Salgado, Integer> {
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT * FROM Salgado WHERE id = ?";
+		String sql = "SELECT * FROM salgado WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
