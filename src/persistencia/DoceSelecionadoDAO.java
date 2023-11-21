@@ -19,7 +19,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 	public DoceSelecionado getDoce(int idDoce, int idBuffet) {
 		// A string doceBuffet tem o seguinte formato: 'idDoce idBuffetCompleto'
 
-		String sql = "SELECT * FROM DoceSelecionado WHERE fk_idDoce = ? AND fk_idOrcamentoBuffetCompleto = ?";
+		String sql = "SELECT * FROM doceselecionado WHERE fk_idDoce = ? AND fk_idOrcamentoBuffetCompleto = ?";
 
 		try {
 
@@ -49,7 +49,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 
 	@Override
 	public ArrayList<DoceSelecionado> getAll() {
-		String sql = "SELECT * FROM DoceSelecionado";
+		String sql = "SELECT * FROM doceselecionado";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -77,7 +77,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 	}
 
 	public ArrayList<Doce> getAllBuffet(int idBuffet) {
-		String sql = "SELECT doce.id,doce.descricao,doce.valorUnitario FROM DoceSelecionado, Doce, orcamentobuffetcompleto WHERE fk_idOrcamentoBuffetCompleto = ? AND fk_idOrcamentoBuffetCompleto = orcamentobuffetcompleto.id AND doceselecionado.fk_idDoce = doce.id;";
+		String sql = "SELECT doce.id,doce.descricao,doce.valorUnitario FROM doceselecionado, doce, orcamentobuffetcompleto WHERE fk_idOrcamentoBuffetCompleto = ? AND fk_idOrcamentoBuffetCompleto = orcamentobuffetcompleto.id AND doceselecionado.fk_idDoce = doce.id;";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -105,7 +105,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 	}
 
 	public boolean criarBuffet(DoceSelecionado doceSelecionado, int idBuffet) {
-		String sql = "INSERT INTO DoceSelecionado VALUES (?, ?, ?)";
+		String sql = "INSERT INTO doceselecionado VALUES (?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -115,7 +115,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Doce selecionado inserido com sucesso!\n");
+				System.out.println("DoceSelecionado selecionado inserido com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -133,7 +133,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 	}
 
 	public boolean atualizarBuffet(DoceSelecionado doceSelecionado, int idBuffet) {
-		String sql = "UPDATE DoceSelecionado SET quantidade = ? WHERE fk_idDoce = ? AND fk_idOrcamentoBuffetCompleto = ?";
+		String sql = "UPDATE doceselecionado SET quantidade = ? WHERE fk_idDoce = ? AND fk_idOrcamentoBuffetCompleto = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -143,7 +143,7 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Doce selecionado atualizado com sucesso!\n");
+				System.out.println("DoceSelecionado selecionado atualizado com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {
@@ -161,14 +161,14 @@ public class DoceSelecionadoDAO implements DAO<DoceSelecionado, String> {
 	}
 
 	public boolean deletarDoce(int idDoce, int idBuffet) {
-		String sql = "DELETE FROM DoceSelecionado WHERE fk_idOrcamentoBuffetCompleto= ? AND fk_idDoce = ?";
+		String sql = "DELETE FROM doceselecionado WHERE fk_idOrcamentoBuffetCompleto= ? AND fk_idDoce = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, idBuffet);
 			statement.setInt(2, idDoce);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
-				System.out.println("Doce selecionado(s) deletado(s) com sucesso!\n");
+				System.out.println("DoceSelecionado selecionado(s) deletado(s) com sucesso!\n");
 			}
 			return true;
 		} catch (SQLException e) {

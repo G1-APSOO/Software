@@ -1,7 +1,6 @@
 package persistencia;
 import java.util.ArrayList;
 
-import negocio.Bolo;
 import negocio.Salgado;
 
 public class TesteSalgadoDAO {

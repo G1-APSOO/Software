@@ -22,6 +22,7 @@ public class ServicoContratado {
 		return quantidade;
 	}
 
+
 	public ServicoAdicional getServicoAdicional() {
 		return servicoAdicional;
 	}

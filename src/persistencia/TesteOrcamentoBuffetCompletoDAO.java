@@ -56,9 +56,9 @@ public class TesteOrcamentoBuffetCompletoDAO {
 		ArrayList<Salgado> listaSalgados = OrcamentoBuffetCompleto.getArraySalgadoAssociados(orc2.getId());
 		ArrayList<Doce> listaDoces = OrcamentoBuffetCompleto.getArrayDoceAssociados(orc2.getId());
 		
-		OrcamentoBuffetCompleto orc3 = new OrcamentoBuffetCompleto(10, "11:30", orc2.getData(), orc2.getPagamento(), orc2.getCliente(),orc2.getId() ,orc2.getTeraCerveja(), listaSalgados, listaDoces, orc2.getBolo());
-		
-		orcDAO.atualizar(orc3);
+//		OrcamentoBuffetCompleto orc3 = new OrcamentoBuffetCompleto(10, "11:30", orc2.getData(), orc2.getPagamento(), orc2.getCliente(),orc2.getId() ,orc2.getTeraCerveja(), listaSalgados, listaDoces, orc2.getBolo());
+//		
+//		orcDAO.atualizar(orc3);
 		
 		//deletar
 		

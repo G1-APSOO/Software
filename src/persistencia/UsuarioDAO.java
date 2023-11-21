@@ -14,7 +14,7 @@ public class UsuarioDAO implements DAO<Usuario, String> {
 
 	@Override
 	public Usuario get(String login) {
-		String sql = "SELECT * FROM Usuario WHERE login = ?";
+		String sql = "SELECT * FROM usuario WHERE login = ?";
 
 		try {
 
@@ -42,7 +42,7 @@ public class UsuarioDAO implements DAO<Usuario, String> {
 
 	@Override
 	public ArrayList<Usuario> getAll() {
-		String sql = "SELECT * FROM Usuario";
+		String sql = "SELECT * FROM usuario";
 
 		try {
 
@@ -70,7 +70,7 @@ public class UsuarioDAO implements DAO<Usuario, String> {
 	@Override
 	public boolean criar(Usuario usuario) {
 		// cpf nome RG endereco CEP celular telefoneResidencial telefoneComercial email
-		String sql = "INSERT INTO Usuario VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO usuario VALUES (?, ?, ?, ?)";
 		String hashed = sha256Hash(usuario.getSenha());
 		if (existeEssaChavePrimaria(usuario.getLogin())) {
 			System.out.println("Cliente com mesmo cpf ja cadastrado");
@@ -102,7 +102,7 @@ public class UsuarioDAO implements DAO<Usuario, String> {
 	public boolean atualizar(Usuario usuario) {
 		// Não altera a senha
 
-		String sql = "UPDATE Usuario SET nome = ?, tipoDeUsuario = ? WHERE login = ?";
+		String sql = "UPDATE usuario SET nome = ?, tipoDeUsuario = ? WHERE login = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -126,7 +126,7 @@ public class UsuarioDAO implements DAO<Usuario, String> {
 	}
 
 	public boolean atualizarSenha(String login, String senha) {
-		String sql = "UPDATE Usuario SET senha = ? WHERE login = ?";
+		String sql = "UPDATE usuario SET senha = ? WHERE login = ?";
 		String hashed = sha256Hash(senha);
 
 		try {
@@ -151,7 +151,7 @@ public class UsuarioDAO implements DAO<Usuario, String> {
 
 	@Override
 	public boolean deletar(String login) {
-		String sql = "DELETE FROM Usuario WHERE login = ?";
+		String sql = "DELETE FROM usuario WHERE login = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, login);
@@ -190,7 +190,7 @@ public class UsuarioDAO implements DAO<Usuario, String> {
 
 	@Override
 	public boolean existeEssaChavePrimaria(String chavePrimaria) {
-		String sql = "SELECT * FROM Usuario WHERE login = ?";
+		String sql = "SELECT * FROM usuario WHERE login = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, chavePrimaria);

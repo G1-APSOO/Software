@@ -15,7 +15,7 @@ public class DoceDAO implements DAO<Doce, Integer> {
 	public Doce get(Integer objetoInteger) {
 		int id = objetoInteger.intValue();
 
-		String sql = "SELECT * FROM Doce WHERE id = ?";
+		String sql = "SELECT * FROM doce WHERE id = ?";
 
 		try {
 
@@ -42,7 +42,7 @@ public class DoceDAO implements DAO<Doce, Integer> {
 
 	@Override
 	public ArrayList<Doce> getAll() {
-		String sql = "SELECT * FROM Doce";
+		String sql = "SELECT * FROM doce";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -64,7 +64,7 @@ public class DoceDAO implements DAO<Doce, Integer> {
 
 	@Override
 	public boolean criar(Doce doce) {
-		String sql = "INSERT INTO Doce VALUES (?, ?, ?)";
+		String sql = "INSERT INTO doce VALUES (?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -93,7 +93,7 @@ public class DoceDAO implements DAO<Doce, Integer> {
 
 	@Override
 	public boolean atualizar(Doce doce) {
-		String sql = "UPDATE Doce SET descricao = ?, valorUnitario = ? WHERE id = ?";
+		String sql = "UPDATE doce SET descricao = ?, valorUnitario = ? WHERE id = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -117,7 +117,7 @@ public class DoceDAO implements DAO<Doce, Integer> {
 
 	@Override
 	public boolean deletar(Integer objetoInteger) {
-		String sql = "DELETE FROM Doce WHERE id = ?";
+		String sql = "DELETE FROM doce WHERE id = ?";
 		int id = objetoInteger.intValue();
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -136,7 +136,7 @@ public class DoceDAO implements DAO<Doce, Integer> {
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT * FROM Doce WHERE id = ?";
+		String sql = "SELECT * FROM doce WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);

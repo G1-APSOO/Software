@@ -10,17 +10,15 @@ import excecoes.ExcecaoValorNaoSetado;
 import negocio.Bolo;
 import negocio.Data;
 import negocio.Doce;
-import negocio.DoceSelecionado;
 import negocio.OrcamentoBuffetCompleto;
 import negocio.Salgado;
-import negocio.SalgadoSelecionado;
 
 public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, Integer> {
 
 	@Override
 	public OrcamentoBuffetCompleto get(Integer objetoInteger) {
 		int id = objetoInteger.intValue();
-		String sql = "SELECT * FROM OrcamentoBuffetCompleto WHERE id = ?";
+		String sql = "SELECT * FROM orcamentobuffetcompleto WHERE id = ?";
 
 		try {
 
@@ -90,7 +88,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 
 	@Override
 	public ArrayList<OrcamentoBuffetCompleto> getAll() {
-		String sql = "SELECT * FROM OrcamentoBuffetCompleto";
+		String sql = "SELECT * FROM orcamentobuffetcompleto";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -134,7 +132,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 
 					OrcamentoBuffetCompleto orcamentoBuffetCompletoEncontrado = new OrcamentoBuffetCompleto(
 							rs.getInt("numeroDeConvidados"), rs.getInt("numeroDeColaboradores"),
-							rs.getString("horaDeInicio"), dataOrcamento, null, clienteDAO.get(rs.getString("cpf")),
+							rs.getString("horaDeInicio"), dataOrcamento, null, clienteDAO.get(cpfCliente),
 							rs.getInt("id"), teraCerveja, salgados, doces, bolo);
 					orcamentoBuffetCompletoEncontrados.add(orcamentoBuffetCompletoEncontrado);
 				}
@@ -148,7 +146,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 
 	@Override
 	public boolean criar(OrcamentoBuffetCompleto orcamentoBuffet) {
-		String sql = "INSERT INTO OrcamentoBuffetCompleto VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO orcamentobuffetcompleto VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -195,7 +193,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 
 	@Override
 	public boolean atualizar(OrcamentoBuffetCompleto orcamentoBuffet) {
-		String sql = "UPDATE OrcamentoBuffetCompleto SET numeroDeConvidados = ?, numeroDeColaboradores = ?, horaDeInicio = ?, data = ?, teraCerveja = ?, fk_cpfCliente = ?, fk_idBolo = ?, fk_idPagamento = ? WHERE id = ?";
+		String sql = "UPDATE orcamentobuffetcompleto SET numeroDeConvidados = ?, numeroDeColaboradores = ?, horaDeInicio = ?, data = ?, teraCerveja = ?, fk_cpfCliente = ?, fk_idBolo = ?, fk_idPagamento = ? WHERE id = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -244,7 +242,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 		doceDAO.deletar(Integer.toString(objetoInteger));
 		salgadoDAO.deletar(Integer.toString(objetoInteger));
 
-		String sql = "DELETE FROM OrcamentoBuffetCompleto WHERE id = ?";
+		String sql = "DELETE FROM orcamentobuffetcompleto WHERE id = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, id);
@@ -259,10 +257,10 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 		}
 	}
 
-	public Boolean verificarData(Data data) {
+	public boolean verificarData(Data data) {
 		String dataString = data.getData();
 		
-		String sql = "SELECT * FROM OrcamentoBuffetCompleto WHERE data = ?";
+		String sql = "SELECT * FROM orcamentobuffetcompleto WHERE data = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setString(1, dataString);
@@ -282,7 +280,7 @@ public class OrcamentoBuffetCompletoDAO implements DAO<OrcamentoBuffetCompleto, 
 	@Override
 	public boolean existeEssaChavePrimaria(Integer chavePrimaria) {
 		int chavePrimariaInt = chavePrimaria.intValue();
-		String sql = "SELECT * FROM OrcamentoBuffetCompleto WHERE id = ?";
+		String sql = "SELECT * FROM orcamentobuffetcompleto WHERE id = ?";
 		try {
 
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
