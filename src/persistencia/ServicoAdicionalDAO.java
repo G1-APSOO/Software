@@ -103,7 +103,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 				id = random.nextInt(2147483646);
 			}
 			statement.setInt(1, id);
-			statement.setString(2, servicoAdicional.getNome());
+			statement.setString(2, servicoAdicional.getDescricao());
 			statement.setDouble(3, servicoAdicional.getValor());
 
 			int rowsInserted = statement.executeUpdate();
@@ -126,7 +126,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setString(1, servicoAdicional.getNome());
+			statement.setString(1, servicoAdicional.getDescricao());
 			statement.setDouble(2, servicoAdicional.getValor());
 			statement.setInt(3, servicoAdicional.getId());
 

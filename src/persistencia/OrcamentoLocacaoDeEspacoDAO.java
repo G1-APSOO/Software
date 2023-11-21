@@ -32,7 +32,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 			try (ResultSet rs = statement.executeQuery()) {
 				while (rs.next()) {
-					String cpfCliente = rs.getString("fk_cpfCliente");
+					String cpfCliente = rs.getString("fk_cpf");
 					String dataString = rs.getString("data");
 					int dia = Integer.parseInt(dataString.split("/")[0]);
 					int mes = Integer.parseInt(dataString.split("/")[1]);
@@ -41,7 +41,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 					ClienteDAO clienteDAO = new ClienteDAO();
 					ServicoContratadoDAO servicoContratadoDAO = new ServicoContratadoDAO();
-					ArrayList<ServicoContratado> servicosContratados = servicoContratadoDAO.getAllBuffet(id);
+					ArrayList<ServicoContratado> servicosContratados = servicoContratadoDAO.getAllServCon(id);
 
 					OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspacoEncontrado = new OrcamentoLocacaoDeEspaco(
 							rs.getInt("numeroDeConvidados"), rs.getInt("numeroDeColaboradores"),
@@ -108,7 +108,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 					Data dataOrcamento = new Data(dia, mes, ano);
 
 					ArrayList<ServicoContratado> servicosContratados = servicoContratadoDAO
-							.getAllBuffet(rs.getInt("id"));
+							.getAllServCon(rs.getInt("id"));
 
 					OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspacoEncontrado = new OrcamentoLocacaoDeEspaco(
 							rs.getInt("numeroDeConvidados"), rs.getInt("numeroDeColaboradores"),
@@ -146,8 +146,9 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 			statement.setInt(3, orcamentoLocacaoDeEspaco.getNumeroDeColaboradores());
 			statement.setString(4, orcamentoLocacaoDeEspaco.getHoraDeInicio());
 			statement.setString(5, orcamentoLocacaoDeEspaco.getData().getData());
-			statement.setInt(6, -1);
-			statement.setString(7, orcamentoLocacaoDeEspaco.getCliente().getCpf());
+			statement.setString(6, orcamentoLocacaoDeEspaco.getCliente().getCpf());
+			statement.setInt(7, -1);
+	
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
@@ -165,7 +166,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 	@Override
 	public boolean atualizar(OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspaco) {
-		String sql = "UPDATE orcamentolocacaodeespaco SET numeroDeConvidados = ?, numeroDeColaboradores = ?, horaDeInicio = ?, data = ?, fk_cpfCliente = ?, fk_idPagamento = ? WHERE id = ?";
+		String sql = "UPDATE orcamentolocacaodeespaco SET numeroDeConvidados = ?, numeroDeColaboradores = ?, horaDeInicio = ?, data = ?, fk_cpf = ?, fk_idPag = ? WHERE id = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
@@ -198,7 +199,7 @@ public class OrcamentoLocacaoDeEspacoDAO implements DAO<OrcamentoLocacaoDeEspaco
 
 		ServicoContratadoDAO servicoContratadoDAO = new ServicoContratadoDAO();
 
-		servicoContratadoDAO.deletar(Integer.toString(chavePrimaria));
+		servicoContratadoDAO.deletarServCon(chavePrimaria);
 
 		String sql = "DELETE FROM orcamentolocacaodeespaco WHERE id = ?";
 		try {

@@ -22,7 +22,14 @@ public class ServicoContratado {
 		return quantidade;
 	}
 
+
 	public ServicoAdicional getServicoAdicional() {
 		return servicoAdicional;
 	}
+
+	@Override
+	public String toString() {
+		return servicoAdicional.getDescricao() + " (" + servicoAdicional.getValor() + ") - " + quantidade;
+	}
+
 }

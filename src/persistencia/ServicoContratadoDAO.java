@@ -48,12 +48,12 @@ public class ServicoContratadoDAO implements DAO<ServicoContratado, Integer> {
 		}
 	}
 
-	public ArrayList<ServicoContratado> getAllBuffet(int idBuffet) {
+	public ArrayList<ServicoContratado> getAllServCon(int idLocacao) {
 		String sql = "SELECT * FROM servicocontratado WHERE fk_idOrcamentoLocacaoDeEspaco = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setInt(1, idBuffet);
+			statement.setInt(1, idLocacao);
 
 			try (ResultSet rs = statement.executeQuery()) {
 				ArrayList<ServicoContratado> servicoContratadoEncontrados = new ArrayList<ServicoContratado>();
@@ -78,13 +78,13 @@ public class ServicoContratadoDAO implements DAO<ServicoContratado, Integer> {
 		throw new IllegalAccessError();
 	}
 
-	public boolean criarBuffet(ServicoContratado objeto, int idBuffet) {
+	public boolean criarServCon(ServicoContratado objeto, int idLocacao) {
 		String sql = "INSERT INTO servicocontratado VALUES (?, ?, ?)";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, objeto.getServicoAdicional().getId());
-			statement.setInt(2, idBuffet);
+			statement.setInt(2, idLocacao);
 			statement.setInt(3, objeto.getQuantidade());
 
 			int rowsInserted = statement.executeUpdate();
@@ -106,14 +106,14 @@ public class ServicoContratadoDAO implements DAO<ServicoContratado, Integer> {
 		throw new IllegalAccessError();
 	}
 
-	public boolean atualizarBuffet(ServicoContratado objeto, int idBuffet) {
+	public boolean atualizarServCon(ServicoContratado objeto, int idLocacao) {
 		String sql = "UPDATE servicocontratado SET quantidade = ? WHERE fk_idServicoAdicional = ? AND fk_idOrcamentoLocacaoDeEspaco = ?";
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
 			statement.setInt(1, objeto.getQuantidade());
 			statement.setInt(2, objeto.getServicoAdicional().getId());
-			statement.setInt(3, idBuffet);
+			statement.setInt(3, idLocacao);
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
@@ -134,11 +134,11 @@ public class ServicoContratadoDAO implements DAO<ServicoContratado, Integer> {
 		throw new IllegalAccessError();
 	}
 
-	public boolean deletarBuffet(int idBuffet) {
+	public boolean deletarServCon(int idLocacao) {
 		String sql = "DELETE FROM servicocontratado WHERE fk_idOrcamentoLocacaoDeEspaco = ?";
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setInt(1, idBuffet);
+			statement.setInt(1, idLocacao);
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
 				System.out.println("ServicoContratado(s) deletado(s) com sucesso!\n");
