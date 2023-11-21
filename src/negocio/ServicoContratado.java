@@ -29,6 +29,6 @@ public class ServicoContratado {
 
 	@Override
 	public String toString() {
-		return servicoAdicional.getNome() + " (" + servicoAdicional.getValor() + ") - " + quantidade;
+		return servicoAdicional.getNome() + String.format(" (%.2f) - ", servicoAdicional.getValor()) + quantidade;
 	}
 }

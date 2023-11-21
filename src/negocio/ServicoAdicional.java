@@ -47,6 +47,6 @@ public class ServicoAdicional {
 
 	@Override
 	public String toString() {
-		return nome + " (" + valor + ")";
+		return nome + String.format(" (%.2f)", valor);
 	}
 }
