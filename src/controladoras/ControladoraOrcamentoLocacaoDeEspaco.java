@@ -13,6 +13,10 @@ public class ControladoraOrcamentoLocacaoDeEspaco {
 		throw new IllegalAccessException("Instanciamento inválido, esta classe é estática");
 	}
 
+    public static boolean verificarData(Data data) {
+        return OrcamentoLocacaoDeEspaco.verificarData(data);
+    }
+
     public static OrcamentoLocacaoDeEspaco criarOrcamento (int numeroDeConvidados, int numeroDeColaboradores, String horaDeInicio, 
             Data data, Cliente cliente) {
         return new OrcamentoLocacaoDeEspaco(numeroDeConvidados, numeroDeColaboradores, horaDeInicio, data, cliente);
