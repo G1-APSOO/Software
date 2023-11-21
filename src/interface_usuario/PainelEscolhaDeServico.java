@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import negocio.ServicoAdicional;
 import negocio.ServicoContratado;
+import persistencia.ServicoAdicionalDAO;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -46,22 +47,10 @@ public class PainelEscolhaDeServico extends Painel {
 		
 		arrayServicoDisponivel = new DefaultListModel<>();
 		arrayServicoContratado = new DefaultListModel<>();
-		
-		//TODO É necessário trocar o debug por requisição ao BD pelos serviços
-		//! Debug
-		arrayServicoDisponivel.add(0, new ServicoAdicional(-1, "Mesa a mais", 15.0, false));
-		arrayServicoDisponivel.add(1, new ServicoAdicional(-1, "Garcom", 120.0, false));
-		arrayServicoDisponivel.add(2, new ServicoAdicional(-1, "Copeira", 120.0, false));
-		arrayServicoDisponivel.add(3, new ServicoAdicional(-1, "Monitora", 60.0, false));
-		arrayServicoDisponivel.add(4, new ServicoAdicional(-1, "Recepcionista", 60.0, false));
-		arrayServicoDisponivel.add(5, new ServicoAdicional(-1, "Kit festa", 150.0, true));
-		arrayServicoDisponivel.add(6, new ServicoAdicional(-1, "Teste1", 150.0, false));
-		arrayServicoDisponivel.add(7, new ServicoAdicional(-1, "Teste2", 150.0, false));
-		arrayServicoDisponivel.add(8, new ServicoAdicional(-1, "Teste3", 150.0, false));
-		arrayServicoDisponivel.add(9, new ServicoAdicional(-1, "Teste4", 150.0, false));
-		arrayServicoDisponivel.add(10, new ServicoAdicional(-1, "Teste5", 1000.0, true));
-		//! Fim Debug
-		
+
+		ServicoAdicionalDAO servicoAdicionalDAO = new ServicoAdicionalDAO();
+		arrayServicoDisponivel.addAll(servicoAdicionalDAO.getAll());
+
 		painel = new JPanel();
 		painel.setBackground(getCorDeFundo());
 		
@@ -443,7 +432,9 @@ public class PainelEscolhaDeServico extends Painel {
 	public ArrayList<ServicoContratado> getServicosContratados() {
 		ArrayList<ServicoContratado> arrayContratados = new ArrayList<>();
 
-		arrayContratados.addAll(arrayContratados);
+		for (int i = 0; i < arrayServicoContratado.size(); i++) {
+			arrayContratados.add(arrayServicoContratado.get(i));
+		}
 
 		return arrayContratados;
 	}
@@ -451,5 +442,19 @@ public class PainelEscolhaDeServico extends Painel {
 	@Override
 	public JPanel getPainel() {
 		return painel;
+	}
+
+	@Override
+	public void limparCampos() {
+		arrayServicoDisponivel = new DefaultListModel<>();
+		arrayServicoContratado = new DefaultListModel<>();
+
+		ServicoAdicionalDAO servicoAdicionalDAO = new ServicoAdicionalDAO();
+		arrayServicoDisponivel.addAll(servicoAdicionalDAO.getAll());
+
+		servicosDisponiveis.setModel(arrayServicoDisponivel);
+		servicosContratados.setModel(arrayServicoContratado);
+
+		inputQuantidade.setText("");
 	}
 }
