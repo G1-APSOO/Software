@@ -3,7 +3,7 @@ package negocio;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-import persistencia.OrcamentoBuffetCompletoDAO;
+import persistencia.OrcamentoLocacaoDeEspacoDAO;
 
 public class OrcamentoLocacaoDeEspaco extends OrcamentoEvento {
 	private ArrayList<ServicoContratado> arrayServicosContratados;
@@ -23,7 +23,7 @@ public class OrcamentoLocacaoDeEspaco extends OrcamentoEvento {
 	}
 	
 	public boolean cadastrarOrcamento() {
-		OrcamentoLocacaoDeEspaco orcamentoLocacaoDeEspacoDAO = new OrcamentoLocacaoDeEspacoDAO();
+		OrcamentoLocacaoDeEspacoDAO orcamentoLocacaoDeEspacoDAO = new OrcamentoLocacaoDeEspacoDAO();
 		
 		boolean foiCadastrado = false;
 		
@@ -38,11 +38,11 @@ public class OrcamentoLocacaoDeEspaco extends OrcamentoEvento {
 		
 		if (orcamentoLocacaoDeEspacoDAO.criar(this)) {
 			JOptionPane.showMessageDialog(null, "Orçamento cadastrado com sucesso!");
+			foiCadastrado = true;
 		} else {
 			JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar o orçamento, ocorreu algum erro", "Erro: Cadastrar Orcamento", JOptionPane.ERROR_MESSAGE);
+			foiCadastrado = false;
 		}
-		
-		foiCadastrado = true;
 
 		return foiCadastrado;
 	}
@@ -70,7 +70,6 @@ public class OrcamentoLocacaoDeEspaco extends OrcamentoEvento {
 	@Override
 	public boolean deletarOrcamento() {
 		OrcamentoLocacaoDeEspacoDAO DAO = new OrcamentoLocacaoDeEspacoDAO();
-		
-		
+		return DAO.deletar(getId());
 	}
 }
