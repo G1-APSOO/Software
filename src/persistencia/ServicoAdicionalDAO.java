@@ -25,7 +25,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 			try (ResultSet rs = statement.executeQuery()) {
 				while (rs.next()) {
-					ServicoAdicional servicoAdicionalEncontrado = new ServicoAdicional(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor"));
+					ServicoAdicional servicoAdicionalEncontrado = new ServicoAdicional(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor"), rs.getBoolean("servicoUnico"));
 					return servicoAdicionalEncontrado;
 				}
 			}
@@ -76,7 +76,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 			try (ResultSet rs = statement.executeQuery()) {
 				ArrayList<ServicoAdicional> servicosAdicionaisEncontrados = new ArrayList<ServicoAdicional>();
 				while (rs.next()) {
-					ServicoAdicional servicoAdicionalEncontrado = new ServicoAdicional(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor"));
+					ServicoAdicional servicoAdicionalEncontrado = new ServicoAdicional(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor"), rs.getBoolean("servicoUnico"));
 					servicosAdicionaisEncontrados.add(servicoAdicionalEncontrado);
 				}
 				return servicosAdicionaisEncontrados;
@@ -103,7 +103,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 				id = random.nextInt(2147483646);
 			}
 			statement.setInt(1, id);
-			statement.setString(2, servicoAdicional.getDescricao());
+			statement.setString(2, servicoAdicional.getNome());
 			statement.setDouble(3, servicoAdicional.getValor());
 			statement.setBoolean(4, false);
 
@@ -127,7 +127,7 @@ public class ServicoAdicionalDAO implements DAO<ServicoAdicional, Integer>{
 
 		try {
 			PreparedStatement statement = ConexaoBanco.getConexao().prepareStatement(sql);
-			statement.setString(1, servicoAdicional.getDescricao());
+			statement.setString(1, servicoAdicional.getNome());
 			statement.setDouble(2, servicoAdicional.getValor());
 			statement.setInt(3, servicoAdicional.getId());
 

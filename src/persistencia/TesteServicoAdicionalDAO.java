@@ -8,7 +8,7 @@ public class TesteServicoAdicionalDAO {
 		System.out.print(ConexaoBanco.getConexao());
 		System.out.print(ConexaoBanco.status);
 		
-		ServicoAdicional servicoAdicional = new ServicoAdicional(1050124796, "Copeira", 120.00);
+		ServicoAdicional servicoAdicional = new ServicoAdicional(1050124796, "Copeira", 120.00, false);
 		
 		ServicoAdicionalDAO servicoAdicionalDAO = new ServicoAdicionalDAO();
 		
